@@ -1,0 +1,2 @@
+module Members::BlocksHelper
+end
