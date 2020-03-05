@@ -1,0 +1,2 @@
+class GenreArticle < ApplicationRecord
+end

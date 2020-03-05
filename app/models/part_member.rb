@@ -1,0 +1,2 @@
+class PartMember < ApplicationRecord
+end
