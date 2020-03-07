@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_104511) do
+ActiveRecord::Schema.define(version: 2020_03_07_080838) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id"
@@ -121,12 +121,12 @@ ActiveRecord::Schema.define(version: 2020_03_05_104511) do
     t.string "name"
     t.integer "gender"
     t.datetime "birthday"
-    t.integer "address_prefecture"
+    t.string "address_prefecture"
     t.string "address_city"
     t.text "introduction"
     t.string "sound"
     t.string "profile_image_id"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_members_on_email", unique: true
