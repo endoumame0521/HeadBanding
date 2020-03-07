@@ -4,27 +4,27 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %><br>
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %><br>
     <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
   </div>
 
   <div class="field">
-    <%= f.label :gender, "男性" %><br />
+    <%= f.label :男性 %><br>
     <%= f.radio_button :gender, :男性 %>
   </div>
 
   <div class="field">
-    <%= f.label :gender, "女性" %><br />
+    <%= f.label :女性 %><br>
     <%= f.radio_button :gender, :女性 %>
   </div>
 
   <div class="field">
-    <%= f.label :birthday, "生年月日" %><br />
+    <%= f.label :birthday, "生年月日" %><br>
     <%= f.date_select :birthday, use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1) %>
   </div>
 
@@ -32,33 +32,47 @@
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
+    <% end %><br>
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :address_prefecture %><br />
-    <%= f.collection_select :address_prefecture, Prefecture.all, :id, :name %>
+    <%= f.label :address_prefecture %><br>
+    <%= f.collection_select :address_prefecture, Prefecture.all, :name, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :address_city %><br />
-    <%= f.collection_select :address_city, City.all, :id, :name %>
+    <%= f.label :address_city %><br>
+    <%= f.collection_select :address_city, City.all, :name, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :part_id, "担当パート" %><br />
-    <%= collection_select :part_id, :part_id, Part.all, :id, :name, include_blank: "選択してください" %>
+    <%= f.label :part, "担当パート" %><br>
+    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name, include_blank: "選択してください" %>
   </div>
 
   <div class="field">
-    <%= f.label :genre_id, "担当パート" %><br />
-    <%= collection_select :genre_id, :genre_id, Genre.all, :id, :name, include_blank: "選択してください"  %>
+    <%= f.label :genre, "好きなジャンル" %><br>
+    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name, include_blank: "選択してください" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :artist, "好きなアーティスト" %><br>
+    <%= f.fields_for :artists_attributes do |a| %>
+      <% for i in 1..5 do %>
+        <%= a.text_field :name, name: "member[artists_attributes][#{i}][name]" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :introduction, "自己紹介文" %><br>
+    <%= f.text_area :introduction %>
   </div>
 
   <div class="actions">
@@ -67,3 +81,4 @@
 <% end %>
 
 <%= render "members/shared/links" %>
+
