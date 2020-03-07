@@ -1,0 +1,20 @@
+<ul>
+        <li><%= link_to 'トップ', articles_path, class: "nav-link fas fa-store" %></li>
+
+      <% if member_signed_in? %>
+        <li><%= link_to "#{current_member.name}", member_path(current_member.id), class: "nav-link fas fa-user" %></li>
+        <li><%= link_to 'ログアウト', destroy_member_session_path, class: "nav-link fas fa-sign-out-alt", method: :delete %></li>
+      <% else %>
+        <li><%= link_to '会員登録', new_member_registration_path, class: "nav-link fas fa-edit" %></li>
+        <li><%= link_to '会員ログイン', new_member_session_path, class: "nav-link fas fa-sign-in-alt" %></li>
+      <% end %>
+
+      <% if admin_signed_in? %>
+        <li><%= link_to 'トップ', admins_top_path, class: "nav-link fas fa-home" %></li>
+        <li><%= link_to '会員一覧', admins_members_path, class: "nav-link fas fa-user" %></li>
+        <li><%= link_to '管理者ログアウト', destroy_admin_session_path, class: "nav-link fas fa-sign-out-alt", method: :delete %></li>
+      <% else %>
+        <li><%= link_to '管理者ログイン', new_admin_session_path, class: "nav-link fas fa-sign-in-alt" %></li>
+        <li style="color: red;">管理者ログイン未済</li>
+      <% end %>
+</ul>
