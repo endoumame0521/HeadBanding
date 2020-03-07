@@ -27,7 +27,7 @@ class Member < ApplicationRecord
   has_many :following_member, through: :follower, source: :followed # 自分がフォローしている人
   has_many :follower_member, through: :followed, source: :follower # 自分をフォローしている人
 
-  #accepts_nested_attributes_for :artists
+  accepts_nested_attributes_for :artists
 
   #メンバーをフォローする
   def follow(member_id)
