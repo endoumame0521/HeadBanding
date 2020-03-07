@@ -1,6 +1,9 @@
 class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  enum gender: { 男性: 0, 女性: 1 }
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -23,6 +26,8 @@ class Member < ApplicationRecord
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy # フォロワー取得
   has_many :following_member, through: :follower, source: :followed # 自分がフォローしている人
   has_many :follower_member, through: :followed, source: :follower # 自分をフォローしている人
+
+  #accepts_nested_attributes_for :artists
 
   #メンバーをフォローする
   def follow(member_id)
