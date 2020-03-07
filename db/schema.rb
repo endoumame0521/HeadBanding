@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_07_080838) do
+ActiveRecord::Schema.define(version: 2020_03_07_100554) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_080838) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "member_id", null: false
+    t.index ["member_id"], name: "index_artists_on_member_id"
   end
 
   create_table "cities", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -230,4 +232,5 @@ ActiveRecord::Schema.define(version: 2020_03_07_080838) do
     t.index ["member_id"], name: "index_tweets_on_member_id"
   end
 
+  add_foreign_key "artists", "members"
 end
