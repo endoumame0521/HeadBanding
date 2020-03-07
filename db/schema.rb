@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_07_160113) do
+ActiveRecord::Schema.define(version: 2020_03_07_184133) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id"
@@ -77,7 +77,6 @@ ActiveRecord::Schema.define(version: 2020_03_07_160113) do
     t.string "name", limit: 16, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "deleted_at"
   end
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -122,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_03_07_160113) do
     t.datetime "remember_created_at"
     t.string "name"
     t.integer "gender"
-    t.datetime "birthday"
+    t.date "birthday"
     t.string "address_prefecture"
     t.string "address_city"
     t.text "introduction"
@@ -184,7 +183,6 @@ ActiveRecord::Schema.define(version: 2020_03_07_160113) do
     t.string "name", limit: 4, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "deleted_at"
   end
 
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -232,5 +230,4 @@ ActiveRecord::Schema.define(version: 2020_03_07_160113) do
     t.index ["member_id"], name: "index_tweets_on_member_id"
   end
 
-  add_foreign_key "artists", "members"
 end
