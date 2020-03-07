@@ -1,4 +1,7 @@
 class Members::ArticlesController < ApplicationController
+  def top
+  end
+
   def index
   end
 
