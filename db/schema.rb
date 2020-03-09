@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_07_184133) do
+ActiveRecord::Schema.define(version: 2020_03_08_104124) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "visitor_id"
-    t.bigint "visited_id"
+    t.bigint "visitor_id", null: false
+    t.bigint "visited_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["visited_id"], name: "index_accesses_on_visited_id"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "article_cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_cities_on_article_id"
+    t.index ["city_id"], name: "index_article_cities_on_city_id"
+  end
+
   create_table "article_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "member_id"
     t.bigint "article_id"
@@ -43,13 +52,11 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.integer "published_status"
-    t.integer "category"
-    t.string "subject"
-    t.text "body"
-    t.integer "prefecture_code"
-    t.string "address_city"
+    t.bigint "member_id", null: false
+    t.boolean "published_status", default: true, null: false
+    t.integer "category", null: false
+    t.string "subject", null: false
+    t.text "body", null: false
     t.integer "day_of_the_week"
     t.integer "band_intention"
     t.integer "music_intention"
@@ -61,7 +68,9 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "prefecture_id", null: false
     t.index ["member_id"], name: "index_articles_on_member_id"
+    t.index ["prefecture_id"], name: "index_articles_on_prefecture_id"
   end
 
   create_table "artists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -73,15 +82,16 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "cities", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "prefecture_id"
     t.string "name", limit: 16, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.bigint "prefecture_id"
+    t.index ["prefecture_id"], name: "index_cities_on_prefecture_id"
   end
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "room_id"
+    t.bigint "member_id", null: false
+    t.bigint "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["member_id"], name: "index_entries_on_member_id"
@@ -89,8 +99,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "genre_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "article_id"
-    t.bigint "genre_id"
+    t.bigint "article_id", null: false
+    t.bigint "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_genre_articles_on_article_id"
@@ -98,8 +108,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "genre_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "genre_id"
+    t.bigint "member_id", null: false
+    t.bigint "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_genre_members_on_genre_id"
@@ -107,7 +117,7 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "genres", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -119,11 +129,11 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name"
-    t.integer "gender"
-    t.date "birthday"
-    t.string "address_prefecture"
-    t.string "address_city"
+    t.string "name", null: false
+    t.integer "gender", null: false
+    t.date "birthday", null: false
+    t.string "address_prefecture", null: false
+    t.string "address_city", null: false
     t.text "introduction"
     t.string "sound"
     t.string "profile_image_id"
@@ -135,9 +145,9 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "room_id"
-    t.text "body"
+    t.bigint "member_id", null: false
+    t.bigint "room_id", null: false
+    t.text "body", null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -146,8 +156,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.text "body"
+    t.bigint "member_id", null: false
+    t.text "body", null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -155,17 +165,17 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "part_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "article_id"
+    t.bigint "part_id", null: false
+    t.bigint "article_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_part_articles_on_article_id"
-    t.index ["member_id"], name: "index_part_articles_on_member_id"
+    t.index ["part_id"], name: "index_part_articles_on_part_id"
   end
 
   create_table "part_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "part_id"
+    t.bigint "member_id", null: false
+    t.bigint "part_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["member_id"], name: "index_part_members_on_member_id"
@@ -173,7 +183,7 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "parts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -201,9 +211,9 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "tweet_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.bigint "tweet_id"
-    t.text "body"
+    t.bigint "member_id", null: false
+    t.bigint "tweet_id", null: false
+    t.text "body", null: false
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -221,8 +231,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_184133) do
   end
 
   create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "member_id"
-    t.text "body"
+    t.bigint "member_id", null: false
+    t.text "body", null: false
     t.integer "profile_image_id"
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
