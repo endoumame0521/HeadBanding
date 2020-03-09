@@ -1,32 +1,38 @@
+<h2>MENU</h2>
+
+<h4>Member</h4>
 <ul>
-  <% url_array = request.url.split('/') %>
-    <% unless url_array[3] == "admins" %>
-      <li><%= link_to 'トップ', articles_path %></li>
-    <% if member_signed_in? %>
-      <li><%= link_to "#{current_member.name}", member_path(current_member.id) %></li>
-      <li><%= link_to '記事一覧', articles_path %></li>
-      <li><%= link_to '呟き一覧', tweets_path %></li>
-      <li><%= link_to '会員一覧', members_path %></li>
-      <li><%= link_to '部屋一覧', rooms_path %></li>
-      <li><%= link_to '通報一覧', notices_path %></li>
-      <li><%= link_to 'ログアウト', destroy_member_session_path, method: :delete %></li>
-    <% else %>
-      <li><%= link_to '会員登録', new_member_registration_path %></li>
-      <li><%= link_to '会員ログイン', new_member_session_path %></li>
-      <li style="color: red;">会員ログイン未済</li>
-    <% end %>
+  <li><%= link_to 'トップ', top_path %></li>
+  <% if member_signed_in? %>
+    <li><%= link_to "#{current_member.name}", member_path(current_member.id) %></li>
+    <li><%= link_to '記事一覧', articles_path %></li>
+    <li><%= link_to '呟き一覧', tweets_path %></li>
+    <li><%= link_to '会員一覧', members_path %></li>
+    <li><%= link_to '部屋一覧', rooms_path %></li>
+    <li><%= link_to '通報一覧', notices_path %></li>
+    <li><%= link_to 'ログアウト', destroy_member_session_path, method: :delete %></li>
+    <li style="color: orange;">管理者ログイン済</li>
+  <% else %>
+    <li><%= link_to '会員登録', new_member_registration_path %></li>
+    <li><%= link_to 'ログイン', new_member_session_path %></li>
+    <li style="color: red;">会員ログイン未済</li>
   <% end %>
-    <% if admin_signed_in? %>
-      <li><%= link_to '記事一覧', admins_articles_path %></li>
-      <li><%= link_to '呟き一覧', admins_tweets_path %></li>
-      <li><%= link_to '会員一覧', admins_members_path %></li>
-      <li><%= link_to '部屋一覧', admins_rooms_path %></li>
-      <li><%= link_to '通報一覧', admins_notices_path %></li>
-      <li><%= link_to 'ジャンル一覧', admins_genres_path %></li>
-      <li><%= link_to 'パート一覧', admins_parts_path %></li>
-      <li><%= link_to '管理者ログアウト', destroy_admin_session_path, method: :delete %></li>
-    <% else %>
-      <li><%= link_to '管理者ログイン', new_admin_session_path %></li>
-      <li style="color: red;">管理者ログイン未済</li>
-    <% end %>
+</ul>
+
+<h4>Admin</h4>
+<ul>
+  <% if admin_signed_in? %>
+    <li><%= link_to '記事一覧(Admin)', admins_articles_path %></li>
+    <li><%= link_to '呟き一覧(Admin)', admins_tweets_path %></li>
+    <li><%= link_to '会員一覧(Admin)', admins_members_path %></li>
+    <li><%= link_to '部屋一覧(Admin)', admins_rooms_path %></li>
+    <li><%= link_to '通報一覧(Admin)', admins_notices_path %></li>
+    <li><%= link_to 'ジャンル一覧(Admin)', admins_genres_path %></li>
+    <li><%= link_to 'パート一覧(Admin)', admins_parts_path %></li>
+    <li><%= link_to 'ログアウト(Admin)', destroy_admin_session_path, method: :delete %></li>
+    <li style="color: orange;">管理者ログイン済</li>
+  <% else %>
+    <li><%= link_to 'ログイン(Admin)', new_admin_session_path %></li>
+    <li style="color: red;">管理者ログイン未済</li>
+  <% end %>
 </ul>
