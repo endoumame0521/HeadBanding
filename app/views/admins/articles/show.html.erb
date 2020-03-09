@@ -1,2 +1,14 @@
-<h1>Admins::Articles#show</h1>
-<p>Find me in app/views/admins/articles/show.html.erb</p>
+<h2>Admin</h2>
+<%= render partial: "/layouts/error_messages", locals: { model: @article } %>
+<%= render "members/articles/detail_article.html.erb", article: @article %>
+
+<%= form_with model: @article, url: admins_article_path, local: true do |f| %>
+  <div class="field">
+    <%= f.label :status, "記事の状態" %><br>
+    <%= f.select :status, Article.statuses.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "更新" %>
+  </div>
+<% end %>

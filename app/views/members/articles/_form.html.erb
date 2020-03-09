@@ -1,0 +1,87 @@
+<% action = edit_flag ? article_path : articles_path %>
+
+<%= form_with model: model, url: action, local: true do |f| %>
+  <div class="field">
+    <%= f.label :category, "記事の種類" %><br>
+    <%= f.select :category, Article.categories.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :published_status, "記事の状態" %><br>
+    <%= f.select :published_status, Article.published_statuses.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :subject, "記事の件名" %><br>
+    <%= f.text_field :subject %>
+  </div>
+
+  <div class="field">
+    <%= f.label :prefecture_id, "都道府県" %><br>
+    <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city, "活動地域" %><br>
+    <%= f.collection_check_boxes :city_ids, City.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :day_of_the_week, "活動する曜日" %><br>
+    <%= f.select :day_of_the_week, Article.day_of_the_weeks.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :band_intention, "活動の方向性" %><br>
+    <%= f.select :band_intention, Article.band_intentions.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :gender, "性別" %><br>
+    <%= f.select :gender, Article.genders.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    年齢<br>
+    <%= f.text_field :age_min %><%= f.label :age_min, "歳" %>〜
+    <%= f.text_field :age_max%><%= f.label :age_max, "歳"  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :band_theme, "バンドのテーマ" %><br>
+    <%= f.select :band_theme, Article.band_themes.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :music_intention, "バンドの楽曲" %><br>
+    <%= f.select :music_intention, Article.music_intentions.keys.map {|k| [k, k]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sound, "デモ音源" %><br>
+    <%= f.text_field :sound %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "記事の内容" %><br>
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= f.label :part, "パート" %><br>
+    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :genre, "ジャンル" %><br>
+    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
+  </div>
+
+  <div class="actions">
+    <% if edit_flag %>
+      <%= f.submit "更新" %>
+    <% else %>
+      <%= f.submit "投稿" %>
+    <% end %>
+  </div>
+<% end %>

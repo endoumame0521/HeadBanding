@@ -1,2 +1,8 @@
-<h1>Members::Articles#show</h1>
-<p>Find me in app/views/members/articles/show.html.erb</p>
+<h2>Member記事詳細</h2>
+<%= render partial: "/layouts/error_messages", locals: { model: @article } %>
+<%= render "detail_article.html.erb", article: @article %>
+
+<% if @article.member == current_member %>
+  <%= link_to "編集", edit_article_path %>
+  <%= link_to "削除", edit_article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
+<% end %>

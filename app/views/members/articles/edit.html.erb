@@ -1,2 +1,3 @@
-<h1>Members::Articles#edit</h1>
-<p>Find me in app/views/members/articles/edit.html.erb</p>
+<h2>Member記事編集</h2>
+<%= render "/layouts/error_messages", model: @article %>
+<%= render "form", { model: @article, edit_flag: true } %>
