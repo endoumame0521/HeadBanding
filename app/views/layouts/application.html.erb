@@ -10,8 +10,12 @@
   </head>
 
   <body>
-    <%= render "layouts/sidebar.html.erb" %>
-    <%= render "layouts/notification.html.erb" %>
-    <%= yield %>
+    <div class="flex-header">
+      <div class="notification"><%= render "layouts/notification.html.erb" %></div>
+    </div>
+
+    <div class="flex-main">
+      <div class="sidebar"><%= render "layouts/sidebar.html.erb" %></div>
+      <div class="main"><%= yield %></div>
   </body>
 </html>

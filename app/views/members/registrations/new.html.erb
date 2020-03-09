@@ -14,13 +14,11 @@
   </div>
 
   <div class="field">
-    <%= f.label :男性 %><br>
-    <%= f.radio_button :gender, :男性 %>
-  </div>
-
-  <div class="field">
-    <%= f.label :女性 %><br>
-    <%= f.radio_button :gender, :女性 %>
+    <p>性別</p>
+    <%= f.radio_button :gender, :male %>
+    <%= f.label :male %>
+    <%= f.radio_button :gender, :female %>
+    <%= f.label :female %>
   </div>
 
   <div class="field">
@@ -53,12 +51,12 @@
 
   <div class="field">
     <%= f.label :part, "担当パート" %><br>
-    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name, include_blank: "選択してください" %>
+    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
   </div>
 
   <div class="field">
     <%= f.label :genre, "好きなジャンル" %><br>
-    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name, include_blank: "選択してください" %>
+    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
   </div>
 
   <div class="field">
