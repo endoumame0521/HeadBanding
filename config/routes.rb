@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resource :relationships, only: [:create, :destroy]
       resource :accesses, only: [:index, :create]
       resource :blocks, only: [:index, :create, :destroy]
+      get "article_favorites" => "members#article_favorites", as: "article_favorites"
       get "cancel" => "members#cancel", as: "cancel"
       patch "cancel" => "members#withdraw", as: "withdraw"
       get "following" => "relationships#follower", as: "following"
