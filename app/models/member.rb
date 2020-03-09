@@ -2,7 +2,7 @@ class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
-  enum gender: { 男性: 0, 女性: 1 }
+  enum gender: { male: 0, female: 1 }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -33,13 +33,20 @@ class Member < ApplicationRecord
   def follow(member_id)
     follower.create(followed_id: member_id)
   end
+
   #メンバーのフォローを外す
   def unfollow(member_id)
     follower.find_by(followed_id: member_id).destroy
   end
+
   # フォローしていればtrueを返す
   def following?(member)
     following_member.include?(member)
+  end
+
+  #会員の生年月日から年齢を計算
+  def age
+    (Date.today.strftime("%Y%m%d").to_i - birthday.strftime("%Y%m%d").to_i) / 10000
   end
 
 end

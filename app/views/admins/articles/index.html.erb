@@ -1,2 +1,8 @@
-<h1>Admins::Articles#index</h1>
-<p>Find me in app/views/admins/articles/index.html.erb</p>
+<h2>Admin記事一覧</h2>
+<%= render "/layouts/error_messages", model: @article %>
+
+<table cellspacing="5">
+  <tbody>
+    <%= render partial: "members/articles/article", collection: @articles %>
+  </tbody>
+</table>
