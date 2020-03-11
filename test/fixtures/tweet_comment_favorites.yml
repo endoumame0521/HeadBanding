@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  member: one
+  tweet_comment: one
+
+two:
+  member: two
+  tweet_comment: two
