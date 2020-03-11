@@ -23,8 +23,10 @@ Rails.application.routes.draw do
     resources :articles do
       resource :article_favorites, only: [:create, :destroy]
     end
-    resources :tweets, only: [:index, :create, :show, :edit, :update, :destroy] do
-      resources :tweet_comments, only: [:create, :destroy]
+    resources :tweets, only: [:index, :create, :show, :destroy] do
+      resources :tweet_comments, only: [:create, :destroy] do
+        resource :tweet_comment_favorites, only: [:create, :destroy]
+      end
       resource :tweet_favorites, only: [:create, :destroy]
     end
     resources :members, only: [:index, :show, :edit, :update] do
