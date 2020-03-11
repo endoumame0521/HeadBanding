@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_08_104124) do
+ActiveRecord::Schema.define(version: 2020_03_11_052732) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id", null: false
@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(version: 2020_03_08_104124) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tweet_comment_favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "tweet_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_tweet_comment_favorites_on_member_id"
+    t.index ["tweet_comment_id"], name: "index_tweet_comment_favorites_on_tweet_comment_id"
+  end
+
   create_table "tweet_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.bigint "tweet_id", null: false
@@ -217,6 +226,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_104124) do
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_id"
     t.index ["member_id"], name: "index_tweet_comments_on_member_id"
     t.index ["tweet_id"], name: "index_tweet_comments_on_tweet_id"
   end
@@ -233,7 +243,7 @@ ActiveRecord::Schema.define(version: 2020_03_08_104124) do
   create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.text "body", null: false
-    t.integer "profile_image_id"
+    t.string "image_id"
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
