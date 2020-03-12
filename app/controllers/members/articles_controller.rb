@@ -12,8 +12,7 @@ class Members::ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-    @article.member_id = current_member.id
+    @article = current_member.articles.new(article_params)
     if @article.save
       redirect_to @article, notice: "記事が投稿されました"
     else
@@ -42,7 +41,7 @@ class Members::ArticlesController < ApplicationController
   end
 
   def destroy
-    article = Ariticle.find(params[:id])
+    article = Article.find(params[:id])
     if article.destroy
       redirect_to article, notice: "記事が削除されました"
     else

@@ -1,0 +1,6 @@
+<tr>
+  <td><%= genre.name %><td>
+  <td><%= genre.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td><%= link_to "編集", edit_admins_genre_path(genre) %></td>
+  <td><%= render "layouts/status_form", { model: genre, action: admins_genre_path(genre) } %></td>
+</tr>

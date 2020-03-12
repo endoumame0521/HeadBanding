@@ -1,3 +1,4 @@
+<!-- サブミットアクションがPATCHかPOSTかを確認し、パスを代入 -->
 <% action = edit_flag ? article_path : articles_path %>
 
 <%= form_with model: model, url: action, local: true do |f| %>

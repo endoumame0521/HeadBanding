@@ -1,38 +1,41 @@
-<h2>MENU</h2>
+<table>
+<thead>
+  <tr><th><h2>メニュー</h2><th></tr>
+</thead>
 
-<h4>Member</h4>
-<ul>
-  <li><%= link_to 'トップ', top_path %></li>
+<tbody>
+  <tr><td><h4>Member</h4><td></tr>
+  <tr><td><%= link_to 'トップ', top_path %><td></tr>
   <% if member_signed_in? %>
-    <li><%= link_to "#{current_member.name}", member_path(current_member.id) %></li>
-    <li><%= link_to '記事一覧', articles_path %></li>
-    <li><%= link_to '呟き一覧', tweets_path %></li>
-    <li><%= link_to '会員一覧', members_path %></li>
-    <li><%= link_to '部屋一覧', rooms_path %></li>
-    <li><%= link_to '通報一覧', notices_path %></li>
-    <li><%= link_to 'ログアウト', destroy_member_session_path, method: :delete %></li>
-    <li style="color: orange;">管理者ログイン済</li>
+    <tr><td><%= link_to "#{current_member.name}", member_path(current_member.id) %><td></tr>
+    <tr><td><%= link_to '記事一覧', articles_path %><td></tr>
+    <tr><td><%= link_to '呟き一覧', tweets_path %><td></tr>
+    <tr><td><%= link_to '会員一覧', members_path %><td></tr>
+    <tr><td><%= link_to '部屋一覧', rooms_path %><td></tr>
+    <tr><td><%= link_to '通報一覧', notices_path %><td></tr>
+    <tr><td><%= link_to 'ログアウト', destroy_member_session_path, method: :delete %><td></tr>
+    <tr style="color: orange;"><td>管理者ログイン済<td></tr>
   <% else %>
-    <li><%= link_to '会員登録', new_member_registration_path %></li>
-    <li><%= link_to 'ログイン', new_member_session_path %></li>
-    <li style="color: red;">会員ログイン未済</li>
+    <tr><td><%= link_to '会員登録', new_member_registration_path %><td></tr>
+    <tr><td><%= link_to 'ログイン', new_member_session_path %><td></tr>
+    <tr style="color: red;"><td>会員ログイン未済<td></tr>
   <% end %>
-</ul>
 
-<h4>Admin</h4>
-<ul>
+  <tr><td><h4>Admin</h4><td></tr>
   <% if admin_signed_in? %>
-    <li><%= link_to '記事一覧(Admin)', admins_articles_path %></li>
-    <li><%= link_to '呟き一覧(Admin)', admins_tweets_path %></li>
-    <li><%= link_to '会員一覧(Admin)', admins_members_path %></li>
-    <li><%= link_to '部屋一覧(Admin)', admins_rooms_path %></li>
-    <li><%= link_to '通報一覧(Admin)', admins_notices_path %></li>
-    <li><%= link_to 'ジャンル一覧(Admin)', admins_genres_path %></li>
-    <li><%= link_to 'パート一覧(Admin)', admins_parts_path %></li>
-    <li><%= link_to 'ログアウト(Admin)', destroy_admin_session_path, method: :delete %></li>
-    <li style="color: orange;">管理者ログイン済</li>
+    <tr><td><%= link_to '記事一覧(Admin)', admins_articles_path %><td></tr>
+    <tr><td><%= link_to '呟き一覧(Admin)', admins_tweets_path %><td></tr>
+    <tr><td><%= link_to '会員一覧(Admin)', admins_members_path %><td></tr>
+    <tr><td><%= link_to '部屋一覧(Admin)', admins_rooms_path %><td></tr>
+    <tr><td><%= link_to '通報一覧(Admin)', admins_notices_path %><td></tr>
+    <tr><td><%= link_to 'ジャンル一覧(Admin)', admins_genres_path %><td></tr>
+    <tr><td><%= link_to 'パート一覧(Admin)', admins_parts_path %><td></tr>
+    <tr><td><%= link_to 'ログアウト(Admin)', destroy_admin_session_path, method: :delete %><td></tr>
+    <tr style="color: orange;"><td>管理者ログイン済<td></tr>
   <% else %>
-    <li><%= link_to 'ログイン(Admin)', new_admin_session_path %></li>
-    <li style="color: red;">管理者ログイン未済</li>
+    <tr><td><%= link_to 'ログイン(Admin)', new_admin_session_path %><td></tr>
+    <tr style="color: red;"><td>管理者ログイン未済<td></tr>
   <% end %>
-</ul>
+  </td>
+</tbody>
+</table>
