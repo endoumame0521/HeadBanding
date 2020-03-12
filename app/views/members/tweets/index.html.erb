@@ -1,2 +1,14 @@
-<h1>Members::Tweets#index</h1>
-<p>Find me in app/views/members/tweets/index.html.erb</p>
+<h2>Memberツイート一覧</h2>
+
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @tweet %>
+
+<table cellspacing="5">
+  <tbody>
+    <!-- ツイート一覧 -->
+    <%= render partial: "tweet", collection: @tweets, locals: { tweet_flag: true } %>
+  </tbody>
+</table>
+
+<!-- ツイート投稿フォーム -->
+<%= render "form", { tweet_flag: true } %>

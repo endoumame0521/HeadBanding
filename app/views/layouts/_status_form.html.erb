@@ -1,0 +1,7 @@
+<!-- 管理者限定：各種公開ステータス更新フォーム -->
+<%= form_with model: model, url: action, local: true do |f| %>
+  <div class="field">
+    <%= f.select :status, model.class.statuses.keys.map {|k| [k, k]} %>
+    <%= f.submit "更新", class: "actions" %>
+  </div>
+<% end %>

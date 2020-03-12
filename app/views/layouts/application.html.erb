@@ -5,17 +5,26 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script src="https://kit.fontawesome.com/6bb1565f31.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="flex-header">
-      <div class="notification"><%= render "layouts/notification.html.erb" %></div>
-    </div>
+    <div class="container">
+      <header>
+        <div class="title"><h1>Head x Banding</h1></div>
+        <div class="notification"><%= render "layouts/notification.html.erb" %></div>
+      </header>
 
-    <div class="flex-main">
-      <div class="sidebar"><%= render "layouts/sidebar.html.erb" %></div>
-      <div class="main"><%= yield %></div>
+      <div class="content">
+        <div class="sidebar"><%= render "layouts/sidebar.html.erb" %></div>
+        <div class="main"><%= yield %></div>
+      </div>
+
+      <footer>
+        <div class=""></div>
+      </footer>
+    </div>
   </body>
 </html>

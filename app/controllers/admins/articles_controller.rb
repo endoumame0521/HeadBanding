@@ -12,9 +12,7 @@ class Admins::ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to admins_articles_path, notice: "記事ステータスが更新されました"
     else
-      @article = Article.all
-      flash.now[:alert] = "#{@article.errors.count}件のエラーが有ります"
-      render "show"
+      redirect_to admins_articles_path, alert: "記事ステータスの更新に失敗しました"
     end
   end
 

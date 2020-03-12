@@ -1,8 +1,29 @@
 <h2>Member記事詳細</h2>
-<%= render partial: "/layouts/error_messages", locals: { model: @article } %>
-<%= render "detail_article.html.erb", article: @article %>
+
+<h4>記事のタイトル</h4>
+<p><%= @article.subject %></p>
+
+<h4>記事の内容</h4>
+<p><%= @article.body %></p>
+
+<h4>基本データ</h4>
+<p>記事の種類：<%= @article.category %></p>
+<p>都道府県：<%= @article.prefecture.name %></p>
+<p>活動エリア：<% @article.article_cities.each { |article_city| %><%= article_city.city.name %>、<% } %></p>
+<p>活動の曜日：<%= @article.day_of_the_week %></p>
+<p>活動の方向性：<%= @article.band_intention %></p>
+<p>バンドの楽曲：<%= @article.music_intention %></p>
+
+<h4>デモ音源</h4>
+<p><%= @article.sound %></p>
+
+<h4>パート</h4>
+<p><% @article.part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %></p>
+
+<h4>ジャンル</h4>
+<p><% @article.genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
 
 <% if @article.member == current_member %>
   <%= link_to "編集", edit_article_path %>
-  <%= link_to "削除", edit_article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
+  <%= link_to "削除", article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
 <% end %>

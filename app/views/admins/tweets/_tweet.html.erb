@@ -1,0 +1,38 @@
+<!-- ツイートの場合はツイート詳細パスを、そうでない場合はコメント詳細パスを代入 -->
+<% show_path = tweet_flag ? admins_tweet_path(tweet) : admins_tweet_tweet_comment_path(tweet.tweet, tweet) %>
+<tr>
+  <td>
+    <%= attachment_image_tag tweet.member, :profile_image, :fill, 50, 50, format: 'jpeg',
+    fallback: "no_image.jpg", size: 50 %>
+  </td>
+  <td><%= tweet.id %></td>
+  <td><%= tweet.member.name %></td>
+  <td><%= tweet.body %></td>
+  <td><%= tweet.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td><%= render partial: "favorites", locals: { tweet: tweet, tweet_flag: tweet_flag } %></td>
+
+  <td>
+    <!-- ツイートの場合はコメント数を表示 -->
+    <% if tweet_flag %>
+      <i class="fa fa-comment"></i>x<%= tweet.tweet_comments.count %>
+    <% end %>
+  </td>
+
+  <td>
+    <!-- ツイートの場合はツイート詳細画面へのリンクを表示 -->
+    <% if tweet_flag %>
+      <%= link_to "詳細", show_path %>
+    <% end %>
+  </td>
+
+  <td><%= link_to "削除", show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %></td>
+
+  <!-- 管理者用のviewだけツイートのステータスを表示 -->
+  <td><%= render "layouts/status_form", { model: tweet, action: show_path } %></td>
+</tr>
+
+<tr>
+  <td colspan="5">
+    <%= attachment_image_tag tweet, :image, :fill, 300, 300, format: 'jpeg' %>
+  </td>
+</tr>

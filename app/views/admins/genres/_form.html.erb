@@ -1,0 +1,20 @@
+<!-- ジャンル追加・更新フォーム -->
+<%= form_with scope: :genre, model: genre, url: action, local: true do |f| %>
+  <div class="field">
+    <%= f.label :name, "ジャンル名" %>
+    <%= f.text_field :name %>
+
+    <%= f.radio_button :status, :enable, checked: "checked" %>
+    <%= f.label :status, :enable %>
+
+    <%= f.radio_button :status, :disable %>
+    <%= f.label :status, :disable %>
+
+    <% if edit_flag %>
+      <%= f.submit "更新" %>
+    <% else %>
+      <%= f.submit "追加" %>
+    <% end %>
+  </div>
+  <br>
+<% end %>

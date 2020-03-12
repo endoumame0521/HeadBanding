@@ -1,0 +1,21 @@
+<!-- ツイートの場合ツイートのいいねパスを、コメントの場合コメントのいいねパスを代入 -->
+<% if tweet_flag %>
+  <% favo_path = tweet_tweet_favorites_path(tweet) %>
+<% else %>
+  <% favo_path = tweet_tweet_comment_tweet_comment_favorites_path(tweet.tweet, tweet) %>
+<% end %>
+
+<!-- 会員がログインしているのみいいねが押せるように表示 -->
+<% unless current_member.nil? %>
+  <% method = tweet.favorited_by?(current_member) ? "delete" : "post" %>
+  <% color = tweet.favorited_by?(current_member) ? "red" : "" %>
+  <% heart = tweet.favorited_by?(current_member) ? "fa fa-heart" : "fa fa-heart-o" %>
+
+  <!-- ツイート（orコメント）がログインしている会員によって既にいいねされているかどうかを確認 -->
+  <%= link_to favo_path, method: method, remote: true do %>
+    <i class="<%= heart %>" aria-hidden="true" style="color: <%= color %>;" ></i>
+  <% end %>
+<% end %>
+
+<!-- ツイートの場合ツイートいいね数を、コメントの場合コメントいいね数を表示 -->
+<span>×</span><%= tweet_flag ? tweet.tweet_favorites.count : tweet.tweet_comment_favorites.count %>

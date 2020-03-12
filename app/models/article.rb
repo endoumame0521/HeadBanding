@@ -17,4 +17,8 @@ class Article < ApplicationRecord
   has_many :parts, through: :part_articles
   has_many :article_cities, dependent: :destroy
   has_many :cities, through: :article_cities
+
+  def favorited_by?(member)
+    article_favorites.where(member_id: member.id).any?
+  end
 end

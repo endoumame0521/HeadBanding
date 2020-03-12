@@ -1,8 +1,7 @@
 <h2>Admin記事一覧</h2>
-<%= render "/layouts/error_messages", model: @article %>
 
 <table cellspacing="5">
   <tbody>
-    <%= render partial: "members/articles/article", collection: @articles %>
+    <%= render @articles %>
   </tbody>
 </table>

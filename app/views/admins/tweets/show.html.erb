@@ -1,2 +1,13 @@
-<h1>Admins::Tweets#show</h1>
-<p>Find me in app/views/admins/tweets/show.html.erb</p>
+<h2>Adminツイート詳細</h2>
+
+<table cellspacing="5">
+  <tbody>
+    <!-- ツイートの詳細 -->
+    <%= render "tweet", { tweet: @tweet, tweet_flag: true } %>
+
+    <!-- ツイートに対するコメント一覧 -->
+    <% @tweet.tweet_comments.each do |tweet| %>
+      <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: false } %>
+    <% end %>
+  </tbody>
+</table>

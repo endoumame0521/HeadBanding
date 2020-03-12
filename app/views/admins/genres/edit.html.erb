@@ -1,2 +1,6 @@
-<h1>Admins::Genres#edit</h1>
-<p>Find me in app/views/admins/genres/edit.html.erb</p>
+<h2>Adminジャンル編集</h2>
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @genre %>
+
+<!-- ジャンル編集フォーム -->
+<%= render "form", { genre: @genre, edit_flag: true, action: admins_genre_path(@genre) } %>
