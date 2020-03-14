@@ -3,6 +3,7 @@ class Member < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   enum gender: { male: 0, female: 1 }
+  enum status: { enable: true, disable: false }
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -10,6 +11,7 @@ class Member < ApplicationRecord
   attachment :profile_image
   has_many :articles, dependent: :destroy
   has_many :article_favorites, dependent: :destroy
+  has_many :favorited_articles, through: :article_favorites, source: :article #特定の会員がお気に入りした記事だけを取得する為
   has_many :tweets, dependent: :destroy
   has_many :tweet_comments, dependent: :destroy
   has_many :tweet_comment_favorites, dependent: :destroy
@@ -48,6 +50,11 @@ class Member < ApplicationRecord
   #会員の生年月日から年齢を計算
   def age
     (Date.today.strftime("%Y%m%d").to_i - birthday.strftime("%Y%m%d").to_i) / 10000
+  end
+
+  #会員のステータスが有効かどうか確認し、有効でなければログイン出来無い
+  def active_for_authentication?
+    super && (self.enable?)
   end
 
 end
