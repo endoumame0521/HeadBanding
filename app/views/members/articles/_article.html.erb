@@ -4,11 +4,12 @@
     fallback: "no_image.jpg", size: 50), article %>
   </td>
   <td><%= article.subject %></td>
-  <td><%= article.member.name %><td>
+  <td><%= article.member.name %></td>
   <td><%= article.member.address_prefecture %></td>
   <td><%= article.member.age %><span>歳</span></td>
   <td><%= article.member.gender %></td>
   <td><%= article.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td><%= render partial: "members/articles/favorites", locals: { article: article } %></td>
 
   <% if article.member == current_member %>
     <td><%= link_to "詳細", article %></td>

@@ -1,2 +1,40 @@
-<h1>Members::Members#show</h1>
-<p>Find me in app/views/members/members/show.html.erb</p>
+<% if @member == current_member %>
+  <h1>マイページ</h1>
+<% else %>
+  <h1>Member会員詳細</h1>
+<% end %>
+<br>
+
+<h3>会員データ</h3>
+<%= attachment_image_tag @member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+<p>ハンドルネーム：<%= @member.name %></p>
+<p>性別：<%= @member.gender %></p>
+<p>生年月日：<%= @member.birthday.strftime("%Y年%-m月%-d日") %></p>
+<p>年齢：<%= @member.age %></p>
+<p>住所：<%= @member.address_prefecture %> <%= @member.address_city %></p>
+<p>音源：<%= @member.sound %></p>
+<p>担当パート：<% @member.part_members.each { |part_member| %><%= part_member.part.name %>、<% } %></p>
+<p>好きなジャンル：<% @member.genre_members.each { |genre_member| %><%= genre_member.genre.name %>、<% } %></p>
+<p>好きなアーティスト：<% @member.artists.each { |artists| %><%= artists.name %>、<% } %></p>
+<p>自己紹介文：<%= @member.introduction %></p>
+<p>登録日時：<%= @member.created_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></p>
+
+<% if @member == current_member %>
+  <%= link_to "編集", edit_member_path %>
+  <%= link_to "退会", member_cancel_path(@member) %>
+<% end %>
+<br><br>
+
+<h3>投稿記事一覧</h3>
+<table cellspacing="5">
+  <tbody>
+    <%= render partial: "members/articles/article", collection: @member.articles %>
+  </tbody>
+</table>
+
+<h3>ツイート一覧</h3>
+<table cellspacing="5">
+  <tbody>
+    <%= render partial: "members/tweets/tweet", collection: @member.tweets, locals: { tweet_flag: true } %>
+  </tbody>
+</table>
