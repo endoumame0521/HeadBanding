@@ -3,6 +3,8 @@
 
 <h3>会員データ</h3>
 <%= attachment_image_tag @member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+<p>フォロー x <%= @member.following_member.count %></p>
+<p>フォロワー x <%= @member.follower_member.count %></p><br>
 <p>ハンドルネーム：<%= @member.name %></p>
 <p>性別：<%= @member.gender %></p>
 <p>生年月日：<%= @member.birthday.strftime("%Y年%-m月%-d日") %></p>

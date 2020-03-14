@@ -31,13 +31,14 @@ Rails.application.routes.draw do
     end
     resources :members, only: [:index, :show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
-      resource :accesses, only: [:index, :create]
+      resource :accesses, only: [:create]
       resource :blocks, only: [:index, :create, :destroy]
       get "article_favorites" => "members#article_favorites", as: "article_favorites"
       get "cancel" => "members#cancel", as: "cancel"
       patch "cancel" => "members#withdraw", as: "withdraw"
       get "following" => "relationships#follower", as: "following"
       get "followers" => "relationships#followed", as: "followers"
+      get "accesses" => "accesses#index", as: "accesses_index"
     end
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]

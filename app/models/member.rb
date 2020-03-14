@@ -27,8 +27,12 @@ class Member < ApplicationRecord
   has_many :parts, through: :part_members
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy # フォロー取得
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy # フォロワー取得
-  has_many :following_member, through: :follower, source: :followed # 自分がフォローしている人
   has_many :follower_member, through: :followed, source: :follower # 自分をフォローしている人
+  has_many :following_member, through: :follower, source: :followed # 自分がフォローしている人
+  has_many :visitor, class_name: "Access", foreign_key: "visitor_id", dependent: :destroy #自分の足跡をつけた人を取得
+  has_many :visited, class_name: "Access", foreign_key: "visited_id", dependent: :destroy #足跡をつけられた人を取得
+  has_many :visitor_member, through: :visited, source: :visitor #自分に足跡をつけた人
+  has_many :visited_member, through: :visitor, source: :visited #自分が足跡をつけた人
 
   accepts_nested_attributes_for :artists
 
