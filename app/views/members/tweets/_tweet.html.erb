@@ -25,12 +25,14 @@
     <% end %>
   </td>
 
-  <td>
-    <!-- 自分のツイート（orコメント）の場合は削除リンクを表示 -->
-    <% if tweet.member == current_member %>
-      <%= link_to "削除", show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
-    <% end %>
-  </td>
+  <!-- 自分のツイート（orコメント）の場合は削除リンクを表示。そうでない場合は通報リンクを表示 -->
+  <% if tweet.member == current_member %>
+    <td><%= link_to "削除", show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %></td>
+  <% elsif tweet_flag %>
+    <td><%= link_to "通報", controller: "members/notices", action: "new", tweet_id: tweet.id %></td>
+  <% elsif tweet_flag == false %>
+    <td><%= link_to "通報", controller: "members/notices", action: "new", tweet_comment_id: tweet.id %></td>
+  <% end %>
 </tr>
 
 <tr>

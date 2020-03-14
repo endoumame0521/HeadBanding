@@ -1,2 +1,33 @@
-<h1>Members::Notices#new</h1>
-<p>Find me in app/views/members/notices/new.html.erb</p>
+<h2>Member通報投稿フォーム</h2>
+
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @notice %>
+
+<h4>通報対象</h4>
+<!-- 通報する対象を表示する -->
+<% if @tweet.present? %>
+  <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag } %>
+<% elsif @article.present? %>
+  <%= render "members/articles/article", { article: @article } %>
+<% end %>
+
+<!-- 記事更新フォームを表示 -->
+<%= form_with model: @notice, local: true do |f| %>
+  <div class="field">
+    <%= f.label :body, "通報内容" %><br>
+    <%= f.text_area :body %>
+  </div>
+
+  <!-- 通報する対象によってパラメータで送る値を分岐させる -->
+  <% if @tweet.nil? == false && @tweet_flag %>
+    <%= f.hidden_field :tweet_id, value: @tweet.id %>
+  <% elsif @tweet.nil? == false && @tweet_flag == false %>
+    <%= f.hidden_field :tweet_comment_id, value: @tweet.id %>
+  <% elsif @article.nil? == false %>
+    <%= f.hidden_field :article_id, value: @article.id  %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "投稿" %>
+  </div>
+<% end %>

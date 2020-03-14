@@ -7,6 +7,8 @@
 
 <h3>会員データ</h3>
 <%= attachment_image_tag @member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+<p>フォロー x <%= @member.following_member.count %></p>
+<p>フォロワー x <%= @member.follower_member.count %></p><br>
 <p>ハンドルネーム：<%= @member.name %></p>
 <p>性別：<%= @member.gender %></p>
 <p>生年月日：<%= @member.birthday.strftime("%Y年%-m月%-d日") %></p>
@@ -22,6 +24,9 @@
 <% if @member == current_member %>
   <%= link_to "編集", edit_member_path %>
   <%= link_to "退会", member_cancel_path(@member) %>
+  <%= link_to "足跡", member_accesses_path(@member) %>
+  <%= link_to "フォロー", member_following_path(@member) %>
+  <%= link_to "フォロワー", member_followers_path(@member) %>
 <% end %>
 <br><br>
 
@@ -38,3 +43,13 @@
     <%= render partial: "members/tweets/tweet", collection: @member.tweets, locals: { tweet_flag: true } %>
   </tbody>
 </table>
+
+<!-- 足跡機能 -->
+<script>
+  $(document).ready(function() {
+    $("#create_access").trigger('click');
+  });
+</script>
+<%= form_with model: Access.new, url: member_accesses_path(@member) do |f| %>
+  <%= f.submit "", style: "display: none", id: "create_access" %>
+<% end %>

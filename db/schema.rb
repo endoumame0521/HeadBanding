@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_052732) do
+ActiveRecord::Schema.define(version: 2020_03_14_072837) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id", null: false
@@ -158,10 +158,16 @@ ActiveRecord::Schema.define(version: 2020_03_11_052732) do
   create_table "notices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.text "body", null: false
-    t.boolean "status", default: true, null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tweet_id"
+    t.bigint "tweet_comment_id"
+    t.bigint "article_id"
+    t.index ["article_id"], name: "index_notices_on_article_id"
     t.index ["member_id"], name: "index_notices_on_member_id"
+    t.index ["tweet_comment_id"], name: "index_notices_on_tweet_comment_id"
+    t.index ["tweet_id"], name: "index_notices_on_tweet_id"
   end
 
   create_table "part_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

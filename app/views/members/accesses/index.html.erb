@@ -1,2 +1,7 @@
-<h1>Members::Accesses#index</h1>
-<p>Find me in app/views/members/accesses/index.html.erb</p>
+<h2>Member足跡一覧</h2>
+
+<table cellspacing="5">
+  <tbody>
+    <%= render partial: "access", collection: @accesses %>
+  </tbody>
+</table>
