@@ -1,2 +1,40 @@
-<h1>Admins::Notices#index</h1>
-<p>Find me in app/views/admins/notices/index.html.erb</p>
+<h2>Admin通報一覧</h2>
+
+<!-- 通報のあったツイート一覧 -->
+<table cellspacing="5">
+  <tbody>
+    <% @tweets.each do |tweet| %>
+      <%= render partial: "admins/tweets/tweet", locals: { tweet: tweet.tweet, tweet_flag: true } %>
+      <tr>
+        <td><%= link_to "通報内容詳細", admins_notice_path(tweet) %></td>
+        <td><%= render "layouts/status_form", { model: tweet, action: admins_notice_path(tweet) } %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- 通報のあったツイートコメント一覧 -->
+<table cellspacing="5">
+  <tbody>
+    <% @tweet_comments.each do |tweet_comment| %>
+      <%= render partial: "admins/tweets/tweet", locals: { tweet: tweet_comment.tweet_comment, tweet_flag: false } %>
+      <tr>
+        <td><%= link_to "通報内容詳細", admins_notice_path(tweet_comment) %></td>
+        <td><%= render "layouts/status_form", { model: tweet_comment, action: admins_notice_path(tweet_comment) } %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- 通報のあった記事一覧 -->
+<table cellspacing="5">
+  <tbody>
+    <% @articles.each do |article| %>
+      <%= render "admins/articles/article", { article: article.article } %>
+      <tr>
+        <td><%= link_to "通報内容詳細", admins_notice_path(article) %></td>
+        <td><%= render "layouts/status_form", { model: article, action: admins_notice_path(article) } %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>
