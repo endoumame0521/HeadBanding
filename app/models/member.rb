@@ -32,7 +32,11 @@ class Member < ApplicationRecord
   has_many :visitor, class_name: "Access", foreign_key: "visitor_id", dependent: :destroy #自分の足跡をつけた人を取得
   has_many :visited, class_name: "Access", foreign_key: "visited_id", dependent: :destroy #足跡をつけられた人を取得
   has_many :visitor_member, through: :visited, source: :visitor #自分に足跡をつけた人
-  has_many :visited_member, through: :visitor, source: :visited #自分が足跡をつけた人
+  has_many :visiting_member, through: :visitor, source: :visited #自分が足跡をつけた人
+  has_many :blocker, class_name: "Block", foreign_key: "blocker_id", dependent: :destroy #ブロックしている人を取得
+  has_many :blocked, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy #ブロックされている人を取得
+  has_many :blocker_member, through: :blocked, source: :blocker #自分をブロックした人
+  has_many :blocking_member, through: :blocker, source: :blocked #自分がブロックしている人
 
   accepts_nested_attributes_for :artists
 
@@ -49,6 +53,21 @@ class Member < ApplicationRecord
   # フォローしていればtrueを返す
   def following?(member)
     following_member.include?(member)
+  end
+
+  #メンバーをブロックする
+  def block(member_id)
+    blocker.create(blocked_id: member_id)
+  end
+
+  #メンバーのブロックを外す
+  def unblock(member_id)
+    blocker.find_by(blocked_id: member_id).destroy
+  end
+
+  # ブロックしていればtrueを返す
+  def blocking?(member)
+    blocking_member.include?(member)
   end
 
   #会員の生年月日から年齢を計算

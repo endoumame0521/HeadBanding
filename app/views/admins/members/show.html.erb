@@ -18,6 +18,10 @@
 <p>登録日時：<%= @member.created_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></p>
 
 <%= link_to "編集", edit_admins_member_path %>
+<%= link_to "ブロックリスト", admins_member_blocking_path(@member) %>
+<%= link_to "ブロッカーリスト", admins_member_blocking_path(@member) %>
+<%= link_to "フォロー", admins_member_following_path(@member) %>
+<%= link_to "フォロワー", admins_member_followers_path(@member) %>
 <br><br>
 
 <h3>投稿記事一覧</h3>

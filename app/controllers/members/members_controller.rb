@@ -7,6 +7,9 @@ class Members::MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
+    if @member.blocking?(current_member)
+      redirect_to request.referrer, alert: "アクセスが拒否されました"
+    end
   end
 
   def edit
