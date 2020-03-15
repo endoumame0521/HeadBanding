@@ -10,7 +10,12 @@ Rails.application.routes.draw do
     resources :tweets, only: [:index, :show, :update, :destroy] do
       resources :tweet_comments, only: [:update, :destroy]
     end
-    resources :members, only: [:index, :show, :edit, :update, :destroy]
+    resources :members, only: [:index, :show, :edit, :update, :destroy] do
+      get "following" => "members#follower", as: "following" #フォロー一覧
+      get "followers" => "members#followed", as: "followers" #フォロワー一覧
+      get "blocking" => "members#blocker", as: "blocking" #ブロックしているリスト一覧
+      get "blockers" => "members#blocked", as: "blockers" #ブロックされているリスト一覧
+    end
     resources :rooms, only: [:index, :show, :update, :destroy] do
       resources :messages, only: [:update, :destroy]
     end
@@ -32,13 +37,14 @@ Rails.application.routes.draw do
     resources :members, only: [:index, :show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
       resource :accesses, only: [:create]
-      resource :blocks, only: [:index, :create, :destroy]
+      resource :blocks, only: [:create, :destroy]
       get "article_favorites" => "members#article_favorites", as: "article_favorites"
-      get "cancel" => "members#cancel", as: "cancel"
-      patch "cancel" => "members#withdraw", as: "withdraw"
-      get "following" => "relationships#follower", as: "following"
-      get "followers" => "relationships#followed", as: "followers"
-      get "accesses" => "accesses#index", as: "accesses_index"
+      get "cancel" => "members#cancel", as: "cancel" #退会確認画面表示
+      patch "cancel" => "members#withdraw", as: "withdraw" #会員ステータス更新（退会する）
+      get "following" => "relationships#follower", as: "following" #フォロー一覧
+      get "followers" => "relationships#followed", as: "followers" #フォロワー一覧
+      get "blocking" => "blocks#blocker", as: "blocking" #ブロックリスト一覧
+      get "accesses" => "accesses#index", as: "accesses_index" #アクセス履歴一覧
     end
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]

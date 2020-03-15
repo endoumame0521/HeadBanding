@@ -21,6 +21,22 @@ class Admins::MembersController < ApplicationController
     end
   end
 
+  def follower
+    @members = Member.find(params[:member_id]).following_member
+  end
+
+  def followed
+    @members = Member.find(params[:member_id]).follower_member
+  end
+
+  def blocker
+    @members = Member.find(params[:member_id]).blocking_member
+  end
+
+  def blocked
+    @members = Member.find(params[:member_id]).blocker_member
+  end
+
   private
   def member_params
     params.require(:member).permit(

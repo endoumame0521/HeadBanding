@@ -1,0 +1,9 @@
+<!-- 対象会員が自分でない場合ブロックボタンを表示する -->
+<% if current_member != member %>
+  <!-- ブロックしていればブロックするボタンを、ブロックしていればブロック解除ボタンを表示 -->
+  <% if current_member.blocking?(member) %>
+    <%= link_to 'ブロック解除', member_blocks_path(member.id), method: :delete %>
+  <% else %>
+    <%= link_to 'ブロックする', member_blocks_path(member.id), method: :post %>
+  <% end %>
+<% end %>

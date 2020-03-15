@@ -1,0 +1,11 @@
+<h2>Adminsブロックリスト</h2>
+
+<% if @members.count > 0 %>
+  <table cellspacing="5">
+    <tbody>
+    <%= render partial: "admins/members/member", collection: @members  %>
+    </tbody>
+  </table>
+<% else %>
+  <p>ブロックしている人はいません</p>
+<% end %>
