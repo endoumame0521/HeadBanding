@@ -7,8 +7,27 @@ class Members::MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
+
     if @member.blocking?(current_member)
       redirect_to request.referrer, alert: "アクセスが拒否されました"
+    end
+
+    @current_member_entry = Entry.where(member_id: current_member.id)
+    @member_entry = Entry.where(member_id: @member.id)
+    if current_member.id != @member.id
+      @current_member_entry.each do |cme|
+        @member_entry.each do |me|
+          if cme.room_id == me.room_id
+            @is_room = true
+            @room_id = cme.room_id
+          end
+        end
+      end
+
+      unless @is_room
+        @room = Room.new
+        @entry = Entry.new
+      end
     end
   end
 
@@ -53,7 +72,7 @@ class Members::MembersController < ApplicationController
       artists_attributes: [:id, :name])
   end
 
-  def signed_in_member
+  def signed_in_member #ログインメンバー以外のアクセス、編集を禁止
     unless current_member.id == params[:id].to_i
       redirect_to top_path, alert: "アクセスが拒否されました"
     end

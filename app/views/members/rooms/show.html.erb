@@ -1,2 +1,24 @@
-<h1>Members::Rooms#show</h1>
-<p>Find me in app/views/members/rooms/show.html.erb</p>
+<h1><%= @room.status %></h1>
+
+<h4>参加者</h4>
+<% @entries.each do |e| %>
+  <%= link_to e.member.name, member_path(e.member_id) %>
+<% end %>
+
+<h1></h1>
+<form>
+  <label>メッセージ:</label><br>
+  <input type="text" id="chat-input" data-behavior="room_speaker">
+</form>
+
+<div class="line-bc" id="messages" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>">
+  <% @messages.each do |message| %>
+    <div id="<%= message.id %>">
+      <% if message.member_id == current_member.id %>
+        <%= render "members/messages/my_message", { message: message } %>
+      <% else %>
+        <%= render "members/messages/message", { message: message } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
