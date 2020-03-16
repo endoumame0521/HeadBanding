@@ -26,10 +26,23 @@
   <%= link_to "退会", member_cancel_path(@member) %>
   <%= link_to "足跡", member_accesses_path(@member) %>
   <%= link_to "ブロックリスト", member_blocking_path(@member) %>
-  <%= link_to "フォロー", member_following_path(@member) %>
-  <%= link_to "フォロワー", member_followers_path(@member) %>
+<% else %>
+  <% if @is_room %>
+    <%= link_to "チャットルームへ", room_path(@room_id) %>
+  <% else %>
+    <%= form_with model: @room do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :member_id, value: @member.id %>
+      <% end %>
+      <%= f.submit "チャットルームを作る" %>
+    <% end %>
+  <% end %>
 <% end %>
+
+<%= link_to "フォロー", member_following_path(@member) %>
+<%= link_to "フォロワー", member_followers_path(@member) %>
 <br><br>
+
 
 <h3>投稿記事一覧</h3>
 <table cellspacing="5">
