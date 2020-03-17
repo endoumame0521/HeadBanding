@@ -80,4 +80,7 @@ class Member < ApplicationRecord
     super && (self.enable?)
   end
 
+  def self.search(search_params)
+  end
+
 end

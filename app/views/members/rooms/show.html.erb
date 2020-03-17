@@ -1,24 +1,17 @@
-<h1><%= @room.status %></h1>
-
-<h4>参加者</h4>
-<% @entries.each do |e| %>
-  <%= link_to e.member.name, member_path(e.member_id) %>
-<% end %>
+<h1 id="room" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>"><%= @member.name %>さんとのチャット</h1>
 
 <h1></h1>
 <form>
   <label>メッセージ:</label><br>
-  <input type="text" id="chat-input" data-behavior="room_speaker">
+  <textarea id="chat-input" data-behavior="room_speaker" placeholder="メッセージを入力"></textarea>
 </form>
 
-<div class="line-bc" id="messages" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>">
+<div class="line-bc" id="messages">
   <% @messages.each do |message| %>
-    <div id="<%= message.id %>">
-      <% if message.member_id == current_member.id %>
-        <%= render "members/messages/my_message", { message: message } %>
-      <% else %>
-        <%= render "members/messages/message", { message: message } %>
-      <% end %>
-    </div>
+    <% if message.member_id == current_member.id %>
+      <%= render "members/messages/my_message", { message: message } %>
+    <% else %>
+      <%= render "members/messages/message", { message: message } %>
+    <% end %>
   <% end %>
 </div>
