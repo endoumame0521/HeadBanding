@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   end
 
   scope module: :members do
+    get "message" => "messages#message", as: "message"
+    get "my_message" => "messages#my_message", as: "my_message"
     resources :articles do
       resource :article_favorites, only: [:create, :destroy]
     end
@@ -48,6 +50,9 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]
+
+
+
     get "top" => "articles#top", as: "top"
     root 'articles#top'
   end

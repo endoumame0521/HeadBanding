@@ -15,6 +15,11 @@ class Members::RoomsController < ApplicationController
     if Entry.where(member_id: current_member.id, room_id: @room.id).present?
       @messages = @room.messages
       @entries = @room.entries
+      @entries.each do |entry|
+        if entry.member.id == current_member.id
+          @member = entry.member
+        end
+      end
     else
       redirect_to request.referer
     end
