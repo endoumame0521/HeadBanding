@@ -1,0 +1,4 @@
+$('#tweet_comments').append('<tr id="tweet_comment-<%= @tweet_comment.id %>">' + '<%= j(render partial: "members/tweets/tweet", locals: { tweet: @tweet_comment, tweet_flag: false }) %>' + '<tr>');
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+$(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
+$("textarea").val('');

@@ -7,8 +7,15 @@
 
 <h3>会員データ</h3>
 <%= attachment_image_tag @member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
-<p>フォロー x <%= @member.following_member.count %></p>
-<p>フォロワー x <%= @member.follower_member.count %></p><br>
+<span id="relation-member-<%= @member.id %>">
+  <%= render "members/relationships/follow_button", { member: @member } %>
+</span><br>
+<%= link_to member_following_path(@member) do %>
+  フォロー x <%= @member.following_member.count %>
+<% end %>
+<%= link_to member_followers_path(@member) do %>
+  フォロワー x <%= @member.follower_member.count %>
+<% end %>
 <p>ハンドルネーム：<%= @member.name %></p>
 <p>性別：<%= @member.gender %></p>
 <p>生年月日：<%= @member.birthday.strftime("%Y年%-m月%-d日") %></p>
@@ -26,37 +33,47 @@
   <%= link_to "退会", member_cancel_path(@member) %>
   <%= link_to "足跡", member_accesses_path(@member) %>
   <%= link_to "ブロックリスト", member_blocking_path(@member) %>
+  <%= link_to "メッセージ一覧", rooms_path %>
 <% else %>
   <% if @is_room %>
-    <%= link_to "チャットルームへ", room_path(@room_id) %>
+    <%= link_to "メッセージルームへ", room_path(@room_id) %>
   <% else %>
     <%= form_with model: @room do |f| %>
       <%= fields_for @entry do |e| %>
         <%= e.hidden_field :member_id, value: @member.id %>
       <% end %>
-      <%= f.submit "チャットルームを作る" %>
+      <%= f.submit "メッセージルームを作る" %>
     <% end %>
   <% end %>
 <% end %>
 
-<%= link_to "フォロー", member_following_path(@member) %>
-<%= link_to "フォロワー", member_followers_path(@member) %>
+<span id="block-member-<%= @member.id %>">
+  <%= render "members/blocks/block_button", { member: @member } %>
+</span>
 <br><br>
 
 
 <h3>投稿記事一覧</h3>
+<% if @member.articles.count > 0 %>
 <table cellspacing="5">
   <tbody>
     <%= render partial: "members/articles/article", collection: @member.articles %>
   </tbody>
 </table>
+<% else %>
+  <p>投稿記事はありません</p>
+<% end %>
 
 <h3>ツイート一覧</h3>
+<% if @member.tweets.count > 0 %>
 <table cellspacing="5">
   <tbody>
     <%= render partial: "members/tweets/tweet", collection: @member.tweets, locals: { tweet_flag: true } %>
   </tbody>
 </table>
+<% else %>
+  <p>ツイートはありません</p>
+<% end %>
 
 <!-- 足跡機能 -->
 <script>

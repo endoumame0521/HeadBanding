@@ -10,18 +10,18 @@ class Admins::ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
     if @article.update(article_params)
-      redirect_to admins_articles_path, notice: "記事ステータスが更新されました"
+      redirect_to request.referer, notice: "記事ステータスが更新されました"
     else
-      redirect_to admins_articles_path, alert: "記事ステータスの更新に失敗しました"
+      redirect_to request.referer, alert: "記事ステータスの更新に失敗しました"
     end
   end
 
   def destroy
     article = Article.find(params[:id])
     if article.destroy
-      redirect_to admins_articles_path, notice: "記事が削除されました"
+      redirect_to request.referer, notice: "記事が削除されました"
     else
-      redirect_to admins_articles_path, alert: "記事の削除に失敗しました"
+      redirect_to request.referer, alert: "記事の削除に失敗しました"
     end
   end
 

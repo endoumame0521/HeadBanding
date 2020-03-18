@@ -4,9 +4,13 @@
 <%= render "/layouts/error_messages", model: @tweet %>
 
 <table cellspacing="5">
-  <tbody>
-    <!-- ツイート一覧 -->
-    <%= render partial: "tweet", collection: @tweets, locals: { tweet_flag: true } %>
+  <!-- ツイート一覧 -->
+  <tbody id="tweets">
+    <% @tweets.each do |tweet| %>
+      <tr id="tweet-<%= tweet.id %>">
+        <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: true } %>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

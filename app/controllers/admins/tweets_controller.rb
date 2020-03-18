@@ -10,18 +10,18 @@ class Admins::TweetsController < ApplicationController
   def update
     @tweet = Tweet.find(params[:id])
     if @tweet.update(tweet_params)
-      redirect_to admins_tweets_path, notice: "ツイートのステータスが更新されました"
+      redirect_to request.referer, notice: "ツイートのステータスが更新されました"
     else
-      redirect_to admins_tweets_path, alert: "ツイートのステータスが更新に失敗しました"
+      redirect_to request.referer, alert: "ツイートのステータスが更新に失敗しました"
     end
   end
 
   def destroy
     tweet = Tweet.find(params[:id])
     if tweet.destroy
-      redirect_to admins_tweets_path, notice: "ツイートが削除されました"
+      redirect_to request.referer, notice: "ツイートが削除されました"
     else
-      redirect_to admins_tweets_path, alert: "ツイートの削除に失敗しました"
+      redirect_to request.referer, alert: "ツイートの削除に失敗しました"
     end
   end
 

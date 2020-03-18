@@ -1,17 +1,14 @@
 class Members::MembersController < ApplicationController
-  before_action :signed_in_member, only: [:edit, :update]
+  before_action :set_member, only: [:show, :edit, :update, :cancel, :withdraw]
+  before_action :signed_in_member?, only: [:edit, :update, :cancel, :withdraw]
+  before_action :blocked_member?, only: [:show]
 
   def index
-    @members = Member.all
+    @search_params = member_search_params
+    @members = Member.search(@search_params)
   end
 
   def show
-    @member = Member.find(params[:id])
-
-    if @member.blocking?(current_member)
-      redirect_to request.referrer, alert: "アクセスが拒否されました"
-    end
-
     @current_member_entry = Entry.where(member_id: current_member.id)
     @member_entry = Entry.where(member_id: @member.id)
     if current_member.id != @member.id
@@ -32,11 +29,9 @@ class Members::MembersController < ApplicationController
   end
 
   def edit
-    @member = Member.find(params[:id])
   end
 
   def update
-    @member = Member.find(params[:id])
     if @member.update(member_params)
       redirect_to @member, notice: "会員情報を更新しました"
     else
@@ -50,11 +45,9 @@ class Members::MembersController < ApplicationController
   end
 
   def cancel
-    @member = Member.find(params[:member_id])
   end
 
   def withdraw
-    @member = Member.find(params[:member_id])
     @member.update(member_params)
     if @member.disable?
       reset_session
@@ -72,9 +65,29 @@ class Members::MembersController < ApplicationController
       artists_attributes: [:id, :name])
   end
 
-  def signed_in_member #ログインメンバー以外のアクセス、編集を禁止
-    unless current_member.id == params[:id].to_i
+  def member_search_params
+    params.fetch(:search, {}).permit(
+      :name, :gender, :age_min, :age_max, { address_prefecture_ids: [] }, { address_city_ids: [] },
+      { part_ids: [] }, { genre_ids: [] }, { artists: [:name] } )
+  end
+
+  def set_member
+    if params[:member_id].nil?
+      @member = Member.find(params[:id])
+    else
+      @member = Member.find(params[:member_id])
+    end
+  end
+
+  def signed_in_member? #ログインメンバー以外のアクセス、編集を禁止
+    unless current_member.id == @member.id
       redirect_to top_path, alert: "アクセスが拒否されました"
+    end
+  end
+
+  def blocked_member? #会員が退会済、またはブロックされていればアクセスできない
+    if @member.blocking?(current_member) || @member.disable?
+      redirect_to top_path, alert: "アクセスできません"
     end
   end
 end

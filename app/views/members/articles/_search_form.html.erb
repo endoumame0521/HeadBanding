@@ -1,0 +1,93 @@
+<h3>Member会員検索フォーム</h3>
+
+<%= form_with scope: :search, url: articles_path, method: :get, local: true do |f| %>
+  <div class="field">
+    <%= f.label :subject, "表題" %><br>
+    <%= f.text_field :subject, value: search_params[:subject]%>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "本文" %><br>
+    <%= f.text_field :body, value: search_params[:body]%>
+  </div>
+
+  <div class="field">
+    <%= f.label :category, "記事の種類" %><br>
+    <%= f.collection_radio_buttons(:category, Article.categories, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == search_params[:category]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :day_of_the_week, "活動の曜日" %><br>
+    <%= f.collection_radio_buttons(:day_of_the_week, Article.day_of_the_weeks, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == search_params[:day_of_the_week]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :band_intention, "バンドの方向性" %><br>
+    <%= f.collection_radio_buttons(:band_intention, Article.band_intentions, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == search_params[:band_intention]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :music_intention, "楽曲の方向性" %><br>
+    <%= f.collection_radio_buttons(:music_intention, Article.music_intentions, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == search_params[:music_intention]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :band_theme, "バンドのテーマ" %><br>
+    <%= f.collection_radio_buttons(:band_theme, Article.band_themes, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == search_params[:band_theme]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :gender, "性別" %><br>
+    <%= f.collection_radio_buttons(:gender, Article.genders, :first, :first) do |r| %>
+      <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
+      <%= r.radio_button(checked: r.value == search_params[:gender]) + r.text %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    年齢<br>
+    <%= f.text_field :age_min, value: search_params[:age_min] %><%= f.label :age_min, "歳" %>〜
+    <%= f.text_field :age_max, value: search_params[:age_max] %><%= f.label :age_max, "歳"  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :prefecture_id, "都道府県" %><br>
+    <%= f.collection_check_boxes :prefecture_ids, Prefecture.all, :id, :name, value: search_params[:prefecture_ids] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city, "市区町村" %><br>
+    <%= f.collection_check_boxes :city_ids, City.all, :id, :name, value: search_params[:city_ids] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :part, "パート" %><br>
+    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name, value: search_params[:part_ids] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :genre, "ジャンル" %><br>
+    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name, value: search_params[:genre_ids] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :artist, "好きなアーティスト" %><br>
+    <%= f.fields_for :artists do |a| %>
+      <%= a.text_field :name %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "検索" %>
+  </div>
+<% end %>

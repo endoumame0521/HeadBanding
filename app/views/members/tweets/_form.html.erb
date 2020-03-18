@@ -1,7 +1,7 @@
 <!-- ツイートの場合はツイート投稿フォームを、コメントの場合はコメント投稿フォームを表示 -->
 <% model = tweet_flag ? Tweet.new : [ tweet, TweetComment.new ] %>
 
-<%= form_with model: model, local: true do |f| %>
+<%= form_with model: model do |f| %>
   <div class="field">
     <%= f.text_area :body, placeholder: "入力してください" %>
   </div>

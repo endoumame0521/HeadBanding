@@ -1,0 +1,3 @@
+$('#tweets').append('<tr id="tweet-<%= @tweet.id %>">' + '<%= j(render partial: "tweet", locals: { tweet: @tweet, tweet_flag: true }) %>' + '<tr>');
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+$("textarea").val('');

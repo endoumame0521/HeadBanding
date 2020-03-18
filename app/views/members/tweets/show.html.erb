@@ -4,12 +4,16 @@
 <%= render "/layouts/error_messages", model: @tweet %>
 
 <table cellspacing="5">
-  <tbody>
+  <tbody id="tweet_comments">
     <!-- ツイートの詳細 -->
     <%= render "tweet", { tweet: @tweet, tweet_flag: true } %>
 
     <!-- ツイートに対するコメント一覧 -->
-    <%= render partial: "tweet", collection: @tweet.tweet_comments, locals: { tweet_flag: false } %>
+    <% @tweet.tweet_comments.each do |tweet_comment| %>
+      <tr id="tweet_comment-<%= tweet_comment.id %>">
+        <%= render partial: "members/tweets/tweet", locals: { tweet: tweet_comment, tweet_flag: false } %>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
