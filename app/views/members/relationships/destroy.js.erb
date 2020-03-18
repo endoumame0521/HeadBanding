@@ -1,0 +1,2 @@
+$("#relation-member-<%= @member.id %>").html("<%= j(render "members/relationships/follow_button", { member: @member }) %>");
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");

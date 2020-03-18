@@ -22,4 +22,61 @@ class Article < ApplicationRecord
   def favorited_by?(member)
     article_favorites.where(member_id: member.id).any?
   end
+
+  #会員検索----------------------------------------------------------------------------------
+  def self.search(search_params)
+    return where(status: "enable") if search_params.blank?
+
+      where(status: "enable")
+      subject_like(search_params[:subject])
+      .body_like(search_params[:body])
+      .category_is(search_params[:category])
+      .day_of_the_week_is(search_params[:day_of_the_week])
+      .band_intention_is(search_params[:band_intention])
+      .music_intention_is(search_params[:music_intention])
+      .band_theme_is(search_params[:band_theme])
+      .gender_is(search_params[:gender])
+      .age_min(search_params[:age_min])
+      .age_max(search_params[:age_max])
+      .prefecture_is(search_params[:prefecture_ids])
+      .city_is(search_params[:city_ids])
+      .part_is(search_params[:part_ids])
+      .genre_is(search_params[:genre_ids])
+  end
+
+  scope :subject_like, -> (subject) { where('subject LIKE ?', "%#{subject}%") if subject.present? }
+  scope :body_like, -> (body) { where('body LIKE ?', "%#{body}%") if body.present? }
+  scope :category_is, -> (category) { where(category: category) if category.present? }
+  scope :day_of_the_week_is, -> (day_of_the_week) { where(day_of_the_week: day_of_the_week) if day_of_the_week.present? }
+  scope :band_intention_is, -> (band_intention) { where(band_intention: band_intention) if band_intention.present? }
+  scope :music_intention_is, -> (music_intention) { where(music_intention: music_intention) if music_intention.present? }
+  scope :band_theme_is, -> (band_theme) { where(band_theme: band_theme) if band_theme.present? }
+  scope :gender_is, -> (gender) { where(gender: gender) if gender.present? }
+  scope :age_min, -> (min) { where('? <= age', min) if min.present? }
+  scope :age_max, -> (max) { where('age <= ?', max) if max.present? }
+
+  scope :prefecture_is, -> (prefecture) do
+    where(prefecture_id: prefecture) unless prefecture[1].nil?
+  end
+
+  scope :city_is, -> (city) do
+    unless city[1].nil?
+      article_ids = ArticleCity.where(city_id: city).map{|k| k.article_id}
+      where(id: article_ids)
+    end
+  end
+
+  scope :part_is, -> (part) do
+    unless part[1].nil?
+      article_ids = PartArticle.where(part_id: part).map{|k| k.article_id}
+      where(id: article_ids)
+    end
+  end
+
+  scope :genre_is, -> (genre) do
+    unless genre[1].nil?
+      article_ids = GenreArticle.where(genre_id: genre).map{|k| k.article_id}
+      where(id: article_ids)
+    end
+  end
 end

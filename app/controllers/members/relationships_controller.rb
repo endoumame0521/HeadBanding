@@ -1,19 +1,33 @@
 class Members::RelationshipsController < ApplicationController
+  before_action :set_member
+  before_action :blocked_member?, only: [:create, :destroy]
+
   def create
     current_member.follow(params[:member_id])
-    redirect_to request.referer
+    flash.now[:notice] = "#{@member.name}さんをフォローしました"
   end
 
   def destroy
     current_member.unfollow(params[:member_id])
-    redirect_to request.referer
+    flash.now[:notice] = "#{@member.name}さんのフォローを外しました"
   end
 
   def follower
-    @members = Member.find(params[:member_id]).following_member
+    @members = @member.following_member
   end
 
   def followed
-    @members = Member.find(params[:member_id]).follower_member
+    @members = @member.follower_member
+  end
+
+  private
+  def set_member
+    @member = Member.find(params[:member_id])
+  end
+
+  def blocked_member? # 会員が退会済、またはブロックされていればフォロー、アンフォローできない
+    if @member.blocking?(current_member) || @member.disable?
+      redirect_to top_path, alert: "アクセスできません"
+    end
   end
 end

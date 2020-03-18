@@ -1,6 +1,5 @@
 <!-- ブロックされている会員のツイートは表示され無い -->
 <% unless tweet.member.blocking?(current_member) %>
-<tr>
   <td>
     <%= attachment_image_tag tweet.member, :profile_image, :fill, 50, 50, format: 'jpeg',
     fallback: "no_image.jpg", size: 50 %>
@@ -9,12 +8,16 @@
   <td><%= tweet.member.name %></td>
   <td><%= tweet.body %></td>
   <td><%= tweet.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
-  <td><%= render partial: "members/tweets/favorites", locals: { tweet: tweet, tweet_flag: tweet_flag } %></td>
+
+  <!-- ツイートの場合とツイートコメントの場合でid名を分けている。jqueryによる非同期通信の為。 -->
+  <% id_name = tweet_flag ? "tweet_favorite" : "tweet_comment_favorite" %>
+  <td id="<%= id_name %>-<%= tweet.id %>"><%= render partial: "members/tweets/favorites", locals: { tweet: tweet, tweet_flag: tweet_flag } %></td>
 
   <td>
     <!-- ツイートの場合はコメント数を表示 -->
     <% if tweet_flag %>
-      <i class="fa fa-comment"></i>x<%= tweet.tweet_comments.count %>
+      <i class="fa fa-comment"></i>x
+      <span class="comment-count"><%= tweet.tweet_comments.count %></span>
     <% end %>
   </td>
 
@@ -29,17 +32,16 @@
 
   <!-- 自分のツイート（orコメント）の場合は削除リンクを表示。そうでない場合は通報リンクを表示 -->
   <% if tweet.member == current_member %>
-    <td><%= link_to "削除", show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %></td>
+    <td><%= link_to "削除", show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, remote: true %></td>
   <% elsif tweet_flag %>
     <td><%= link_to "通報", controller: "members/notices", action: "new", tweet_id: tweet.id %></td>
   <% elsif tweet_flag == false %>
     <td><%= link_to "通報", controller: "members/notices", action: "new", tweet_comment_id: tweet.id %></td>
   <% end %>
-</tr>
 
-<tr>
-  <td colspan="5">
-    <%= attachment_image_tag tweet, :image, :fill, 300, 300, format: 'jpeg' %>
-  </td>
-</tr>
+  <tr>
+    <td colspan="5">
+      <%= attachment_image_tag tweet, :image, :fill, 300, 300, format: 'jpeg' %>
+    </td>
+  </tr>
 <% end %>

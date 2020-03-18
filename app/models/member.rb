@@ -21,6 +21,7 @@ class Member < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :rooms, through: :entries
+  has_many :entry_rooms, through: :entries, source: :room #特定の会員が参加したメッセージルームを取得する
   has_many :genre_members, dependent: :destroy
   has_many :genres, through: :genre_members
   has_many :part_members, dependent: :destroy
@@ -70,6 +71,8 @@ class Member < ApplicationRecord
     blocking_member.include?(member)
   end
 
+  #会員登録後、年齢を誕生日から計算してageカラムに保存
+  after_create_commit { self.update(age: self.age) }
   #会員の生年月日から年齢を計算
   def age
     (Date.today.strftime("%Y%m%d").to_i - birthday.strftime("%Y%m%d").to_i) / 10000
@@ -80,7 +83,53 @@ class Member < ApplicationRecord
     super && (self.enable?)
   end
 
+  #会員検索----------------------------------------------------------------------------------
   def self.search(search_params)
+    return where(status: "enable") if search_params.blank?
+
+      where(status: "enable")
+      .name_like(search_params[:name])
+      .gender_is(search_params[:gender])
+      .age_min(search_params[:age_min])
+      .age_max(search_params[:age_max])
+      .address_prefecture_is(search_params[:address_prefecture_ids])
+      .address_city_is(search_params[:address_city_ids])
+      .part_is(search_params[:part_ids])
+      .genre_is(search_params[:genre_ids])
+      .artist_like(search_params[:artists])
   end
 
+  scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
+  scope :gender_is, -> (gender) { where(gender: gender) if gender.present? }
+  scope :age_min, -> (min) { where('? <= age', min) if min.present? }
+  scope :age_max, -> (max) { where('age <= ?', max) if max.present? }
+
+  scope :address_prefecture_is, -> (prefecture) do
+    where(address_prefecture: Prefecture.where(id: prefecture).map{|k| k.name}) unless prefecture[1].nil?
+  end
+
+  scope :address_city_is, -> (city) do
+    where(address_city: City.where(id: city).map{|k| k.name}) unless city[1].nil?
+  end
+
+  scope :part_is, -> (part) do
+    unless part[1].nil?
+      member_ids = PartMember.where(part_id: part).map{|k| k.member_id}
+      where(id: member_ids)
+    end
+  end
+
+  scope :genre_is, -> (genre) do
+    unless genre[1].nil?
+      member_ids = GenreMember.where(genre_id: genre).map{|k| k.member_id}
+      where(id: member_ids)
+    end
+  end
+
+  scope :artist_like, -> (artist) do
+    unless artist[:name].blank?
+      member_ids = Artist.where('name LIKE?', "%#{artist[:name]}%").map{|k| k.member_id}
+      where(id: member_ids)
+    end
+  end
 end

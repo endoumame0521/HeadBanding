@@ -1,6 +1,7 @@
 <h2>Admin通報一覧</h2>
 
 <!-- 通報のあったツイート一覧 -->
+<h4>ツイート一覧</h4>
 <table cellspacing="5">
   <tbody>
     <% @tweets.each do |tweet| %>
@@ -14,6 +15,7 @@
 </table>
 
 <!-- 通報のあったツイートコメント一覧 -->
+<h4>ツイートコメント一覧</h4>
 <table cellspacing="5">
   <tbody>
     <% @tweet_comments.each do |tweet_comment| %>
@@ -27,6 +29,7 @@
 </table>
 
 <!-- 通報のあった記事一覧 -->
+<h4>記事一覧</h4>
 <table cellspacing="5">
   <tbody>
     <% @articles.each do |article| %>

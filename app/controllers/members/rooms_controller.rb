@@ -1,12 +1,30 @@
 class Members::RoomsController < ApplicationController
   def index
+    @entry_rooms = current_member.entry_rooms
   end
 
   def create
-    @room = Room.create
-    @entry1 = Entry.create(room_id: @room.id, member_id: current_member.id)
-    @entry2 = Entry.create(params.require(:entry).permit(:member_id, :room_id).merge(room_id: @room.id))
-    redirect_to room_path(@room.id)
+    @member = Member.find(room_params[:member_id])
+
+    current_member_entry = Entry.where(member_id: current_member.id)
+    member_entry = Entry.where(member_id: @member.id)
+    current_member_entry.each do |cme|
+      member_entry.each do |me|
+        @is_room = true if cme.room_id == me.room_id
+      end
+    end
+
+    # 会員が退会済、またはブロックされていればメッセージルームを作成できない
+    if @member.blocking?(current_member) || @member.disable?
+      redirect_to top_path, alert: "アクセスできません"
+    else
+      unless @is_room #お互いのチャットルームが存在しない時のみルーム作成
+        @room = Room.create
+        @entry1 = Entry.create(room_id: @room.id, member_id: current_member.id)
+        @entry2 = Entry.create(room_params.merge(room_id: @room.id))
+        redirect_to room_path(@room.id)
+      end
+    end
   end
 
   def show
@@ -16,12 +34,22 @@ class Members::RoomsController < ApplicationController
       @messages = @room.messages
       @entries = @room.entries
       @entries.each do |entry|
-        if entry.member.id == current_member.id
+        if entry.member.id != current_member.id
           @member = entry.member
         end
+      end
+
+      # 会員が退会済、またはブロックされていればメッセージルームにアクセスできない
+      if @member.blocking?(current_member) || @member.disable?
+        redirect_to top_path, alert: "アクセスできません"
       end
     else
       redirect_to request.referer
     end
+  end
+
+  private
+  def room_params
+    params.require(:entry).permit(:member_id, :room_id)
   end
 end
