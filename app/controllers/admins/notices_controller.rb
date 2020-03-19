@@ -1,4 +1,4 @@
-class Admins::NoticesController < ApplicationController
+class Admins::NoticesController < Admins::ApplicationController
   def index
     @tweets = Notice.where.not(tweet_id: nil)
     @tweet_comments = Notice.where.not(tweet_comment_id: nil)

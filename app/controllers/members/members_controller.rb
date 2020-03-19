@@ -1,4 +1,4 @@
-class Members::MembersController < ApplicationController
+class Members::MembersController < Members::ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :cancel, :withdraw]
   before_action :signed_in_member?, only: [:edit, :update, :cancel, :withdraw]
   before_action :blocked_member?, only: [:show]

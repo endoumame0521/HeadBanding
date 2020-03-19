@@ -1,4 +1,4 @@
-class Admins::RoomsController < ApplicationController
+class Admins::RoomsController < Admins::ApplicationController
   def index
     @rooms = Room.all
   end

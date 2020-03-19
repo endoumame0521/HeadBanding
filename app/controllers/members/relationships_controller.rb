@@ -1,4 +1,4 @@
-class Members::RelationshipsController < ApplicationController
+class Members::RelationshipsController < Members::ApplicationController
   before_action :set_member
   before_action :blocked_member?, only: [:create, :destroy]
 

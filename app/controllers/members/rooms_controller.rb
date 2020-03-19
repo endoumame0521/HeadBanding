@@ -1,4 +1,4 @@
-class Members::RoomsController < ApplicationController
+class Members::RoomsController < Members::ApplicationController
   def index
     @entry_rooms = current_member.entry_rooms
   end

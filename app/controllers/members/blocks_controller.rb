@@ -1,4 +1,4 @@
-class Members::BlocksController < ApplicationController
+class Members::BlocksController < Members::ApplicationController
   before_action :set_member
   before_action :withdrawed_member?, only: [:create, :destroy]
 

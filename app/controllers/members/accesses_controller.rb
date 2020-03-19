@@ -1,4 +1,4 @@
-class Members::AccessesController < ApplicationController
+class Members::AccessesController < Members::ApplicationController
   def index
     if params[:member_id].to_i == current_member.id
       @accesses = current_member.visited

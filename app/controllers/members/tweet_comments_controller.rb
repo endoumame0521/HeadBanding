@@ -1,4 +1,4 @@
-class Members::TweetCommentsController < ApplicationController
+class Members::TweetCommentsController < Members::ApplicationController
   before_action :set_tweet_comment, only: [:destroy]
   before_action :signed_in_member?, only: [:destroy]
 

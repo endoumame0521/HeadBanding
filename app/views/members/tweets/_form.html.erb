@@ -1,19 +1,22 @@
-<!-- ツイートの場合はツイート投稿フォームを、コメントの場合はコメント投稿フォームを表示 -->
-<% model = tweet_flag ? Tweet.new : [ tweet, TweetComment.new ] %>
+<!-- 会員がログインしている場合のみ投稿フォームが表示される-->
+<% if member_signed_in? %>
+  <!-- ツイートの場合はツイート投稿フォームを、コメントの場合はコメント投稿フォームを表示 -->
+  <% model = tweet_flag ? Tweet.new : [ tweet, TweetComment.new ] %>
 
-<%= form_with model: model do |f| %>
-  <div class="field">
-    <%= f.text_area :body, placeholder: "入力してください" %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.attachment_field :image %>
-  </div>
+  <%= form_with model: model do |f| %>
+    <div class="field">
+      <%= f.text_area :body, placeholder: "入力してください" %>
+    </div>
+    <div class="field">
+      <%= f.label :image %><br />
+      <%= f.attachment_field :image %>
+    </div>
 
-  <!-- ツイートの場合はツイート投稿ボタンを、コメントの場合はコメント投稿ボタンを表示 -->
-  <% if tweet_flag %>
-    <%= f.submit "ツイートする" %>
-  <% else %>
-    <%= f.submit "コメントする" %>
+    <!-- ツイートの場合はツイート投稿ボタンを、コメントの場合はコメント投稿ボタンを表示 -->
+    <% if tweet_flag %>
+      <%= f.submit "ツイートする" %>
+    <% else %>
+      <%= f.submit "コメントする" %>
+    <% end %>
   <% end %>
 <% end %>

@@ -1,0 +1,12 @@
+<h3>Memberツイート検索フォーム</h3>
+
+<%= form_with scope: :search, url: tweets_path, method: :get, local: true do |f| %>
+  <div class="field">
+    <%= f.label :body %><br>
+    <%= f.text_field :body, value: search_params[:body]%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "検索" %>
+  </div>
+<% end %>

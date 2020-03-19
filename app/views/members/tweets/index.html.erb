@@ -3,6 +3,8 @@
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @tweet %>
 
+<%= render "members/tweets/search_form", { search_params: @search_params } %>
+
 <table cellspacing="5">
   <!-- ツイート一覧 -->
   <tbody id="tweets">

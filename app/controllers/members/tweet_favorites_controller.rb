@@ -1,4 +1,4 @@
-class Members::TweetFavoritesController < ApplicationController
+class Members::TweetFavoritesController < Members::ApplicationController
   before_action :set_tweet
 
   def create

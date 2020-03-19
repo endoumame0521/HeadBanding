@@ -1,10 +1,12 @@
-class Members::TweetsController < ApplicationController
+class Members::TweetsController < Members::ApplicationController
+  skip_before_action :authenticate_member!, only: [:index, :show]
   before_action :set_tweet, only: [:show, :destroy]
   before_action :signed_in_member?, only: [:destroy]
   before_action :blocked_member?, only: [:show]
 
   def index
-    @tweets = Tweet.all
+    @search_params = tweet_search_params
+    @tweets = Tweet.search(@search_params)
   end
 
   def create
@@ -32,6 +34,10 @@ class Members::TweetsController < ApplicationController
   private
   def tweet_params
     params.require(:tweet).permit(:body, :image)
+  end
+
+  def tweet_search_params
+    params.fetch(:search, {}).permit(:body)
   end
 
   def set_tweet
