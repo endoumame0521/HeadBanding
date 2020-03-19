@@ -1,5 +1,8 @@
 <h2>Adminツイート一覧</h2>
 
+<!-- ツイート検索フォーム -->
+<%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: true } %>
+
 <table cellspacing="5">
   <tbody>
     <!-- ツイート一覧 -->

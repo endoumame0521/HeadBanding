@@ -7,6 +7,11 @@
 <p><%= @article.body %></p>
 
 <h4>基本データ</h4>
+
+<% if @article.member == current_member %>
+  <p>記事の公開状態：<%= @article.published_status %></p>
+<% end %>
+
 <p>記事の種類：<%= @article.category %></p>
 <p>都道府県：<%= @article.prefecture.name %></p>
 <p>活動エリア：<% @article.article_cities.each { |article_city| %><%= article_city.city.name %>、<% } %></p>

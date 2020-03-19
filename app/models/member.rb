@@ -85,20 +85,21 @@ class Member < ApplicationRecord
 
   #会員検索----------------------------------------------------------------------------------
   def self.search(search_params)
-    return where(status: "enable") if search_params.blank?
+    return status_is("enable") if search_params.blank?
 
-      where(status: "enable")
-      .name_like(search_params[:name])
-      .gender_is(search_params[:gender])
-      .age_min(search_params[:age_min])
-      .age_max(search_params[:age_max])
-      .address_prefecture_is(search_params[:address_prefecture_ids])
-      .address_city_is(search_params[:address_city_ids])
-      .part_is(search_params[:part_ids])
-      .genre_is(search_params[:genre_ids])
-      .artist_like(search_params[:artists])
+    status_is(search_params[:status])
+    .name_like(search_params[:name])
+    .gender_is(search_params[:gender])
+    .age_min(search_params[:age_min])
+    .age_max(search_params[:age_max])
+    .address_prefecture_is(search_params[:address_prefecture_ids])
+    .address_city_is(search_params[:address_city_ids])
+    .part_is(search_params[:part_ids])
+    .genre_is(search_params[:genre_ids])
+    .artist_like(search_params[:artists])
   end
 
+  scope :status_is, -> (status) { where(status: status) if status.present? }
   scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
   scope :gender_is, -> (gender) { where(gender: gender) if gender.present? }
   scope :age_min, -> (min) { where('? <= age', min) if min.present? }

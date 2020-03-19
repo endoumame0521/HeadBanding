@@ -1,5 +1,8 @@
 <h2>Admin会員一覧</h2>
 
+<!-- 会員検索フォーム -->
+<%= render "members/members/search_form", { search_params: @search_params, admin_flag: true } %>
+
 <table cellspacing="5">
   <tbody>
     <%= render @members %>

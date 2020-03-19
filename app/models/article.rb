@@ -17,33 +17,38 @@ class Article < ApplicationRecord
   has_many :parts, through: :part_articles
   has_many :article_cities, dependent: :destroy
   has_many :cities, through: :article_cities
-  has_many :notices
+  has_many :notices, dependent: :destroy
 
   def favorited_by?(member)
     article_favorites.where(member_id: member.id).any?
   end
 
-  #会員検索----------------------------------------------------------------------------------
+  #記事検索----------------------------------------------------------------------------------
   def self.search(search_params)
-    return where(status: "enable") if search_params.blank?
+    if search_params.blank?
+      return status_is("enable").published_status_is("open")
+    end
 
-      where(status: "enable")
-      subject_like(search_params[:subject])
-      .body_like(search_params[:body])
-      .category_is(search_params[:category])
-      .day_of_the_week_is(search_params[:day_of_the_week])
-      .band_intention_is(search_params[:band_intention])
-      .music_intention_is(search_params[:music_intention])
-      .band_theme_is(search_params[:band_theme])
-      .gender_is(search_params[:gender])
-      .age_min(search_params[:age_min])
-      .age_max(search_params[:age_max])
-      .prefecture_is(search_params[:prefecture_ids])
-      .city_is(search_params[:city_ids])
-      .part_is(search_params[:part_ids])
-      .genre_is(search_params[:genre_ids])
+    status_is(search_params[:status])
+    .published_status_is(search_params[:published_status])
+    .subject_like(search_params[:subject])
+    .body_like(search_params[:body])
+    .category_is(search_params[:category])
+    .day_of_the_week_is(search_params[:day_of_the_week])
+    .band_intention_is(search_params[:band_intention])
+    .music_intention_is(search_params[:music_intention])
+    .band_theme_is(search_params[:band_theme])
+    .gender_is(search_params[:gender])
+    .age_min(search_params[:age_min])
+    .age_max(search_params[:age_max])
+    .prefecture_is(search_params[:prefecture_ids])
+    .city_is(search_params[:city_ids])
+    .part_is(search_params[:part_ids])
+    .genre_is(search_params[:genre_ids])
   end
 
+  scope :status_is, -> (status) { where(status: status) if status.present? }
+  scope :published_status_is, -> (published_status) { where(published_status: published_status) if published_status.present? }
   scope :subject_like, -> (subject) { where('subject LIKE ?', "%#{subject}%") if subject.present? }
   scope :body_like, -> (body) { where('body LIKE ?', "%#{body}%") if body.present? }
   scope :category_is, -> (category) { where(category: category) if category.present? }

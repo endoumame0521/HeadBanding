@@ -3,7 +3,7 @@ class TweetComment < ApplicationRecord
   belongs_to :member
   belongs_to :tweet
   has_many :tweet_comment_favorites, dependent: :destroy
-  has_many :notices
+  has_many :notices, dependent: :destroy
 
   enum status: { enable: true, disable: false }
 

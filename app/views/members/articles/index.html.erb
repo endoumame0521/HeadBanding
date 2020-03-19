@@ -1,6 +1,7 @@
 <h2>Member記事一覧</h2>
 
-<%= render "members/articles/search_form", { search_params: @search_params } %>
+<!-- 記事検索フォーム -->
+<%= render "members/articles/search_form", { search_params: @search_params, admin_flag: false } %>
 
 <%= link_to "新規投稿", new_article_path %>
 

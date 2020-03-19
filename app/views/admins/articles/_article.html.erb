@@ -9,6 +9,7 @@
   <td><%= article.member.age %><span>歳</span></td>
   <td><%= article.member.gender %></td>
   <td><%= article.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td><%= article.published_status %></td>
   <td><%= render partial: "admins/articles/favorites", locals: { article: article } %></td>
   <td><%= link_to "詳細", admins_article_path(article) %></td>
   <td><%= link_to "削除", admins_article_path(article), method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %></td>

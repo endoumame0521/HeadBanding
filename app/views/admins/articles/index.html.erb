@@ -1,5 +1,8 @@
 <h2>Admin記事一覧</h2>
 
+<!-- 記事検索フォーム -->
+<%= render "members/articles/search_form", { search_params: @search_params, admin_flag: true } %>
+
 <table cellspacing="5">
   <tbody>
     <%= render @articles %>

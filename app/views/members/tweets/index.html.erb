@@ -3,7 +3,8 @@
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @tweet %>
 
-<%= render "members/tweets/search_form", { search_params: @search_params } %>
+<!-- ツイート検索フォーム -->
+<%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: false } %>
 
 <table cellspacing="5">
   <!-- ツイート一覧 -->

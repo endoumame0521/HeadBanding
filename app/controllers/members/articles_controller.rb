@@ -5,7 +5,8 @@ class Members::ArticlesController < Members::ApplicationController
   before_action :blocked_member?, only: [:show]
 
   def top
-    @articles = Article.all
+    @search_params = article_search_params
+    @articles = Article.search(@search_params)
   end
 
   def index
@@ -63,7 +64,7 @@ class Members::ArticlesController < Members::ApplicationController
     params.fetch(:search, {}).permit(
       :published_status, :category, :subject, :body, { prefecture_ids: [] }, { city_ids: [] },
       :day_of_the_week, :band_intention, :music_intention, :gender, :age_min, :age_max,
-      :band_theme, { part_ids: [] }, { genre_ids: [] })
+      :status, :band_theme, { part_ids: [] }, { genre_ids: [] })
   end
 
   def set_article

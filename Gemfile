@@ -72,3 +72,4 @@ gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
 gem 'jquery-rails'
 gem 'dotenv-rails'
+gem 'rails-i18n', '~> 5.1'
