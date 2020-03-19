@@ -1,4 +1,4 @@
-class Members::ArticleFavoritesController < ApplicationController
+class Members::ArticleFavoritesController < Members::ApplicationController
   before_action :set_article
 
   def create

@@ -1,4 +1,5 @@
-class Members::ArticlesController < ApplicationController
+class Members::ArticlesController < Members::ApplicationController
+  skip_before_action :authenticate_member!, only: [:top, :show]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_member?, only: [:edit, :update, :destroy]
   before_action :blocked_member?, only: [:show]
@@ -34,7 +35,6 @@ class Members::ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to @article, notice: "記事が更新されました"
     else
@@ -45,9 +45,9 @@ class Members::ArticlesController < ApplicationController
 
   def destroy
     if @article.destroy
-      redirect_to @article, notice: "記事が削除されました"
+      redirect_to request.referer, notice: "記事が削除されました"
     else
-      redirect_to @article, alert: "記事の削除に失敗しました"
+      redirect_to request.referer, alert: "記事の削除に失敗しました"
     end
   end
 

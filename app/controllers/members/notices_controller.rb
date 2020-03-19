@@ -1,4 +1,4 @@
-class Members::NoticesController < ApplicationController
+class Members::NoticesController < Members::ApplicationController
   def new
     @notice = Notice.new
 

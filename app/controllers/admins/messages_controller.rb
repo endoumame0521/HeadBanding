@@ -1,2 +1,2 @@
-class Admins::MessagesController < ApplicationController
+class Admins::MessagesController < Admins::ApplicationController
 end

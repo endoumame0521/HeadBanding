@@ -1,4 +1,4 @@
-class Admins::TweetCommentsController < ApplicationController
+class Admins::TweetCommentsController < Admins::ApplicationController
   def update
     @tweet_comment = TweetComment.find_by(tweet_id: params[:tweet_id], id: params[:id])
     if @tweet_comment.update(tweet_comment_params)

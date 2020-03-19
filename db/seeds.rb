@@ -41,8 +41,8 @@ end
 
 #初期データを下記する
 Admin.create!(
-   email: "a@a",
-   password: "aaaaaa"
+   email: ENV["ADMIN_PASS"],
+   password: ENV["ADMIN_MAIL"]
 )
 
 [

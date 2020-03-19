@@ -13,10 +13,9 @@
   <td><%= article.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
   <td id="article-<%= article.id %>"><%= render partial: "members/articles/favorites", locals: { article: article } %></td>
 
-  <td><%= link_to "詳細", article %></td>
-  <% if article.member == current_member %>
-    <td><%= link_to "削除", article, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %></td>
-  <% else %>
+  <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
+  <% if member_signed_in? %>
+    <td><%= link_to "詳細", article %></td>
     <td><%= link_to "通報", controller: "members/notices", action: "new", article_id: article.id %></td>
   <% end %>
 </tr>
