@@ -5,67 +5,67 @@
 
 <%= form_with model: @member, local: true do |f| %>
    <div class="field">
-    <%= f.label :profile_image, "プロフィール画像" %><br />
+    <%= f.label(:profile_image, Member.human_attribute_name(:profile_image)) %><br>
     <%= f.attachment_field :profile_image %>
   </div>
 
   <div class="field">
-    <%= f.label :email %><br>
+    <%= f.label(:email, Member.human_attribute_name(:email)) %><br>
     <%= f.email_field :email %>
   </div>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label(:name, Member.human_attribute_name(:name)) %><br>
     <%= f.text_field :name %>
   </div>
 
   <div class="field">
-    <p>性別</p>
+    <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
     <%= f.radio_button :gender, :male %>
-    <%= f.label :male %>
+    <%= f.label :男性 %>
     <%= f.radio_button :gender, :female %>
-    <%= f.label :female %>
+    <%= f.label :女性 %>
   </div>
 
   <div class="field">
-    <%= f.label :birthday, "生年月日" %><br>
+    <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %><br>
     <%= f.date_select :birthday, use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1) %>
   </div>
 
   <div class="field">
-    <%= f.label :address_prefecture %><br>
+    <%= f.label(:address_prefecture, Member.human_attribute_name(:address_prefecture)) %><br>
     <%= f.collection_select :address_prefecture, Prefecture.all, :name, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :address_city %><br>
+    <%= f.label(:address_city, Member.human_attribute_name(:address_city)) %><br>
     <%= f.collection_select :address_city, City.all, :name, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :sound %><br>
+    <%= f.label(:sound, Member.human_attribute_name(:sound)) %><br>
     <%= f.text_field :sound %>
   </div>
 
   <div class="field">
-    <%= f.label :part, "担当パート" %><br>
+    <%= f.label :part, Part.model_name.human %><br>
     <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :genre, "好きなジャンル" %><br>
+    <%= f.label :genre, Genre.model_name.human %><br>
     <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
   </div>
 
   <div class="field">
-    <%= f.label :artist, "好きなアーティスト" %><br>
+    <%= f.label :artist, Artist.model_name.human %>
     <%= f.fields_for :artists do |a| %>
       <%= a.text_field :name %>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :introduction, "自己紹介文" %><br>
+    <%= f.label(:introduction, Member.human_attribute_name(:introduction)) %><br>
     <%= f.text_area :introduction %>
   </div>
 

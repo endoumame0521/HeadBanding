@@ -16,7 +16,10 @@
   <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
   <% if member_signed_in? %>
     <td><%= link_to "詳細", article %></td>
-    <td><%= link_to "通報", controller: "members/notices", action: "new", article_id: article.id %></td>
+    <!-- 自分以外の記事のみ通報ボタンが表示される -->
+    <% unless article.member == current_member %>
+      <td><%= link_to "通報", controller: "members/notices", action: "new", article_id: article.id %></td>
+    <% end %>
   <% end %>
 </tr>
 <% end %>

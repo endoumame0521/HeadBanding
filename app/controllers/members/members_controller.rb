@@ -68,7 +68,7 @@ class Members::MembersController < Members::ApplicationController
   def member_search_params
     params.fetch(:search, {}).permit(
       :name, :gender, :age_min, :age_max, { address_prefecture_ids: [] }, { address_city_ids: [] },
-      { part_ids: [] }, { genre_ids: [] }, { artists: [:name] } )
+      { part_ids: [] }, { genre_ids: [] }, { artists: [:name] }, :status)
   end
 
   def set_member

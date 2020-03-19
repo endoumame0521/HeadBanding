@@ -1,10 +1,25 @@
 <h3>Memberツイート検索フォーム</h3>
 
-<%= form_with scope: :search, url: tweets_path, method: :get, local: true do |f| %>
+<!-- admin_flagの値によって会員側フォームか管理者側フォームかを判断 -->
+<% action = admin_flag ? admins_tweets_path : tweets_path %>
+
+<%= form_with scope: :search, url: action, method: :get, local: true do |f| %>
   <div class="field">
-    <%= f.label :body %><br>
+    <%= f.label(:body, Tweet.human_attribute_name(:body)) %>
     <%= f.text_field :body, value: search_params[:body]%>
   </div>
+
+  <% if admin_flag %>
+    <div class="field">
+      <%= f.label(:status, Tweet.human_attribute_name(:status)) %><br>
+      <%= f.collection_radio_buttons(:status, Tweet.statuses, :first, :first) do |r| %>
+        <%= r.radio_button(checked: r.value == @search_params[:status]) + f.label(Tweet.human_attribute_name("status.#{r.text}")) %>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- 会員側の検索時はステータスが有効なツイートしか表示させない -->
+    <%= f.hidden_field :status, value: :enable %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "検索" %>

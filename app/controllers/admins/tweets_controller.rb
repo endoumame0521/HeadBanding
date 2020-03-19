@@ -1,6 +1,7 @@
 class Admins::TweetsController < Admins::ApplicationController
   def index
-    @tweets = Tweet.all
+    @search_params = tweet_search_params
+    @tweets = Tweet.search(@search_params)
   end
 
   def show
@@ -28,5 +29,9 @@ class Admins::TweetsController < Admins::ApplicationController
   private
   def tweet_params
     params.require(:tweet).permit(:status)
+  end
+
+  def tweet_search_params
+    params.fetch(:search, {}).permit(:body, :status)
   end
 end

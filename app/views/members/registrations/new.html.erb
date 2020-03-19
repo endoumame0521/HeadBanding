@@ -14,11 +14,10 @@
   </div>
 
   <div class="field">
-    <p>性別</p>
-    <%= f.radio_button :gender, :male %>
-    <%= f.label :male %>
-    <%= f.radio_button :gender, :female %>
-    <%= f.label :female %>
+    <p>性別：</p>
+    <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
+      <%= r.label {r.radio_button + r.value} %>
+    <% end %>
   </div>
 
   <div class="field">

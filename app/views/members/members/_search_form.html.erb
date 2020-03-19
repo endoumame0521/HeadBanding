@@ -1,51 +1,64 @@
-<h3>Member会員検索フォーム</h3>
+<h3>会員検索フォーム</h3>
 
-<%= form_with scope: :search, url: members_path, method: :get, local: true do |f| %>
+<!-- admin_flagの値によって会員側フォームか管理者側フォームかを判断 -->
+<% action = admin_flag ? admins_members_path : members_path %>
+
+<%= form_with scope: :search, url: action, method: :get, local: true do |f| %>
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label(:name, Member.human_attribute_name(:name)) %>
     <%= f.text_field :name, value: search_params[:name]%>
   </div>
 
   <div class="field">
-    <%= f.label :gender, "性別" %><br>
+    <%= f.label(:gender, Member.human_attribute_name(:gender)) %>
     <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
-      <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
-      <%= r.radio_button(checked: r.value == search_params[:gender]) + r.text %>
+      <%= r.radio_button(checked: r.value == @search_params[:gender]) + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
     <% end %>
   </div>
 
   <div class="field">
-    年齢<br>
     <%= f.text_field :age_min, value: search_params[:age_min] %><%= f.label :age_min, "歳" %>〜
     <%= f.text_field :age_max, value: search_params[:age_max] %><%= f.label :age_max, "歳"  %>
   </div>
 
   <div class="field">
-    <%= f.label :address_prefecture, "都道府県" %><br>
+    <%= f.label(:address_prefecture, Member.human_attribute_name(:address_prefecture)) %>
     <%= f.collection_check_boxes :address_prefecture_ids, Prefecture.all, :id, :name, value: search_params[:address_prefecture_ids] %>
   </div>
 
   <div class="field">
-    <%= f.label :address_city, "市区町村" %><br>
+    <%= f.label(:address_city, Member.human_attribute_name(:address_city)) %>
     <%= f.collection_check_boxes :address_city_ids, City.all, :id, :name, value: search_params[:address_city_ids] %>
   </div>
 
   <div class="field">
-    <%= f.label :part, "担当パート" %><br>
+    <%= f.label :part, Part.model_name.human %>
     <%= f.collection_check_boxes :part_ids, Part.all, :id, :name, value: search_params[:part_ids] %>
   </div>
 
   <div class="field">
-    <%= f.label :genre, "好きなジャンル" %><br>
+    <%= f.label :genre, Genre.model_name.human %>
     <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name, value: search_params[:genre_ids] %>
   </div>
 
   <div class="field">
-    <%= f.label :artist, "好きなアーティスト" %><br>
+    <%= f.label :artist, Artist.model_name.human %>
     <%= f.fields_for :artists do |a| %>
       <%= a.text_field :name %>
     <% end %>
   </div>
+
+  <% if admin_flag %>
+    <div class="field">
+      <%= f.label(:status, Member.human_attribute_name(:status)) %><br>
+      <%= f.collection_radio_buttons(:status, Member.statuses, :first, :first) do |r| %>
+        <%= r.radio_button(checked: r.value == @search_params[:status]) + f.label(Member.human_attribute_name("status.#{r.text}")) %>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- 会員側の検索時はステータスが有効な会員しか表示させない -->
+    <%= f.hidden_field :status, value: :enable %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "検索" %>

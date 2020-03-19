@@ -37,7 +37,7 @@ class Members::TweetsController < Members::ApplicationController
   end
 
   def tweet_search_params
-    params.fetch(:search, {}).permit(:body)
+    params.fetch(:search, {}).permit(:body, :status)
   end
 
   def set_tweet

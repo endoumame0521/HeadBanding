@@ -1,6 +1,7 @@
 class Admins::MembersController < Admins::ApplicationController
   def index
-    @members = Member.all
+    @search_params = member_search_params
+    @members = Member.search(@search_params)
   end
 
   def show
@@ -43,5 +44,11 @@ class Admins::MembersController < Admins::ApplicationController
       :name, :gender, :birthday, :address_prefecture, :address_city, :introduction,
       :sound, :profile_image, :email, :status, { part_ids: [] }, { genre_ids: [] },
       artists_attributes: [:id, :name])
+  end
+
+  def member_search_params
+    params.fetch(:search, {}).permit(
+      :name, :gender, :age_min, :age_max, { address_prefecture_ids: [] }, { address_city_ids: [] },
+      { part_ids: [] }, { genre_ids: [] }, { artists: [:name] }, :status)
   end
 end
