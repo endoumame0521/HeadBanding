@@ -12,9 +12,12 @@ class Tweet < ApplicationRecord
     tweet_favorites.where(member_id: member.id).any?
   end
 
+  # 最新順に並び替え
+  default_scope -> { order(created_at: :desc)}
+
   #ツイート検索----------------------------------------------------------------------------------
   def self.search(search_params)
-    return status_is("enable") if search_params.blank?
+    return all if search_params.blank?
 
     status_is(search_params[:status])
     .body_like(search_params[:body])

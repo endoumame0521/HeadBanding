@@ -1,12 +1,11 @@
-<h2>Member記事一覧</h2>
-
 <!-- 記事検索フォーム -->
 <%= render "members/articles/search_form", { search_params: @search_params, admin_flag: false } %>
 
-<%= link_to "新規投稿", new_article_path %>
+<!-- 記事新規投稿ページへのリンク -->
+<h3><%= link_to "新規投稿", new_article_path %></h3>
 
-<table cellspacing="5">
-  <tbody>
-    <%= render @articles %>
-  </tbody>
-</table>
+<h2>バンド記事一覧</h2>
+
+<div class="row">
+  <%= render @articles %>
+</div>

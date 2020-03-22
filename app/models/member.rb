@@ -83,17 +83,20 @@ class Member < ApplicationRecord
     super && (self.enable?)
   end
 
+  # 最新順に並び替え
+  default_scope -> { order(created_at: :desc)}
+
   #会員検索----------------------------------------------------------------------------------
   def self.search(search_params)
-    return status_is("enable") if search_params.blank?
+    return all if search_params.blank?
 
     status_is(search_params[:status])
     .name_like(search_params[:name])
     .gender_is(search_params[:gender])
     .age_min(search_params[:age_min])
     .age_max(search_params[:age_max])
-    .address_prefecture_is(search_params[:address_prefecture_ids])
-    .address_city_is(search_params[:address_city_ids])
+    .address_prefecture_is(search_params[:prefecture_id])
+    .address_city_is(search_params[:city_ids])
     .part_is(search_params[:part_ids])
     .genre_is(search_params[:genre_ids])
     .artist_like(search_params[:artists])
@@ -106,7 +109,7 @@ class Member < ApplicationRecord
   scope :age_max, -> (max) { where('age <= ?', max) if max.present? }
 
   scope :address_prefecture_is, -> (prefecture) do
-    where(address_prefecture: Prefecture.where(id: prefecture).map{|k| k.name}) unless prefecture[1].nil?
+    where(address_prefecture: Prefecture.where(id: prefecture).map{|k| k.name}) if prefecture.present?
   end
 
   scope :address_city_is, -> (city) do

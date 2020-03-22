@@ -1,0 +1,25 @@
+<!-- ブロックされている会員の記事は表示され無い -->
+<% unless article.member.blocking?(current_member) %>
+<tr>
+  <td>
+    <%= link_to (attachment_image_tag article.member, :profile_image, :fill, 50, 50, format: 'jpeg',
+    fallback: "no_image.jpg", size: 50), article %>
+  </td>
+  <td><%= article.subject %></td>
+  <td><%= article.member.name %></td>
+  <td><%= article.member.address_prefecture %></td>
+  <td><%= article.member.age %><span>歳</span></td>
+  <td><%= article.member.gender %></td>
+  <td><%= article.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td id="article-<%= article.id %>"><%= render partial: "members/articles/favorites", locals: { article: article } %></td>
+
+  <td><%= link_to "詳細", article %></td>
+  <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
+  <% if member_signed_in? %>
+    <!-- 自分以外の記事のみ通報ボタンが表示される -->
+    <% unless article.member == current_member %>
+      <td><%= link_to "通報", controller: "members/notices", action: "new", article_id: article.id %></td>
+    <% end %>
+  <% end %>
+</tr>
+<% end %>

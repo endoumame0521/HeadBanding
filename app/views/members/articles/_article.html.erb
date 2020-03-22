@@ -1,25 +1,77 @@
-<!-- ブロックされている会員の記事は表示され無い -->
-<% unless article.member.blocking?(current_member) %>
-<tr>
-  <td>
-    <%= link_to (attachment_image_tag article.member, :profile_image, :fill, 50, 50, format: 'jpeg',
-    fallback: "no_image.jpg", size: 50), article %>
-  </td>
-  <td><%= article.subject %></td>
-  <td><%= article.member.name %></td>
-  <td><%= article.member.address_prefecture %></td>
-  <td><%= article.member.age %><span>歳</span></td>
-  <td><%= article.member.gender %></td>
-  <td><%= article.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
-  <td id="article-<%= article.id %>"><%= render partial: "members/articles/favorites", locals: { article: article } %></td>
+<div class="col-lg-6 pr-3 mb-5">
+  <div class="Article">
+    <div class="ArticleHeader row">
+      <div class="col-3">
+        <div class="ArticleProfileImage row">
+          <div class="col-12">
+            <%= link_to (attachment_image_tag article.member, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: 100), article %>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="ArticleSubject row">
+          <div class="col-12 d-flex align-items-center">
+            <h4><%= article.subject %></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ArticleInfo row">
+      <div class="col-4">
+        <div class="ArticleMemberName row d-flex align-items-end">
+          <div class="col-12"><p><%= article.member.name %></p></div>
+        </div>
+        <div class="ArticleMemberInfo row d-flex align-items-end">
+          <div class="col-12">
+            <p>
+              <%= article.member.age %><span>歳 </span>
+              <%= Article.human_attribute_name("gender.#{article.member.gender}") %>
+            </p>
+          </div>
+        </div>
+        <div class="ArticlePrefectureCity row d-flex align-items-end">
+          <div class="col-12">
+            <p><%= article.prefecture.name %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="ArticlePart row d-flex align-items-end">
+          <div class="col-12">
+            <p>
+              <% article.part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %>
+            </p>
+          </div>
+        </div>
+        <div class="ArticleGenre row d-flex align-items-end">
+          <div class="col-12">
+            <p>
+              <% article.genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ArticleContent row d-flex align-items-center">
+      <div class="col-12">
+        <span>
+          <!-- 表示文字数を制限し、続きを読むリンクを表示 -->
+          <%= truncate(article.body, length: 200) do %>
+            <%= link_to "続きを読む", article_path(article.id) %>
+          <% end %>
+        </span>
+      </div>
+    </div>
+    <div class="ArticleFooter row mt-3">
+      <div class="col-12">
+        <p class="text-right">
+          最終更新日
+          <!-- 日付表示変更(ja.ymlファイルにて定義) -->
+          <%= I18n.l(article.updated_at, format: :original) %>
+          (<%= time_ago_in_words(article.updated_at) + "前" %>)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
-  <% if member_signed_in? %>
-    <td><%= link_to "詳細", article %></td>
-    <!-- 自分以外の記事のみ通報ボタンが表示される -->
-    <% unless article.member == current_member %>
-      <td><%= link_to "通報", controller: "members/notices", action: "new", article_id: article.id %></td>
-    <% end %>
-  <% end %>
-</tr>
-<% end %>

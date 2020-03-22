@@ -5,7 +5,7 @@ class Members::MembersController < Members::ApplicationController
 
   def index
     @search_params = member_search_params
-    @members = Member.search(@search_params)
+    @members = Member.search(@search_params).status_is("enable")
   end
 
   def show
@@ -67,7 +67,7 @@ class Members::MembersController < Members::ApplicationController
 
   def member_search_params
     params.fetch(:search, {}).permit(
-      :name, :gender, :age_min, :age_max, { address_prefecture_ids: [] }, { address_city_ids: [] },
+      :name, :gender, :age_min, :age_max, :prefecture_id, { city_ids: [] },
       { part_ids: [] }, { genre_ids: [] }, { artists: [:name] }, :status)
   end
 

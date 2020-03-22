@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :admins
   devise_for :members, :controllers => {
     :registrations => "members/registrations",
+    :sessions => "members/sessions",
   }
 
   namespace :admins do
@@ -51,9 +52,12 @@ Rails.application.routes.draw do
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]
 
-
-
     get "top" => "articles#top", as: "top"
     root 'articles#top'
   end
+
+  #市区町村のソートの為
+  get "cities_select" => "searches#cities_select"
+  get "cities_select_regist" => "searches#cities_select_regist"
+
 end

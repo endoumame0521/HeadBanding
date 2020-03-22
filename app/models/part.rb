@@ -5,4 +5,7 @@ class Part < ApplicationRecord
   has_many :articles, through: :part_articles
 
   enum status: { enable: true, disable: false }
+
+  # 最新順に並び替え
+  default_scope -> { order(created_at: :desc)}
 end

@@ -15,4 +15,39 @@
 //= require turbolinks
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require_tree .
+
+// 検索フォームでの都道府県選択に連動する市区町村
+$(document).on('turbolinks:load', function() {
+  $(document).on('change', '.prefecture_id_select', function(){
+      $.ajax({
+        type: 'GET',
+        url: '/cities_select',
+        data: {
+        prefecture_id: $(this).val()
+        }
+      }).done(function(data){
+        $('#ajax_cities_check_boxes').html(data);
+      }).fail(function(){
+        alert("通信失敗");
+      })
+    });
+});
+
+// 会員新規登録フォームでの都道府県選択に連動する市区町村
+$(document).on('turbolinks:load', function() {
+  $(document).on('change', '#member_address_prefecture', function(){
+      $.ajax({
+        type: 'GET',
+        url: '/cities_select_regist',
+        data: {
+        prefecture_name: $(this).val()
+        }
+      }).done(function(data){
+        $('#ajax_cities_radio_buttons').html(data);
+      }).fail(function(){
+        alert("通信失敗");
+      })
+    });
+});

@@ -1,3 +1,85 @@
 // Place all the styles related to the members::articles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.Article {
+  padding: 0.5em 1em;
+  background: white;/*背景色*/
+  border-top: solid 6px #FFBC61;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
+  border-radius: 10px;/*角の丸み*/
+}
+
+.Article p {
+  padding: 0.2em;
+  background: linear-gradient(transparent 90%, #FFBC61 90%);
+}
+
+.ArticleProfileImage {
+  height: 100px;
+}
+
+.ArticleSubject {
+  height: 100px;
+  background: #FFBC61;
+  color: #FFF;
+  border-radius: 10px 0px 0px 10px;/*角の丸み*/
+  position: relative;
+  border: solid 3px #FFBC61;
+}
+
+.ArticleSubject:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  margin-top: -14px;
+  border: 14px solid transparent;
+  border-right: 14px solid #FFBC61;
+}
+
+.ArticleInfo {
+
+}
+
+.ArticleMemberName {
+  height: 42px;
+}
+
+.ArticleMemberInfo {
+  height: 43px
+}
+
+.ArticlePrefectureCity {
+  height: 43px;
+}
+
+.ArticlePart {
+  height: 64px;
+}
+
+.ArticleGenre {
+  height: 64px;
+}
+
+.ArticleContent {
+  height: 188px;
+}
+
+.ArticleFooter {
+
+}
+
+
+.ArticleShow {
+  padding: 0.5em 1em;
+  background: white;/*背景色*/
+  border-top: solid 6px #FFBC61;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
+  border-radius: 10px;/*角の丸み*/
+}
+
+.ArticleShow h4 {
+  padding: 0.2em;
+  background: linear-gradient(transparent 5%, #FFBC61 90%);
+}

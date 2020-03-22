@@ -6,12 +6,12 @@ class Members::ArticlesController < Members::ApplicationController
 
   def top
     @search_params = article_search_params
-    @articles = Article.search(@search_params)
+    @articles = Article.search(@search_params).status_is("enable").published_status_is("open")
+    @articles = @articles.where(member_id: Member.where(status: "enable"))
   end
 
   def index
-    @search_params = article_search_params
-    @articles = Article.search(@search_params)
+    top
   end
 
   def new
@@ -46,9 +46,9 @@ class Members::ArticlesController < Members::ApplicationController
 
   def destroy
     if @article.destroy
-      redirect_to request.referer, notice: "記事が削除されました"
+      redirect_to articles_path, notice: "記事が削除されました"
     else
-      redirect_to request.referer, alert: "記事の削除に失敗しました"
+      redirect_to articles_path, alert: "記事の削除に失敗しました"
     end
   end
 
@@ -62,7 +62,7 @@ class Members::ArticlesController < Members::ApplicationController
 
   def article_search_params
     params.fetch(:search, {}).permit(
-      :published_status, :category, :subject, :body, { prefecture_ids: [] }, { city_ids: [] },
+      :published_status, :category, :subject, :body, :prefecture_id, { city_ids: [] },
       :day_of_the_week, :band_intention, :music_intention, :gender, :age_min, :age_max,
       :status, :band_theme, { part_ids: [] }, { genre_ids: [] })
   end

@@ -1,0 +1,12 @@
+<% if admin_signed_in? %>
+  <li class="nav-item"><%= link_to 'バンド記事', admins_articles_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'ツイート', admins_tweets_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'メンバー', admins_members_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'メッセージ', admins_rooms_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to '通報', admins_notices_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'ジャンル', admins_genres_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'パート', admins_parts_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "nav-link" %></li>
+<% else %>
+  <li class="nav-item"><%= link_to 'ログイン', new_admin_session_path, class: "nav-link" %></li>
+<% end %>

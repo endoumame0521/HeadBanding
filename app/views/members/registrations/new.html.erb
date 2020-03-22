@@ -1,81 +1,85 @@
-<h2>Sign up</h2>
+<div class="row justify-content-center">
+  <div class="col-lg-10">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <h2>新規会員登録</h2>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
+      <div class="field">
+        <%= f.label(:email, Member.human_attribute_name(:email)) %>
+        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
 
-  <div class="field">
-    <p>性別：</p>
-    <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
-      <%= r.label {r.radio_button + r.value} %>
+      <div class="field">
+        <%= f.label(:name, Member.human_attribute_name(:name)) %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
+        <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
+          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
+        <% end %>
+      </div>
+
+      <div class="field form-inline">
+        <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
+        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:password, Member.human_attribute_name(:password)) %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %>文字以上)</em>
+        <% end %><br>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:password_confirmation, Member.human_attribute_name(:password_confirmation)) %><br>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      </div>
+
+
+      <div class="field">
+        住所（<%= f.label(:address_prefecture, Prefecture.human_attribute_name(:name)) %>）
+        <%= f.collection_select(:address_prefecture, Prefecture.all, :name, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
+      </div>
+
+      <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
+      <div class="field" id="ajax_cities_radio_buttons">
+        <%= render partial: "members/registrations/cities_select", locals: { prefecture_id: "" } %>
+      </div>
+
+      <div class="field">
+        <span>担当</span><%= f.label :part, Part.model_name.human %><br>
+        <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
+      </div>
+
+      <div class="field">
+        <span>好きな</span><%= f.label :genre, Genre.model_name.human %><br>
+        <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
+      </div>
+
+      <div class="field">
+        <span>好きな</span><%= f.label :artist, Artist.model_name.human %><br>
+        <%= f.fields_for :artists_attributes do |a| %>
+          <% for i in 1..5 do %>
+            <%= a.text_field :name, name: "member[artists_attributes][#{i}][name]", class: "form-control mb-2" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:introduction, Member.human_attribute_name(:introduction)) %><br>
+        <%= f.text_area :introduction, class: "form-control", rows: "5" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "会員登録", class: "btn btn-primary mb-5" %>
+      </div>
     <% end %>
+
   </div>
-
-  <div class="field">
-    <%= f.label :birthday, "生年月日" %><br>
-    <%= f.date_select :birthday, use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address_prefecture %><br>
-    <%= f.collection_select :address_prefecture, Prefecture.all, :name, :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address_city %><br>
-    <%= f.collection_select :address_city, City.all, :name, :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :part, "担当パート" %><br>
-    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :genre, "好きなジャンル" %><br>
-    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :artist, "好きなアーティスト" %><br>
-    <%= f.fields_for :artists_attributes do |a| %>
-      <% for i in 1..5 do %>
-        <%= a.text_field :name, name: "member[artists_attributes][#{i}][name]" %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :introduction, "自己紹介文" %><br>
-    <%= f.text_area :introduction %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "members/shared/links" %>
-
+</div>

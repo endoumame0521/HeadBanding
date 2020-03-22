@@ -6,7 +6,8 @@ class Members::TweetsController < Members::ApplicationController
 
   def index
     @search_params = tweet_search_params
-    @tweets = Tweet.search(@search_params)
+    @tweets = Tweet.search(@search_params).status_is("enable")
+    @tweets = @tweets.where(member_id: Member.where(status: "enable"))
   end
 
   def create
