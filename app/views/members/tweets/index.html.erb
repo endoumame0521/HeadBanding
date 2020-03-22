@@ -6,6 +6,9 @@
 <!-- ツイート検索フォーム -->
 <%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: false } %>
 
+<!-- ツイート投稿フォーム -->
+<%= render "form", { tweet_flag: true } %>
+
 <table cellspacing="5">
   <!-- ツイート一覧 -->
   <tbody id="tweets">
@@ -17,5 +20,3 @@
   </tbody>
 </table>
 
-<!-- ツイート投稿フォーム -->
-<%= render "form", { tweet_flag: true } %>

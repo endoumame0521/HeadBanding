@@ -3,6 +3,9 @@
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @tweet %>
 
+<!-- コメント投稿フォーム -->
+<%= render "form", { tweet: @tweet, tweet_flag: false } %>
+
 <table cellspacing="5">
   <tbody id="tweet_comments">
     <!-- ツイートの詳細 -->
@@ -16,6 +19,3 @@
     <% end %>
   </tbody>
 </table>
-
-<!-- コメント投稿フォーム -->
-<%= render "form", { tweet: @tweet, tweet_flag: false } %>

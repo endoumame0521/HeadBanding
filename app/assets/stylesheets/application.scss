@@ -13,81 +13,52 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap";
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+nav {
+  background-color: #FFBC61;
+}
+
+.navbar-admins {
+  background-color: #4C4C4C;
+}
+
 header {
-  display: flex;
-  background: #AFB42B;
-  color: #fff;
-  height: 60px;
-  top: 0px;
-  position: -webkit-sticky;
-  position: sticky;
-  padding-left: 20px;
+  padding-top: 1.5rem;
+  background-color: white !important;
 }
 
-header > .title {
-  align-items: center;
-  justify-content: center;
-  width: 30%;
+main {
+  color: #4C4C4C;
+  background-color: #FFF4E0;
 }
 
-header > .notification {
-  align-items: center;
-  justify-content: center;
-  width: 70%;
+body {
+  background-color: #FFF4E0;
 }
 
-.content {
-  display: flex;
+#notice {
+  margin-bottom: 0px;
 }
 
-.content > .sidebar {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 60px;
-  width: 20%;
-  height: calc(100vh - 60px * 2);
-  color: #757575;
-  background: #F0F4C3;
+#alert {
+  margin-bottom: 0px;
 }
 
-.content > .main {
-  width: 80%;
-  background: #fff;
-  padding: 20px;
-  /* background: linear-gradient(to bottom, #eeeeee 0%,#B7EAE0 100%); */
+.field {
+  margin-bottom: 1.1em;
 }
 
-.content > .sidebar > table {
-  width: 100%;
-  padding: 10px;
+h2 {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
-
-.content > .sidebar > table > thead {
-  background: #CDDC39;
-}
-
-.content > .sidebar > tbody > a:link, a:visited, a:hover, a:active {
-  text-decoration: none;
-  color: #333333;
-}
-
-footer {
-  display: flex;
-  background: #AFB42B;
-  color: #fff;
-  height: 60px;
-  bottom: 0px;
-  position: -webkit-sticky;
-  position: sticky;
-}
-
-
 
 
 
@@ -100,7 +71,6 @@ footer {
   text-align: right;
   font-size: 14px;
   background: white;
-
 }
 
 /*以下、②左側のコメント*/
@@ -163,7 +133,6 @@ footer {
   max-width: 250px;
   border-radius: 12px;
   background: #AFB42B;
-  font-size: 15px:
 }
 
 .mycomment p:after {
@@ -176,4 +145,3 @@ footer {
   -webkit-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
-

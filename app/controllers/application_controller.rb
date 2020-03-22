@@ -5,11 +5,16 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_in_path_for(resource)
-    top_path
+    case resource
+    when Admin
+      admins_articles_path
+    when Member
+      articles_path
+    end
   end
 
   def after_sign_out_path_for(resource)
-    root_path
+    top_path
   end
 
   def configure_permitted_parameters

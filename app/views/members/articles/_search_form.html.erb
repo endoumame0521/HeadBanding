@@ -1,4 +1,4 @@
-<h3>記事検索フォーム</h3>
+<h2>バンド記事検索フォーム</h2>
 
 <!-- admin_flagの値によって会員側フォームか管理者側フォームかを判断 -->
 <% action = admin_flag ? admins_articles_path : articles_path %>
@@ -6,12 +6,12 @@
 <%= form_with scope: :search, url: action, method: :get, local: true do |f| %>
   <div class="field">
     <%= f.label(:name, Article.human_attribute_name(:subject)) %>
-    <%= f.text_field :subject, value: search_params[:subject]%>
+    <%= f.text_field :subject, value: search_params[:subject], class: "form-control" %>
   </div>
 
   <div class="field">
-    <%= f.label(:name, Article.human_attribute_name(:body)) %>
-    <%= f.text_field :body, value: search_params[:body]%>
+    <%= f.label(:body, Article.human_attribute_name(:body)) %>
+    <%= f.text_field :body, value: search_params[:body], class: "form-control" %>
   </div>
 
   <div class="field">
@@ -57,35 +57,32 @@
   </div>
 
   <div class="field">
-    年齢
+    <span>年齢</span>
     <%= f.text_field :age_min, value: search_params[:age_min] %><%= f.label :age_min, "歳" %>〜
     <%= f.text_field :age_max, value: search_params[:age_max] %><%= f.label :age_max, "歳"  %>
   </div>
 
   <div class="field">
-    <%= f.label :prefecture_id, Prefecture.model_name.human %>
-    <%= f.collection_check_boxes :prefecture_ids, Prefecture.all, :id, :name, value: search_params[:prefecture_ids] %>
+    <%= f.label(:prefecture_id, Prefecture.human_attribute_name(:name)) %>
+    <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
   </div>
 
-  <div class="field">
-    <%= f.label :city, City.model_name.human %>
-    <%= f.collection_check_boxes :city_ids, City.all, :id, :name, value: search_params[:city_ids] %>
+  <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
+  <div class="field" id="ajax_cities_check_boxes">
+    <%= render partial: "layouts/cities_select", locals: { prefecture_id: "" } %>
   </div>
 
   <div class="field">
     <%= f.label :part, Part.model_name.human %>
-    <%= f.collection_check_boxes :part_ids, Part.all, :id, :name, value: search_params[:part_ids] %>
+    <%= f.collection_check_boxes(:part_ids, Part.all, :id, :name) do |b| %>
+      <%= b.label { b.check_box(checked: Array(@search_params[:part_ids]).include?(b.value.to_s)) + b.text } %>
+    <% end %>
   </div>
 
   <div class="field">
     <%= f.label :genre, Genre.model_name.human %>
-    <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name, value: search_params[:genre_ids] %>
-  </div>
-
-  <div class="field">
-    <%= f.label :artist, Artist.model_name.human %>
-    <%= f.fields_for :artists do |a| %>
-      <%= a.text_field :name %>
+    <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+      <%= b.label { b.check_box(checked: Array(@search_params[:genre_ids]).include?(b.value.to_s)) + b.text } %>
     <% end %>
   </div>
 
@@ -93,14 +90,14 @@
     <div class="field">
       <p>記事のステータス：</p>
       <%= f.collection_radio_buttons(:status, Article.statuses, :first, :first) do |r| %>
-        <%= r.label {r.radio_button(checked: r.value == search_params[:status]) + r.text} %>
+        <%= r.radio_button(checked: r.value == @search_params[:status]) + f.label(Article.human_attribute_name("status.#{r.text}")) %>
       <% end %>
     </div>
 
     <div class="field">
       <p>記事の公開状態：</p>
       <%= f.collection_radio_buttons(:published_status, Article.published_statuses, :first, :first) do |r| %>
-        <%= r.label {r.radio_button(checked: r.value == search_params[:published_status]) + r.text} %>
+        <%= r.radio_button(checked: r.value == @search_params[:published_status]) + f.label(Article.human_attribute_name("published_status.#{r.text}")) %>
       <% end %>
     </div>
   <% else %>
@@ -110,6 +107,6 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "検索" %>
+    <%= f.submit "検索", class: "btn btn-primary mb-5" %>
   </div>
 <% end %>
