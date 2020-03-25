@@ -12,10 +12,13 @@ class Admins::RoomsController < Admins::ApplicationController
     end
   end
 
-  def show
-    @room = Room.find(params[:id])
-    @messages = @room.messages
-    @entries = @room.entries
+  def destroy
+    room = Room.find(params[:id])
+    if room.destroy
+      redirect_to admins_rooms_path, notice: "メッセージルームが削除されました"
+    else
+      redirect_to admins_rooms_path, alert: "メッセージルームの削除に失敗しました"
+    end
   end
 
   private

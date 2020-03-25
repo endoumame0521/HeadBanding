@@ -33,7 +33,7 @@
 
       <div class="field form-inline">
         <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
-        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control" %>
+        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control ml-1" %>
       </div>
 
       <div class="field">
@@ -73,7 +73,7 @@
 
       <div class="field">
         <%= f.label(:introduction, Member.human_attribute_name(:introduction)) %><br>
-        <%= f.text_area :introduction, class: "form-control", rows: "5" %>
+        <%= f.text_area :introduction, class: "form-control", rows: "10" %>
       </div>
 
       <div class="actions">

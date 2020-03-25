@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       get "blocking" => "members#blocker", as: "blocking" #ブロックしているリスト一覧
       get "blockers" => "members#blocked", as: "blockers" #ブロックされているリスト一覧
     end
-    resources :rooms, only: [:index, :show, :update, :destroy] do
+    resources :rooms, only: [:index, :update, :destroy] do
       resources :messages, only: [:update, :destroy]
     end
     resources :notices, only: [:index, :show, :update, :destroy]

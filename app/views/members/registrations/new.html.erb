@@ -19,7 +19,7 @@
       <div class="field">
         <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
         <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
-          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}"), class: "ml-1") %>
+          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
         <% end %>
       </div>
 
