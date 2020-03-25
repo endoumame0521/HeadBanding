@@ -1,26 +1,19 @@
-<h2>Adminメッセージ一覧</h2>
+<h2>メッセージルーム一覧</h2>
 
-<table cellspacing="5">
-  <tbody>
-    <% @rooms.each do |room| %>
-      <tr>
-        <td>RoomId:<%= room.id %></td>
-        <td><%= render "layouts/status_form", { model: room, action: admins_room_path(room.id) } %></td>
-        <td><%= link_to "メッセージルームへ", admins_room_path(room.id) %></td>
-      <tr>
-      <% room.entry_members.each do |entry_member| %>
-        <tr>
-          <td>
-            <%= link_to (attachment_image_tag entry_member, :profile_image, :fill, 30, 30, format: 'jpeg',
-            fallback: "no_image.jpg", size: 30), entry_member %>
-          </td>
-          <td><%= entry_member.id %></td>
-          <td><%= entry_member.name %></td>
-          <td><%= entry_member.address_prefecture %></td>
-          <td><%= entry_member.age %><span>歳</span></td>
-          <td><%= entry_member.gender %></td>
-        </tr>
-      <% end %>
+<% @rooms.each do |room| %>
+  <div class="row mt-4">
+    <div class="col-lg-1">ルームID<%= room.id  %></div>
+    <% room.entry_members.each do |entry_member| %>
+      <div class="col-lg-4">
+          <%= link_to (attachment_image_tag entry_member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50), admins_member_path(entry_member.id) %>
+          <%= entry_member.name %>
+          （<%= entry_member.address_prefecture %>
+          <%= entry_member.age %><span>歳</span>
+          <%= Member.human_attribute_name("gender.#{entry_member.gender}") %>）
+      </div>
     <% end %>
-  </tbody>
-</table>
+    <div class="col-lg-3 mt-3">
+      <%= render "layouts/status_form", { model: room, action: admins_room_path(room.id) } %>
+    </div>
+  </div>
+<% end %>
