@@ -22,6 +22,15 @@ class Admins::MembersController < Admins::ApplicationController
     end
   end
 
+  def destroy
+    member = Member.find(params[:id])
+    if member.destroy
+      redirect_to admins_members_path, notice: "会員が削除されました"
+    else
+      redirect_to admins_members_path, alert: "会員の削除に失敗しました"
+    end
+  end
+
   def follower
     @members = Member.find(params[:member_id]).following_member
   end
@@ -40,15 +49,12 @@ class Admins::MembersController < Admins::ApplicationController
 
   private
   def member_params
-    params.require(:member).permit(
-      :name, :gender, :birthday, :address_prefecture, :address_city, :introduction,
-      :sound, :profile_image, :email, :status, { part_ids: [] }, { genre_ids: [] },
-      artists_attributes: [:id, :name])
+    params.require(:member).permit(:status)
   end
 
   def member_search_params
     params.fetch(:search, {}).permit(
-      :name, :gender, :age_min, :age_max, { address_prefecture_ids: [] }, { address_city_ids: [] },
+      :name, :gender, :age_min, :age_max, :prefecture_id, { city_ids: [] },
       { part_ids: [] }, { genre_ids: [] }, { artists: [:name] }, :status)
   end
 end

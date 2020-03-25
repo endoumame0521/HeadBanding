@@ -2,5 +2,5 @@
 <div class="mycomment">
   <p><%= message.body %></p>
 </div>
-<p><%= message.created_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></p>
+<p><%= I18n.l(message.updated_at, format: :original) %></p>
 <!--/③右コメント終-->

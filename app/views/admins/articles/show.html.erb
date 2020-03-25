@@ -1,5 +1,4 @@
-<!-- 管理者にログインメンバーの権限を付与する -->
-<%= render file: "members/articles/show", locals: { current_member: @article.member } %>
-
 <!-- 記事ステータス更新フォーム -->
 <%= render "layouts/status_form", { model: @article, action: admins_article_path(@article.id) } %>
+<!-- 管理者にログインメンバーの権限を付与する -->
+<%= render file: "members/articles/show", locals: { current_member: @article.member } %>

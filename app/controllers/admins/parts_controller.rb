@@ -27,6 +27,15 @@ class Admins::PartsController < Admins::ApplicationController
     end
   end
 
+  def destroy
+    part = Part.find(params[:id])
+    if part.destroy
+      redirect_to admins_parts_path, notice: "パートが削除されました"
+    else
+      redirect_to admins_parts_path, alert: "パートの削除に失敗しました"
+    end
+  end
+
   private
   def part_params
     params.require(:part).permit(:name, :status)

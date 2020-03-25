@@ -168,13 +168,17 @@ ja:
       notice:
         body: 通報内容
         status: 通報ステータス
-      notices/status:
-        opne: 確認中
+      notice/status:
+        open: 確認中
         close: 確認完了
         missreporting: 問題無し
 
       part:
         name: パート名
+        status: パートステータス
+      part/status:
+        enable: 有効
+        disable: 無効
 
       prefecture:
         name: 都道府県名

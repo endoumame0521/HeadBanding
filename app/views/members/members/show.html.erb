@@ -4,14 +4,18 @@
     $("#create_access").trigger('click');
   });
 </script>
-<%= form_with model: Access.new, url: member_accesses_path(@member) do |f| %>
-  <%= f.submit "", style: "display: none", id: "create_access" %>
+
+<!-- 管理者としてログイン中の場合は除く -->
+<% unless admin_signed_in? %>
+  <%= form_with model: Access.new, url: member_accesses_path(@member) do |f| %>
+    <%= f.submit "", style: "display: none", id: "create_access" %>
+  <% end %>
 <% end %>
 <!-- 足跡機能END -->
 
 
-
-<% if @member == current_member %>
+<!-- 自分のページ、管理者としてログインしていない場合 -->
+<% if @member == current_member && admin_signed_in? == false %>
   <h2>マイページ</h2>
 <% else %>
   <h2><%= @member.name %>さんのページ</h2>
@@ -24,52 +28,71 @@
     <div class="row">
     <%= attachment_image_tag @member, :profile_image, :fill, 300, 300, format: 'jpeg', fallback: "no_image.jpg", size: 300 %>
     </div>
-
-    <!-- フォロー・アンフォローボタン＋ブロック・アンプロックボタン -->
-    <div class="row mt-3">
-      <span id="relation-member-<%= @member.id %>" class="mr-3">
-        <%= render "members/relationships/follow_button", { member: @member } %>
-      </span>
-      <span id="block-member-<%= @member.id %>">
-        <%= render "members/blocks/block_button", { member: @member } %>
-      </span>
-    </div>
+    <!-- 管理者としてログイン中の場合は除く -->
+    <% unless admin_signed_in? %>
+      <!-- フォロー・アンフォローボタン＋ブロック・アンプロックボタン -->
+      <div class="row mt-3">
+        <span id="relation-member-<%= @member.id %>" class="mr-3">
+          <%= render "members/relationships/follow_button", { member: @member } %>
+        </span>
+        <span id="block-member-<%= @member.id %>">
+          <%= render "members/blocks/block_button", { member: @member } %>
+        </span>
+      </div>
+    <% end %>
 
     <!-- フォロー・フォロワー一覧へのリンク -->
     <div class="row mt-3 mb-4">
       <div class="btn btn-warning">
-        <%= link_to member_following_path(@member) do %>
-        フォロー x <%= @member.following_member.count %>
+        <% if admin_signed_in? %>
+          <%= link_to admins_member_following_path(@member) do %>
+            フォロー x <%= @member.following_member.count %>
+          <% end %>
+        <% else %>
+          <%= link_to member_following_path(@member) do %>
+            フォロー x <%= @member.following_member.count %>
+          <% end %>
+        <% end %>
       </div>
-      <% end %>
-      <div class="btn btn-warning">
-        <%= link_to member_followers_path(@member) do %>
-      フォロワー x <%= @member.follower_member.count %>
-      <% end %>
+      <div class="btn btn-warning ml-2">
+        <% if admin_signed_in? %>
+          <%= link_to admins_member_followers_path(@member) do %>
+            フォロワー x <%= @member.follower_member.count %>
+          <% end %>
+        <% else %>
+          <%= link_to member_followers_path(@member) do %>
+            フォロワー x <%= @member.follower_member.count %>
+          <% end %>
+        <% end %>
       </div>
     </div>
 
     <div class="row">
-      <% if @member == current_member %>
-        <%= link_to "編集", edit_member_path %>
-        <%= link_to "退会", member_cancel_path(@member) %>
-        <%= link_to "足跡", member_accesses_path(@member) %>
-        <%= link_to "ブロックリスト", member_blocking_path(@member) %>
-        <%= link_to "メッセージ一覧", rooms_path %>
+      <% if admin_signed_in? %>
+        <%= link_to "ブロックリスト", admins_member_blocking_path(@member) %>
+        <%= link_to "ブロッカーリスト", admins_member_blockers_path(@member) %>
       <% else %>
-        <% if @is_room %>
-          <%= link_to "メッセージルームへ", room_path(@room_id), class: "btn-gradient-radius mb-5" %>
+        <!-- ログイン中メンバー自分自身の場合 -->
+        <% if @member == current_member %>
+          <%= link_to "メッセージ一覧", rooms_path %>
+          <%= link_to "ブロックリスト", member_blocking_path(@member) %>
+          <%= link_to "足跡", member_accesses_path(@member) %>
+          <%= link_to "編集", edit_member_path %>
+          <%= link_to "退会", member_cancel_path(@member) %>
         <% else %>
-          <%= form_with model: @room do |f| %>
-            <%= fields_for @entry do |e| %>
-              <%= e.hidden_field :member_id, value: @member.id %>
+          <% if @is_room %>
+            <%= link_to "メッセージルームへ", room_path(@room_id), class: "btn-gradient-radius mb-5" %>
+          <% else %>
+            <%= form_with model: @room do |f| %>
+              <%= fields_for @entry do |e| %>
+                <%= e.hidden_field :member_id, value: @member.id %>
+              <% end %>
+              <%= f.submit "メッセージルームを作る", class: "btn-gradient-radius mb-5" %>
             <% end %>
-            <%= f.submit "メッセージルームを作る", class: "btn-gradient-radius mb-5" %>
           <% end %>
         <% end %>
       <% end %>
     </div>
-
 
     <!-- メンバー情報エリア -->
     <h3 class="mt-3">
@@ -182,11 +205,22 @@
           <div class="twitter__contents scroll" id="tweets">
             <!-- ツイート一覧 -->
             <% @member.tweets.each do |tweet| %>
-              <!-- ブロックされている会員のツイートは表示され無い -->
-              <% unless tweet.member.blocking?(current_member) %>
+              <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->
+              <% if admin_signed_in? %>
                 <div class="twitter__block" id="tweet-<%= tweet.id %>">
-                  <%= render partial: "members/tweets/tweet", locals: { tweet: tweet, tweet_flag: true } %>
-                </div>
+                    <%= render partial: "members/tweets/tweet", locals: {
+                    tweet: tweet, tweet_flag: true, current_member: tweet.member, show_path: admins_tweet_path(tweet.id)
+                  } %>
+                  </div>
+              <% else %>
+                <!-- ブロックされている会員のツイートは表示され無い -->
+                <% unless tweet.member.blocking?(current_member) %>
+                  <div class="twitter__block" id="tweet-<%= tweet.id %>">
+                    <%= render partial: "members/tweets/tweet", locals: {
+                    tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id)
+                  } %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           </div>
@@ -202,7 +236,18 @@
 <h3 class="mt-5 mb-4">バンド記事一覧</h3>
 <div class="row">
   <% if @member.articles.count > 0 %>
-    <%= render @member.articles %>
+    <!-- 記事一覧 -->
+    <% @member.articles.each do |article| %>
+      <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->
+      <% if admin_signed_in? %>
+        <%= render partial: "members/articles/article", locals: { article: article, article_path: admins_article_path(article.id) } %>
+      <% else %>
+        <!-- ブロックされている会員の記事は表示され無い -->
+        <% unless article.member.blocking?(current_member) %>
+          <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% else %>
     <h4 class="mt-3 ml-5">投稿記事はありません</h4>
   <% end %>

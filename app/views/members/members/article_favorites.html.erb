@@ -2,7 +2,17 @@
 
 <% if @favorited_articles.count > 0 %>
   <div class="row">
-    <%= render partial: "members/articles/article", collection: @favorited_articles %>
+    <!-- 記事一覧 -->
+    <% @favorited_articles.each do |favorited_article| %>
+      <div class="col-lg-6">
+        <div class="row">
+          <!-- ブロックされている会員の記事は表示され無い -->
+          <% unless favorited_article.member.blocking?(current_member) %>
+            <%= render partial: "members/articles/article", locals: { article: favorited_article, article_path: article_path(favorited_article.id) } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% else %>
   <p>お気に入り記事はありません</p>

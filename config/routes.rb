@@ -20,9 +20,9 @@ Rails.application.routes.draw do
     resources :rooms, only: [:index, :show, :update, :destroy] do
       resources :messages, only: [:update, :destroy]
     end
-    resources :notices, only: [:index, :show, :update]
-    resources :genres, only: [:index, :create, :edit, :update]
-    resources :parts, only: [:index, :create, :edit, :update]
+    resources :notices, only: [:index, :show, :update, :destroy]
+    resources :genres, only: [:index, :create, :edit, :update, :destroy]
+    resources :parts, only: [:index, :create, :edit, :update, :destroy]
   end
 
   scope module: :members do

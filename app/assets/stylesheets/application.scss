@@ -23,6 +23,15 @@
 
 nav {
   background-color: #FFBC61;
+  .profile_image{
+  overflow: hidden;
+  margin-left: 15px;
+  width: 40px;
+  height: 40px;
+  border: #fff 1px solid;
+  border-radius: 55px;
+  background: #fff;
+}
 }
 
 .navbar-admins {
@@ -78,7 +87,6 @@ h2::before {
   border-bottom: solid 15px transparent;
   border-right: solid 20px rgb(149, 158, 155);
 }
-
 
 .form-control {
   box-shadow: 0px 1px 3px rgba(0,0,0,.18);
@@ -171,11 +179,11 @@ a:link, a:visited, a:hover, a:active {
 /*以下、①背景色など*/
 .line-bc {
   padding: 20px 10px;
-  max-width: 450px;
+  max-width: 900px;
   margin: 15px auto;
   text-align: right;
-  font-size: 14px;
-  background: white;
+  font-size: 16px;
+  background: #FFF4E0;
 }
 
 /*以下、②左側のコメント*/

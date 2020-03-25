@@ -9,9 +9,13 @@
 <div class="row">
   <!-- 記事一覧 -->
   <% @articles.each do |article| %>
-    <!-- ブロックされている会員の記事は表示され無い -->
-    <% unless article.member.blocking?(current_member) %>
-      <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
-    <% end %>
+    <div class="col-lg-6">
+      <div class="row">
+        <!-- ブロックされている会員の記事は表示され無い -->
+        <% unless article.member.blocking?(current_member) %>
+          <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>

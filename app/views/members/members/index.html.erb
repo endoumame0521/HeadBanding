@@ -7,7 +7,7 @@
   <!-- メンバー一覧 -->
   <% @members.each do |member| %>
     <!-- ブロックされているメンバーは表示され無い -->
-    <% unless member.member.blocking?(current_member) %>
+    <% unless member.blocking?(current_member) %>
       <%= render partial: "members/members/member", locals: { member: member, member_path: member_path(member.id) } %>
     <% end %>
   <% end %>
