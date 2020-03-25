@@ -1,21 +1,29 @@
-<h2>Memberツイート詳細</h2>
-
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @tweet %>
 
+<div class="twitter__container">
+
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweet_comments">
+    <!-- ツイートの詳細 -->
+    <div class="twitter__block" id="tweet_comment_tweet">
+      <%= render "members/tweets/tweet", { tweet: @tweet, tweet_flag: true, show_path: tweet_path(@tweet.id) } %>
+    </div>
+    <!-- ツイートコメント一覧 -->
+    <% @tweet.tweet_comments.each do |tweet_comment| %>
+      <!-- ブロックされている会員のツイートは表示され無い -->
+      <% unless tweet_comment.member.blocking?(current_member) %>
+        <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
+          <%= render partial: "members/tweets/tweet", locals: {
+            tweet: tweet_comment, tweet_flag: false, show_path: tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
+          } %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
 <!-- コメント投稿フォーム -->
 <%= render "form", { tweet: @tweet, tweet_flag: false } %>
-
-<table cellspacing="5">
-  <tbody id="tweet_comments">
-    <!-- ツイートの詳細 -->
-    <%= render "tweet", { tweet: @tweet, tweet_flag: true } %>
-
-    <!-- ツイートに対するコメント一覧 -->
-    <% @tweet.tweet_comments.each do |tweet_comment| %>
-      <tr id="tweet_comment-<%= tweet_comment.id %>">
-        <%= render partial: "members/tweets/tweet", locals: { tweet: tweet_comment, tweet_flag: false } %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

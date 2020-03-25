@@ -1,10 +1,14 @@
 <!-- 会員検索フォーム -->
 <%= render "members/members/search_form", { search_params: @search_params, admin_flag: false } %>
 
-<h2>Member会員一覧</h2>
+<h2>メンバー一覧</h2>
 
-<table cellspacing="5">
-  <tbody>
-    <%= render partial: "members/members/member", collection: @members %>
-  </tbody>
-</table>
+<div class="row">
+  <!-- メンバー一覧 -->
+  <% @members.each do |member| %>
+    <!-- ブロックされているメンバーは表示され無い -->
+    <% unless member.member.blocking?(current_member) %>
+      <%= render partial: "members/members/member", locals: { member: member, member_path: member_path(member.id) } %>
+    <% end %>
+  <% end %>
+</div>

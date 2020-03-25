@@ -187,7 +187,7 @@ ja:
 
       tweet:
         body: ツイート内容
-        image_id: 投稿画像
+        image: ツイート画像
         status: ツイートステータス
       tweet/status:
         enable: 有効

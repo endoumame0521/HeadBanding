@@ -1,11 +1,9 @@
-<h2>Memberフォロー</h2>
+<h2>フォロー</h2>
 
 <% if @members.count > 0 %>
-  <table cellspacing="5">
-    <tbody>
-    <%= render partial: "members/members/member", collection: @members  %>
-    </tbody>
-  </table>
+  <div class="row">
+    <%= render partial: "members/members/member", collection: @members %>
+  </div>
 <% else %>
   <p>フォローしている人はいません</p>
 <% end %>

@@ -1,10 +1,13 @@
-<h2>Admin会員一覧</h2>
-
 <!-- 会員検索フォーム -->
 <%= render "members/members/search_form", { search_params: @search_params, admin_flag: true } %>
 
-<table cellspacing="5">
-  <tbody>
-    <%= render @members %>
-  </tbody>
-</table>
+<h2>メンバー一覧</h2>
+
+<div class="row">
+  <!-- メンバー一覧 -->
+  <% @members.each do |member| %>
+    <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
+    <!-- メンバーステータス更新フォーム -->
+    <%= render "layouts/status_form", { model: member, action: admins_member_path(member.id) } %>
+  <% end %>
+</div>

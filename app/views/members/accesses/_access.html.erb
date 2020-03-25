@@ -3,10 +3,10 @@
     <%= link_to (attachment_image_tag access.visitor, :profile_image, :fill, 50, 50, format: 'jpeg',
     fallback: "no_image.jpg", size: 50), access.visitor %>
   </td>
-  <td><%= access.visitor.id %></td>
   <td><%= access.visitor.name %></td>
   <td><%= access.visitor.address_prefecture %></td>
+  <td><%= access.visitor.address_city %></td>
   <td><%= access.visitor.age %><span>歳</span></td>
-  <td><%= access.created_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
+  <td><%= I18n.l(access.created_at, format: :original) %></td>
   <td><%= link_to "詳細", access.visitor %></td>
 </tr>

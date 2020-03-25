@@ -1,4 +1,5 @@
-$('#tweet_comments').prepend('<tr id="tweet_comment-<%= @tweet_comment.id %>">' + '<%= j(render partial: "members/tweets/tweet", locals: { tweet: @tweet_comment, tweet_flag: false }) %>' + '<tr>');
+$('#tweet_comments').append('<div class="twitter__block" id="tweet_comment-<%= @tweet_comment.id %>">' + '<%= j(render partial: "members/tweets/tweet", locals: { tweet: @tweet_comment, tweet_flag: false }) %>' + '</div>');
 $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
 $(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
 $("textarea").val('');
+$("#tweet_comments").scrollTop($("#tweet_comments")[0].scrollHeight);

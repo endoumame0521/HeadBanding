@@ -1,12 +1,17 @@
-<h2>バンド記事の詳細</h2>
-
-<!-- 自分の記事の場合、編集ボタンと削除ボタンを表示 -->
-<% if @article.member == current_member %>
-  <div class="btn-group">
-    <%= link_to "編集", edit_article_path, class: "btn btn-success" %>
-    <%= link_to "削除", article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, class: "btn btn-danger" %>
+<div class="row">
+  <div class="col-6">
+    <h2>バンド記事の詳細</h2>
   </div>
-<% end %>
+  <div class="col-6 form-inline d-flex justify-content-end">
+    <!-- 自分の記事の場合、編集ボタンと削除ボタンを表示 -->
+    <% if member_signed_in? %>
+      <% if @article.member == current_member %>
+          <%= link_to "編集", edit_article_path, class: "btn btn-primary mt-4" %>
+          <%= link_to "削除", article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, class: "btn btn-danger mt-4 ml-3" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 <div class="row pr-3 mb-4">
   <div class="ArticleShow col-lg-12">
@@ -23,10 +28,13 @@
     <h4>基本データ</h4>
     <div class="row">
       <div class="col-3">
-        <!-- 自分の記事の場合は公開ステータスを表示する -->
-        <% if @article.member.id == current_member.id %>
-          <p><%= Article.human_attribute_name(:published_status) %></p>
+        <% if member_signed_in? %>
+          <!-- 自分の記事の場合は公開ステータスを表示する -->
+          <% if @article.member.id == current_member.id %>
+            <p><%= Article.human_attribute_name(:published_status) %></p>
+          <% end %>
         <% end %>
+
         <p><%= Article.human_attribute_name(:category) %></p>
         <p><%= Article.human_attribute_name(:prefecture_id) %></p>
         <p><%= City.model_name.human %></p>
@@ -38,8 +46,10 @@
       </div>
 
       <div class="col-9">
-        <% if @article.member.id == current_member.id %>
-          <p><%= Article.human_attribute_name("published_status.#{@article.published_status}") %></p>
+        <% if member_signed_in? %>
+          <% if @article.member.id == current_member.id %>
+            <p><%= Article.human_attribute_name("published_status.#{@article.published_status}") %></p>
+          <% end %>
         <% end %>
 
         <p><%= Article.human_attribute_name("category.#{@article.category}") %></p>

@@ -1,7 +1,10 @@
 <!-- 管理者限定：各種公開ステータス更新フォーム -->
+<div class=" row align-items-start">
 <%= form_with model: model, url: action, local: true do |f| %>
-  <div class="field">
-    <%= f.select :status, model.class.statuses.keys.map {|k| [k, k]} %>
-    <%= f.submit "更新", class: "actions" %>
+  <div class="field form-inline">
+    <%= f.select :status, model.class.statuses.keys.map {|k| [ model.class.human_attribute_name("status.#{k}"), k]}, {}, class: "form-control" %>
+    <%= f.submit "更新", class: "actions btn btn-primary ml-2" %>
   </div>
 <% end %>
+<%= link_to "削除", action, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, class: "btn btn-danger ml-2" %>
+</div>

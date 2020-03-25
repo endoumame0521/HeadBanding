@@ -1,29 +1,5 @@
-<h2>Admin記事詳細</h2>
-
-<h4>記事のタイトル</h4>
-<p><%= @article.subject %></p>
-
-<h4>記事の内容</h4>
-<p><%= @article.body %></p>
-
-<h4>基本データ</h4>
-<p>記事の公開状態：<%= @article.published_status %></p>
-<p>記事の種類：<%= @article.category %></p>
-<p>都道府県：<%= @article.prefecture.name %></p>
-<p>活動エリア：<% @article.article_cities.each { |article_city| %><%= article_city.city.name %>、<% } %></p>
-<p>活動の曜日：<%= @article.day_of_the_week %></p>
-<p>活動の方向性：<%= @article.band_intention %></p>
-<p>バンドの楽曲：<%= @article.music_intention %></p>
-<p>募集年齢：<%= @article.age_min %>歳〜<%= @article.age_max %>歳</p>
-
-<h4>デモ音源</h4>
-<p><%= @article.sound %></p>
-
-<h4>パート</h4>
-<p><% @article.part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %></p>
-
-<h4>ジャンル</h4>
-<p><% @article.genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
+<!-- 管理者にログインメンバーの権限を付与する -->
+<%= render file: "members/articles/show", locals: { current_member: @article.member } %>
 
 <!-- 記事ステータス更新フォーム -->
-<%= render "layouts/status_form", { model: @article, action: admins_article_path } %>
+<%= render "layouts/status_form", { model: @article, action: admins_article_path(@article.id) } %>

@@ -15,7 +15,7 @@
       <%= link_to "フォロワー", member_followers_path(current_member.id), class: "dropdown-item" %>
       <%= link_to "お気に入り", member_article_favorites_path(current_member.id), class: "dropdown-item" %>
       <%= link_to "足跡", member_accesses_index_path(current_member.id), class: "dropdown-item" %>
-      <%= link_to "ブロック", member_blocks_path(current_member.id), class: "dropdown-item" %>
+      <%= link_to "ブロック", member_blocking_path(current_member.id), class: "dropdown-item" %>
       <%= link_to 'ログアウト', destroy_member_session_path, method: :delete, class: "dropdown-item" %>
     </div>
   </li>

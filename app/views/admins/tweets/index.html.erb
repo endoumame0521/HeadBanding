@@ -1,11 +1,25 @@
-<h2>Adminツイート一覧</h2>
+<h2>タイムライン</h2>
 
 <!-- ツイート検索フォーム -->
 <%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: true } %>
 
-<table cellspacing="5">
-  <tbody>
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweets">
     <!-- ツイート一覧 -->
-    <%= render partial: "tweet", collection: @tweets, locals: { tweet_flag: true } %>
-  </tbody>
-</table>
+    <% @tweets.each do |tweet| %>
+      <div class="twitter__block" id="tweet-<%= tweet.id %>">
+        <%= render partial: "members/tweets/tweet", locals: {
+          tweet: tweet, tweet_flag: true, current_member: tweet.member,
+          show_path: admins_tweet_path(tweet.id)
+        } %>
+        <div class="row justify-content-end text-right mr-5">
+          <!-- 記事ステータス更新フォーム -->
+          <%= render "layouts/status_form", { model: tweet, action: admins_tweet_path(tweet.id) } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

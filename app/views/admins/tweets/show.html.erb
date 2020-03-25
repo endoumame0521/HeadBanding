@@ -1,13 +1,30 @@
 <h2>Adminツイート詳細</h2>
 
-<table cellspacing="5">
-  <tbody>
-    <!-- ツイートの詳細 -->
-    <%= render "tweet", { tweet: @tweet, tweet_flag: true } %>
+<div class="twitter__container">
 
-    <!-- ツイートに対するコメント一覧 -->
-    <% @tweet.tweet_comments.each do |tweet| %>
-      <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: false } %>
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweet_comments">
+    <!-- ツイートの詳細 -->
+    <div class="twitter__block" id="tweet_comment_tweet">
+      <%= render "members/tweets/tweet", { tweet: @tweet, tweet_flag: true, current_member: @tweet.member,
+        show_path: admins_tweet_path(@tweet.id) } %>
+    </div>
+    <!-- ツイートコメント一覧 -->
+    <% @tweet.tweet_comments.each do |tweet_comment| %>
+      <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
+        <%= render partial: "members/tweets/tweet", locals: {
+          tweet: tweet_comment, tweet_flag: false, current_member: tweet_comment.member,
+          show_path: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
+        } %>
+        <div class="row justify-content-end text-right mr-5">
+          <!-- 記事ステータス更新フォーム -->
+          <%= render "layouts/status_form", {
+            model: tweet_comment, action: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
+          } %>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>

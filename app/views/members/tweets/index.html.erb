@@ -1,4 +1,4 @@
-<h2>Memberツイート一覧</h2>
+<h2>タイムライン</h2>
 
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @tweet %>
@@ -9,14 +9,19 @@
 <!-- ツイート投稿フォーム -->
 <%= render "form", { tweet_flag: true } %>
 
-<table cellspacing="5">
-  <!-- ツイート一覧 -->
-  <tbody id="tweets">
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweets">
+    <!-- ツイート一覧 -->
     <% @tweets.each do |tweet| %>
-      <tr id="tweet-<%= tweet.id %>">
-        <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: true } %>
-      </tr>
+      <!-- ブロックされている会員のツイートは表示され無い -->
+      <% unless tweet.member.blocking?(current_member) %>
+        <div class="twitter__block" id="tweet-<%= tweet.id %>">
+          <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id) } %>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
+</div>

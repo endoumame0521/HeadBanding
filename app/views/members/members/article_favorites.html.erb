@@ -1,11 +1,9 @@
-<h2>お気に入り記事一覧</h2>
+<h2>お気に入り</h2>
 
 <% if @favorited_articles.count > 0 %>
-<table cellspacing="5">
-  <tbody>
+  <div class="row">
     <%= render partial: "members/articles/article", collection: @favorited_articles %>
-  </tbody>
-</table>
+  </div>
 <% else %>
   <p>お気に入り記事はありません</p>
 <% end %>
