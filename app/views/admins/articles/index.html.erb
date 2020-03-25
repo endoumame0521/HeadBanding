@@ -1,10 +1,13 @@
-<h2>Admin記事一覧</h2>
-
 <!-- 記事検索フォーム -->
 <%= render "members/articles/search_form", { search_params: @search_params, admin_flag: true } %>
 
-<table cellspacing="5">
-  <tbody>
-    <%= render @articles %>
-  </tbody>
-</table>
+<h2>バンド記事一覧</h2>
+
+<div class="row">
+  <!-- 記事一覧 -->
+  <% @articles.each do |article| %>
+    <%= render partial: "members/articles/article", locals: { article: article, article_path: admins_article_path(article.id) } %>
+    <!-- 記事ステータス更新フォーム -->
+    <%= render "layouts/status_form", { model: article, action: admins_article_path(article.id) } %>
+  <% end %>
+</div>

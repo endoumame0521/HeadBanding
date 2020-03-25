@@ -1,11 +1,9 @@
-<h2>Memberブロックリスト</h2>
+<h2>ブロックリスト</h2>
 
 <% if @members.count > 0 %>
-  <table cellspacing="5">
-    <tbody>
-    <%= render partial: "members/members/member", collection: @members  %>
-    </tbody>
-  </table>
+  <div class="row">
+    <%= render partial: "members/members/member", collection: @members %>
+  </div>
 <% else %>
   <p>ブロックしている人はいません</p>
 <% end %>

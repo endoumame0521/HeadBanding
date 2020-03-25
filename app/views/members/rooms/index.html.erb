@@ -1,30 +1,12 @@
-<h2>Memberメッセージ一覧</h2>
+<h2>メッセージ一覧</h2>
 
-<table cellspacing="5">
-  <tbody>
-    <% @entry_rooms.each do |entry_room| %>
-      <% entry_room.entry_members.each do |entry_member| %>
-        <!-- 自分以外のルームメンバーを表示 -->
-        <% unless entry_member == current_member %>
-          <!-- ブロックされていないルームメンバーを表示 -->
-          <% unless entry_member.blocking?(current_member) %>
-            <tr>
-              <td>
-                <%= link_to (attachment_image_tag entry_member, :profile_image, :fill, 50, 50, format: 'jpeg',
-                fallback: "no_image.jpg", size: 50), entry_member %>
-              </td>
-              <td><%= entry_member.id %></td>
-              <td><%= entry_member.name %></td>
-              <td><%= entry_member.address_prefecture %></td>
-              <td><%= entry_member.age %><span>歳</span></td>
-              <td><%= entry_member.gender %></td>
-              <td><%= render "members/relationships/follow_button", { member: entry_member } %></td>
-              <td><%= render "members/blocks/block_button", { member: entry_member } %></td>
-              <td><%= link_to "メッセージルームへ", room_path(entry_room.id) %></td>
-            </tr>
-          <% end %>
-        <% end %>
+<div class="row">
+  <% @entry_rooms.each do |entry_room| %>
+    <% entry_room.entry_members.each do |entry_member| %>
+      <!-- 自分以外のルームメンバーを表示 -->
+      <% unless entry_member == current_member %>
+        <%= render partial: "members/rooms/room", locals: { member: entry_member, entry_room: entry_room } %>
       <% end %>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+</div>

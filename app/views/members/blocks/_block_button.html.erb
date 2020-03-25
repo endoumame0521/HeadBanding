@@ -2,8 +2,12 @@
 <% if current_member != member %>
   <!-- ブロックしていればブロックするボタンを、ブロックしていればブロック解除ボタンを表示 -->
   <% if current_member.blocking?(member) %>
-    <%= link_to 'ブロック解除', member_blocks_path(member.id), method: :delete, remote: true %>
+    <span class="BlockButton">
+      <%= link_to 'ブロック解除', member_blocks_path(member.id), method: :delete, remote: true, class: "btn btn-sm btn-secondary" %>
+    </span>
   <% else %>
-    <%= link_to 'ブロックする', member_blocks_path(member.id), method: :post, remote: true %>
+    <span class="BlockButton">
+      <%= link_to 'ブロックする', member_blocks_path(member.id), method: :post, remote: true, class: "btn btn-sm btn-secondary" %>
+    </span>
   <% end %>
 <% end %>

@@ -1,18 +1,40 @@
-<!-- ブロックされている会員は表示され無い -->
-<% unless member.blocking?(current_member) %>
-  <tr>
-    <td>
-      <%= link_to (attachment_image_tag member, :profile_image, :fill, 50, 50, format: 'jpeg',
-      fallback: "no_image.jpg", size: 50), member %>
-    </td>
-    <td><%= member.id %></td>
-    <td><%= member.name %></td>
-    <td><%= member.address_prefecture %></td>
-    <td><%= member.age %><span>歳</span></td>
-    <td><%= member.gender %></td>
-    <td><%= member.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
-    <td id="relation-member-<%= member.id %>"><%= render "members/relationships/follow_button", { member: member } %></td>
-    <td id="block-member-<%= member.id %>"><%= render "members/blocks/block_button", { member: member } %></td>
-    <td><%= link_to "詳細", member %></td>
-  </tr>
-<% end %>
+<div class="justify-content-center col-lg-6">
+  <%= link_to member_path(member.id) do %>
+  <div class="ProfileCard">
+    <div class="ProfileCardInner">
+      <div class="ProfileThumb">
+        <%= attachment_image_tag member, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: 100 %>
+      </div>
+      <div class="ProfileContent">
+        <span class="ProfileName">
+          <%= member.name %>
+          （<%= member.address_prefecture %>&nbsp;<%= member.age %>歳&nbsp;
+          <%= Member.human_attribute_name("gender.#{member.gender}") %>）
+        </span>
+        <span class="ProfilePart">
+          <% partString = "" %>
+          <% member.part_members.each do |part_member| %>
+            <% partString += part_member.part.name + " " %>
+          <% end %>
+          <%= partString.truncate(25) %>
+        </span>
+        <span class="ProfileIntro">
+          <!-- 表示文字数を制限して表示 -->
+          <%= member.introduction.truncate(200) %>
+        </span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <!-- メンバーがログインしているときだけフォロー・ブロックボタンを表示 -->
+  <% if member_signed_in? %>
+    <span class="ProfileRelation">
+      <span id="relation-member-<%= member.id %>">
+        <%= render "members/relationships/follow_button", { member: member } %>
+      </span>
+      <span id="block-member-<%= member.id %>">
+        <%= render "members/blocks/block_button", { member: member } %>
+      </span>
+    </span>
+  <% end %>
+</div>

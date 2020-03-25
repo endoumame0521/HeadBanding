@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6bb1565f31.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -16,7 +17,6 @@
     </header>
     <%= render "layouts/navbar.html.erb" %>
     <div class="notification"><%= render "layouts/notification.html.erb" %></div>
-
     <main>
       <div class="container"><%= yield %></div>
     </main>

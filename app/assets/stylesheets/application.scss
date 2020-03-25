@@ -35,11 +35,12 @@ header {
 }
 
 main {
-  color: #4C4C4C;
+  color: #757575;
   background-color: #FFF4E0;
 }
 
 body {
+  font-family: 'M PLUS 1p', sans-serif;
   background-color: #FFF4E0;
 }
 
@@ -60,6 +61,110 @@ h2 {
   margin-bottom: 1em;
 }
 
+
+h2 {
+  position: relative;
+  padding: 0.5em;
+  background: #a6d3c8;
+  color: white;
+}
+
+h2::before {
+  position: absolute;
+  content: '';
+  top: 100%;
+  left: 0;
+  border: none;
+  border-bottom: solid 15px transparent;
+  border-right: solid 20px rgb(149, 158, 155);
+}
+
+
+.form-control {
+  box-shadow: 0px 1px 3px rgba(0,0,0,.18);
+}
+
+a {
+  display: inline-block;
+  padding: 0.3em;
+  transition: .2s;
+  transform: scale(1);
+}
+
+a:hover, .btn:hover {
+  transition: .2s;
+  transform: scale(1.05);
+}
+
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: #757575;
+}
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #F99292;
+  border-color: #ec8585;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: #e97d79;
+  border-color: #df6556;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-outline-primary {
+  background-image: none;
+}
+
+.BlockButton {
+  a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+.FollowButton {
+  a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+
+
+
+
+.MessageCard {
+  width: 120%;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 20px;
+  background-size: contain;
+  background-image: url('letter.jpg');
+}
+
+.MessageContent{
+  padding: 20px;
+  height: 280px;
+}
+
+.MessageContent span{
+  display: block;
+}
+
+.MessageRoom {
+  position: absolute;
+  top: 320px;
+  left: 165px;
+}
 
 
 

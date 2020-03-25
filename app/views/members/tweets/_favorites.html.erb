@@ -1,28 +1,36 @@
-<!-- ツイートの場合ツイートのいいねパスを、コメントの場合コメントのいいねパスを代入 -->
-<% if tweet_flag %>
-  <% favo_path = tweet_tweet_favorites_path(tweet) %>
-<% else %>
-  <% favo_path = tweet_tweet_comment_tweet_comment_favorites_path(tweet.tweet, tweet) %>
-<% end %>
+<!-- 管理者ログインしている場合は、いいね数とスターだけを表示 -->
+<% if current_member.nil? && admin_signed_in? %>
+  <!-- 記事のお気に入り数を表示 -->
+  <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+  <span>×</span><%= tweet_flag ? tweet.tweet_favorites.count : tweet.tweet_comment_favorites.count %>
 
-<!-- ツイート（orコメント）がログインしている会員によって既にいいねされているかどうかを確認 -->
-<% if member_signed_in? %>
-  <% method = tweet.favorited_by?(current_member) ? "delete" : "post" %>
-  <% color = tweet.favorited_by?(current_member) ? "red" : "" %>
-  <% heart = tweet.favorited_by?(current_member) ? "fa fa-heart" : "fa fa-heart-o" %>
-<% else %>
-  <% color = "red" %>
-  <% heart = "fa fa-heart" %>
-<% end %>
+<% elsif %>
+  <!-- ツイートの場合ツイートのいいねパスを、コメントの場合コメントのいいねパスを代入 -->
+  <% if tweet_flag %>
+    <% favo_path = tweet_tweet_favorites_path(tweet) %>
+  <% else %>
+    <% favo_path = tweet_tweet_comment_tweet_comment_favorites_path(tweet.tweet, tweet) %>
+  <% end %>
 
-<!-- 会員がログインしている場合のみいいねが出来るように-->
-<% if member_signed_in? %>
-  <%= link_to favo_path, method: method, remote: true do %>
+  <!-- ツイート（orコメント）がログインしている会員によって既にいいねされているかどうかを確認 -->
+  <% if member_signed_in? %>
+    <% method = tweet.favorited_by?(current_member) ? "delete" : "post" %>
+    <% color = tweet.favorited_by?(current_member) ? "#F99292" : "" %>
+    <% heart = tweet.favorited_by?(current_member) ? "fa fa-heart" : "fa fa-heart-o" %>
+  <% else %>
+    <% color = "#F99292" %>
+    <% heart = "fa fa-heart" %>
+  <% end %>
+
+  <!-- 会員がログインしている場合のみいいねが出来るように-->
+  <% if member_signed_in? %>
+    <%= link_to favo_path, method: method, remote: true do %>
+      <i class="<%= heart %>" aria-hidden="true" style="color: <%= color %>;" ></i>
+    <% end %>
+  <% else %>
     <i class="<%= heart %>" aria-hidden="true" style="color: <%= color %>;" ></i>
   <% end %>
-<% else %>
-  <i class="<%= heart %>" aria-hidden="true" style="color: <%= color %>;" ></i>
-<% end %>
 
-<!-- ツイートの場合ツイートいいね数を、コメントの場合コメントいいね数を表示 -->
-<span>×</span><%= tweet_flag ? tweet.tweet_favorites.count : tweet.tweet_comment_favorites.count %>
+  <!-- ツイートの場合ツイートいいね数を、コメントの場合コメントいいね数を表示 -->
+  <span>×</span><%= tweet_flag ? tweet.tweet_favorites.count : tweet.tweet_comment_favorites.count %>
+<% end %>

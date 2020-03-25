@@ -1,81 +1,4 @@
-<% if @member == current_member %>
-  <h1>マイページ</h1>
-<% else %>
-  <h1>Member会員詳細</h1>
-<% end %>
-<br>
-
-<h3>会員データ</h3>
-<%= attachment_image_tag @member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
-<span id="relation-member-<%= @member.id %>">
-  <%= render "members/relationships/follow_button", { member: @member } %>
-</span><br>
-<%= link_to member_following_path(@member) do %>
-  フォロー x <%= @member.following_member.count %>
-<% end %>
-<%= link_to member_followers_path(@member) do %>
-  フォロワー x <%= @member.follower_member.count %>
-<% end %>
-<p>ハンドルネーム：<%= @member.name %></p>
-<p>性別：<%= @member.gender %></p>
-<p>生年月日：<%= @member.birthday.strftime("%Y年%-m月%-d日") %></p>
-<p>年齢：<%= @member.age %></p>
-<p>住所：<%= @member.address_prefecture %> <%= @member.address_city %></p>
-<p>音源：<%= @member.sound %></p>
-<p>担当パート：<% @member.part_members.each { |part_member| %><%= part_member.part.name %>、<% } %></p>
-<p>好きなジャンル：<% @member.genre_members.each { |genre_member| %><%= genre_member.genre.name %>、<% } %></p>
-<p>好きなアーティスト：<% @member.artists.each { |artists| %><%= artists.name %>、<% } %></p>
-<p>自己紹介文：<%= @member.introduction %></p>
-<p>登録日時：<%= @member.created_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></p>
-
-<% if @member == current_member %>
-  <%= link_to "編集", edit_member_path %>
-  <%= link_to "退会", member_cancel_path(@member) %>
-  <%= link_to "足跡", member_accesses_path(@member) %>
-  <%= link_to "ブロックリスト", member_blocking_path(@member) %>
-  <%= link_to "メッセージ一覧", rooms_path %>
-<% else %>
-  <% if @is_room %>
-    <%= link_to "メッセージルームへ", room_path(@room_id) %>
-  <% else %>
-    <%= form_with model: @room do |f| %>
-      <%= fields_for @entry do |e| %>
-        <%= e.hidden_field :member_id, value: @member.id %>
-      <% end %>
-      <%= f.submit "メッセージルームを作る" %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<span id="block-member-<%= @member.id %>">
-  <%= render "members/blocks/block_button", { member: @member } %>
-</span>
-<br><br>
-
-
-<h3>投稿記事一覧</h3>
-<% if @member.articles.count > 0 %>
-<table cellspacing="5">
-  <tbody>
-    <%= render partial: "members/articles/article", collection: @member.articles %>
-  </tbody>
-</table>
-<% else %>
-  <p>投稿記事はありません</p>
-<% end %>
-
-<h3>ツイート一覧</h3>
-<% if @member.tweets.count > 0 %>
-<table cellspacing="5">
-  <tbody>
-    <%= render partial: "members/tweets/tweet", collection: @member.tweets, locals: { tweet_flag: true } %>
-  </tbody>
-</table>
-<% else %>
-  <p>ツイートはありません</p>
-<% end %>
-
-<!-- 足跡機能 -->
+<!-- 足跡機能START -->
 <script>
   $(document).ready(function() {
     $("#create_access").trigger('click');
@@ -84,3 +7,203 @@
 <%= form_with model: Access.new, url: member_accesses_path(@member) do |f| %>
   <%= f.submit "", style: "display: none", id: "create_access" %>
 <% end %>
+<!-- 足跡機能END -->
+
+
+
+<% if @member == current_member %>
+  <h2>マイページ</h2>
+<% else %>
+  <h2><%= @member.name %>さんのページ</h2>
+<% end %>
+
+<!-- プロフィールエリア（画面左半分） -->
+<div class="row">
+  <div class="col-6 pr-3">
+    <h3 class="mb-5">プロフィール</h3>
+    <div class="row">
+    <%= attachment_image_tag @member, :profile_image, :fill, 300, 300, format: 'jpeg', fallback: "no_image.jpg", size: 300 %>
+    </div>
+
+    <!-- フォロー・アンフォローボタン＋ブロック・アンプロックボタン -->
+    <div class="row mt-3">
+      <span id="relation-member-<%= @member.id %>" class="mr-3">
+        <%= render "members/relationships/follow_button", { member: @member } %>
+      </span>
+      <span id="block-member-<%= @member.id %>">
+        <%= render "members/blocks/block_button", { member: @member } %>
+      </span>
+    </div>
+
+    <!-- フォロー・フォロワー一覧へのリンク -->
+    <div class="row mt-3 mb-4">
+      <div class="btn btn-warning">
+        <%= link_to member_following_path(@member) do %>
+        フォロー x <%= @member.following_member.count %>
+      </div>
+      <% end %>
+      <div class="btn btn-warning">
+        <%= link_to member_followers_path(@member) do %>
+      フォロワー x <%= @member.follower_member.count %>
+      <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <% if @member == current_member %>
+        <%= link_to "編集", edit_member_path %>
+        <%= link_to "退会", member_cancel_path(@member) %>
+        <%= link_to "足跡", member_accesses_path(@member) %>
+        <%= link_to "ブロックリスト", member_blocking_path(@member) %>
+        <%= link_to "メッセージ一覧", rooms_path %>
+      <% else %>
+        <% if @is_room %>
+          <%= link_to "メッセージルームへ", room_path(@room_id), class: "btn-gradient-radius mb-5" %>
+        <% else %>
+          <%= form_with model: @room do |f| %>
+            <%= fields_for @entry do |e| %>
+              <%= e.hidden_field :member_id, value: @member.id %>
+            <% end %>
+            <%= f.submit "メッセージルームを作る", class: "btn-gradient-radius mb-5" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+
+    <!-- メンバー情報エリア -->
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:name) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.name %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:gender) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= Member.human_attribute_name("gender.#{@member.gender}") %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:birthday) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.birthday.strftime("%Y年%-m月%-d日") %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small>年齢</small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.age %><span>歳</span>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:address_prefecture) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.address_prefecture %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:address_city) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.address_city %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:sound) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= @member.sound %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small>担当<%= Part.model_name.human %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <% @member.part_members.each { |part_member| %><%= part_member.part.name %>、<% } %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small>好きな<%= Genre.model_name.human %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <% @member.genre_members.each { |genre_member| %><%= genre_member.genre.name %>、<% } %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small>好きな<%= Artist.model_name.human %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <% @member.artists.each { |artists| %><%= artists.name %>、<% } %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:introduction) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= simple_format(@member.introduction) %>
+      </div>
+    </div>
+    <h3 class="mt-3">
+      <small>登録日時</small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2 pl-5">
+        <%= I18n.l(@member.created_at, format: :original) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- メンバーのタイムラインエリア（画面右半分） -->
+  <div class="col-6">
+    <div class="row ml-3">
+      <h3 class="mb-4">タイムライン</h3>
+      <% if @member.tweets.count > 0 %>
+        <div class="twitter__container">
+          <div class="twitter__title">
+            <span class="twitter-logo">♬</span>
+          </div>
+          <div class="twitter__contents scroll" id="tweets">
+            <!-- ツイート一覧 -->
+            <% @member.tweets.each do |tweet| %>
+              <!-- ブロックされている会員のツイートは表示され無い -->
+              <% unless tweet.member.blocking?(current_member) %>
+                <div class="twitter__block" id="tweet-<%= tweet.id %>">
+                  <%= render partial: "members/tweets/tweet", locals: { tweet: tweet, tweet_flag: true } %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <h4 class="mt-5">ツイートはありません</h4>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- バンド記事一覧 -->
+<h3 class="mt-5 mb-4">バンド記事一覧</h3>
+<div class="row">
+  <% if @member.articles.count > 0 %>
+    <%= render @member.articles %>
+  <% else %>
+    <h4 class="mt-3 ml-5">投稿記事はありません</h4>
+  <% end %>
+</div>
