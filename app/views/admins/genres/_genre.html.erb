@@ -1,6 +1,7 @@
 <tr>
-  <td><%= genre.name %><td>
-  <td><%= genre.updated_at.strftime("%Y年%-m月%-d日(%a) %H:%M") %></td>
-  <td><%= link_to "編集", edit_admins_genre_path(genre) %></td>
+  <td><%= genre.name %></td>
+  <td><%= I18n.l(genre.created_at, format: :original) %></td>
+  <td><%= I18n.l(genre.updated_at, format: :original) %></td>
+  <td><%= link_to "編集", edit_admins_genre_path(genre), class: "btn btn-success", style: "color: white;" %></td>
   <td><%= render "layouts/status_form", { model: genre, action: admins_genre_path(genre) } %></td>
 </tr>

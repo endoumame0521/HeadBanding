@@ -19,13 +19,13 @@
       <div class="field">
         <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
         <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
-          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
+          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}"), class: "ml-1") %>
         <% end %>
       </div>
 
       <div class="field form-inline">
         <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
-        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control" %>
+        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control ml-1" %>
       </div>
 
       <div class="field">

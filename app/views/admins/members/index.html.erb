@@ -6,8 +6,14 @@
 <div class="row">
   <!-- メンバー一覧 -->
   <% @members.each do |member| %>
-    <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
-    <!-- メンバーステータス更新フォーム -->
-    <%= render "layouts/status_form", { model: member, action: admins_member_path(member.id) } %>
+    <div class="col-lg-6">
+      <div class="row">
+        <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
+      </div>
+      <!-- メンバーステータス更新フォーム -->
+      <div class="row justify-content-center">
+        <%= render "layouts/status_form", { model: member, action: admins_member_path(member.id) } %>
+      </div>
+    </div>
   <% end %>
 </div>

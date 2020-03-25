@@ -1,7 +1,7 @@
-<h2>Member記事投稿</h2>
+<h2>バンド記事投稿</h2>
 
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @article %>
 
 <!-- 記事更新フォームを表示 -->
-<%= render "form", { model: @article, edit_flag: false } %>
+<%= render "form", { model: @article } %>

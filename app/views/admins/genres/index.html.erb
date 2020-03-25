@@ -1,11 +1,20 @@
-<h2>Adminジャンル一覧</h2>
+<h2>ジャンル一覧</h2>
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @genre %>
 
 <!-- ジャンル追加フォーム -->
-<%= render "form", { genre: @genre, edit_flag: false, action: admins_genres_path } %>
+<%= render "layouts/admin_add_form", { scope: :genre, model: Genre.new, action: admins_genres_path } %>
 
-<table cellspacing="5">
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>ジャンル名</th>
+      <th>登録日</th>
+      <th>更新日</th>
+      <th></th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
   <tbody>
     <%= render @genres %>
   </tbody>

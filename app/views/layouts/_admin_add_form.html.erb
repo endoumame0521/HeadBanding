@@ -1,0 +1,18 @@
+<!-- 管理者用　追加及び更新フォーム -->
+<%= form_with scope: scope, model: model, url: action, local: true, class: "form-inline mb-5" do |f| %>
+  <div class="field form-group">
+    <%= f.label(model.class.human_attribute_name(:name)) %>
+    <%= f.text_field :name, class: "form-control ml-3", placeholder: "#{model.class.model_name.human}を追加" %>
+
+    <%= f.label(:status, model.class.human_attribute_name(:status), class: "ml-3") %>
+    <%= f.collection_radio_buttons(:status, model.class.statuses, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == "enable", class: "ml-3") + f.label(model.class.human_attribute_name("status.#{r.text}"), class: "ml-1") %>
+    <% end %>
+
+    <% if model.id.nil? %>
+      <%= f.submit "追加", class: "btn btn-primary ml-3" %>
+    <% else %>
+      <%= f.submit "更新", class: "btn btn-primary ml-3" %>
+    <% end %>
+  </div>
+<% end %>

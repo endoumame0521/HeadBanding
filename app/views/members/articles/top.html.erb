@@ -3,6 +3,10 @@
 <div class="row">
   <!-- 記事一覧 -->
   <% @articles.each do |article| %>
-    <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
+    <div class="col-lg-6">
+      <div class="row">
+        <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
+      </div>
+    </div>
   <% end %>
 </div>

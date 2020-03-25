@@ -2,7 +2,13 @@
 
 <% if @members.count > 0 %>
   <div class="row">
-    <%= render partial: "members/members/member", collection: @members %>
+    <!-- メンバー一覧 -->
+    <% @members.each do |member| %>
+      <!-- ブロックされているメンバーは表示され無い -->
+      <% unless member.blocking?(current_member) %>
+        <%= render partial: "members/members/member", locals: { member: member, member_path: member_path(member.id) } %>
+      <% end %>
+    <% end %>
   </div>
 <% else %>
   <p>フォロワーはいません</p>

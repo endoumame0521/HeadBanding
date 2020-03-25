@@ -20,9 +20,9 @@ class Admins::TweetsController < Admins::ApplicationController
   def destroy
     tweet = Tweet.find(params[:id])
     if tweet.destroy
-      redirect_to request.referer, notice: "ツイートが削除されました"
+      redirect_to admins_tweets_path, notice: "ツイートが削除されました"
     else
-      redirect_to request.referer, alert: "ツイートの削除に失敗しました"
+      redirect_to admins_tweets_path, alert: "ツイートの削除に失敗しました"
     end
   end
 

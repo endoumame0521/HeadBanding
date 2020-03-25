@@ -18,6 +18,15 @@ class Admins::NoticesController < Admins::ApplicationController
     end
   end
 
+  def destroy
+    notice = Notice.find(params[:id])
+    if notice.destroy
+      redirect_to admins_notices_path, notice: "通報が削除されました"
+    else
+      redirect_to admins_notices_path, alert: "通報の削除に失敗しました"
+    end
+  end
+
   private
   def notice_params
     params.require(:notice).permit(:status)

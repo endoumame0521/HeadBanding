@@ -1,6 +1,6 @@
-<h2>Adminパート編集</h2>
+<h2>パート編集</h2>
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @part %>
 
 <!-- パート編集フォーム -->
-<%= render "form", { part: @part, edit_flag: true, action: admins_part_path(@part) } %>
+<%= render "layouts/admin_add_form", { scope: :part, model: @part, action: admins_part_path(@part.id) } %>

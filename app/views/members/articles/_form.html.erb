@@ -1,5 +1,5 @@
 <!-- サブミットアクションがPATCHかPOSTかを確認し、パスを代入 -->
-<% action = edit_flag ? article_path : articles_path %>
+<% action = model.id.nil? ? articles_path : article_path %>
 
 <%= form_with model: model, url: action, local: true do |f| %>
 
@@ -99,10 +99,10 @@
   </div>
 
   <div class="actions">
-    <% if edit_flag %>
-      <%= f.submit "更新", class: "btn btn-primary mb-5" %>
-    <% else %>
+    <% if model.id.nil? %>
       <%= f.submit "投稿", class: "btn btn-primary mb-5" %>
+    <% else %>
+      <%= f.submit "更新", class: "btn btn-primary mb-5" %>
     <% end %>
   </div>
 <% end %>

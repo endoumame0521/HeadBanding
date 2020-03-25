@@ -1,4 +1,4 @@
-<h2>Member通報投稿フォーム</h2>
+<h2>通報投稿フォーム</h2>
 
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @notice %>
@@ -8,14 +8,14 @@
 <% if @tweet.present? %>
   <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag } %>
 <% elsif @article.present? %>
-  <%= render "members/articles/article", { article: @article } %>
+  <%= render "members/articles/article", { article: @article, article_path: article_path(@article.id) } %>
 <% end %>
 
 <!-- 記事更新フォームを表示 -->
-<%= form_with model: @notice, local: true do |f| %>
-  <div class="field">
+<%= form_with model: @notice, local: true, class: "row" do |f| %>
+  <div class="field col-lg-6">
     <%= f.label :body, "通報内容" %><br>
-    <%= f.text_area :body %>
+    <%= f.text_area :body, class: "form-control", rows: "5" %>
   </div>
 
   <!-- 通報する対象によってパラメータで送る値を分岐させる -->
@@ -27,7 +27,7 @@
     <%= f.hidden_field :article_id, value: @article.id  %>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "投稿" %>
+  <div class="actions col-lg-12">
+    <%= f.submit "投稿", class: "btn btn-primary mb-5" %>
   </div>
 <% end %>

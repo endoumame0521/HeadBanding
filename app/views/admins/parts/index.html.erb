@@ -1,11 +1,20 @@
-<h2>Adminパート一覧</h2>
+<h2>パート一覧</h2>
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @part %>
 
 <!-- パート追加フォーム -->
-<%= render "form", { part: @part, edit_flag: false, action: admins_parts_path } %>
+<%= render "layouts/admin_add_form", { scope: :part, model: Part.new, action: admins_parts_path } %>
 
-<table cellspacing="5">
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>パート名</th>
+      <th>登録日</th>
+      <th>更新日</th>
+      <th></th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
   <tbody>
     <%= render @parts %>
   </tbody>

@@ -1,4 +1,4 @@
-<div class="col-lg-6 pr-5 mb-5">
+<div class="col-lg-12 pr-5 mb-3 mt-5">
   <div class="Article">
     <div class="ArticleHeader row">
       <div class="col-3">
@@ -72,17 +72,17 @@
         </p>
       </div>
     </div>
-    <div id="article-<%= article.id %>" class="row justify-content-end d-flex align-items-center">
+    <span id="article-<%= article.id %>" class="mr-2">
       <%= render partial: "members/articles/favorites", locals: { article: article } %>
-        <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
-        <% if member_signed_in? %>
-          <!-- 自分以外の記事のみ通報ボタンが表示される -->
-          <% unless article.member == current_member %>
-            <%= link_to controller: "members/notices", action: "new", article_id: article.id do %>
-              <i class="fas fa-exclamation-triangle fa-2x" style="color: #FFBC61;"></i>
-            <% end %>
-          <% end %>
+    </span>
+    <!-- 会員がログインしている場合のみ通報ボタンが表示される-->
+    <% if member_signed_in? %>
+      <!-- 自分以外の記事のみ通報ボタンが表示される -->
+      <% unless article.member == current_member %>
+        <%= link_to controller: "members/notices", action: "new", article_id: article.id do %>
+          <i class="fas fa-exclamation-triangle fa-2x" style="color: #FFBC61;"></i>
         <% end %>
-    </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
