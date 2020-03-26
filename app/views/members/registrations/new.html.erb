@@ -7,36 +7,42 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:email, Member.human_attribute_name(:email)) %>
-        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "※メールアドレスを入力してください" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:name, Member.human_attribute_name(:name)) %>
-        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control", placeholder: "※50文字以内で入力してください" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
         <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
-          <%= r.radio_button(checked: true) + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
+          <%= r.radio_button() + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
         <% end %>
       </div>
 
       <div class="field form-inline">
+        <span class="badge badge-danger mr-1">必須</span>
         <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
         <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control ml-1" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:password, Member.human_attribute_name(:password)) %>
         <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %>文字以上)</em>
+        (<%= @minimum_password_length %>文字以上)
         <% end %><br>
         <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:password_confirmation, Member.human_attribute_name(:password_confirmation)) %><br>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
       </div>
@@ -53,16 +59,19 @@
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <span>担当</span><%= f.label :part, Part.model_name.human %><br>
         <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <span>好きな</span><%= f.label :genre, Genre.model_name.human %><br>
         <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
       </div>
 
       <div class="field">
+        <span class="badge badge-success">任意</span>
         <span>好きな</span><%= f.label :artist, Artist.model_name.human %><br>
         <%= f.fields_for :artists_attributes do |a| %>
           <% for i in 1..5 do %>
@@ -72,8 +81,9 @@
       </div>
 
       <div class="field">
+        <span class="badge badge-success">任意</span>
         <%= f.label(:introduction, Member.human_attribute_name(:introduction)) %><br>
-        <%= f.text_area :introduction, class: "form-control", rows: "5" %>
+        <%= f.text_area :introduction, class: "form-control", rows: "10", placeholder: "※5000文字以内で入力してください" %>
       </div>
 
       <div class="actions">

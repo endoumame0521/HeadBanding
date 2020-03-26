@@ -10,6 +10,10 @@ class Members::MembersController < Members::ApplicationController
   end
 
   def show
+    @member_tweets = @member.tweets
+    @member_articles = @member.articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
+
+    # メッセージルーム関係START----------------------------------------------------------
     @current_member_entry = Entry.where(member_id: current_member.id)
     @member_entry = Entry.where(member_id: @member.id)
     if current_member.id != @member.id
@@ -27,6 +31,7 @@ class Members::MembersController < Members::ApplicationController
         @entry = Entry.new
       end
     end
+    # メッセージルーム関係END-----------------------------------------------------------
   end
 
   def edit

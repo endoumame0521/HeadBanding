@@ -1,10 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-lg-10">
 
-    <h2>会員情報編集</h2>
-
     <!-- バリデーションのエラーメッセージ -->
     <%= render "/layouts/error_messages", model: @member %>
+
+    <h2>会員情報編集</h2>
+
 
     <%= form_with model: @member, local: true do |f| %>
 
@@ -49,8 +50,8 @@
       <!-- 会員新規登録フォームには存在しない -->
       <%= f.label(:sound, Member.human_attribute_name(:sound)) %>
       <div class="field input-group">
-        <div class="input-group-prepend"><div class="input-group-text">http://</div></div>
-        <%= f.text_field :sound, class: "form-control" %>
+        <div class="input-group-prepend"><div class="input-group-text">URL</div></div>
+        <%= f.text_field :sound, class: "form-control", placeholder: "YouTubeのURLを入力" %>
       </div>
 
       <div class="field">

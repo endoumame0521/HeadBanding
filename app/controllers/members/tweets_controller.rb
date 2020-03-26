@@ -17,8 +17,6 @@ class Members::TweetsController < Members::ApplicationController
       flash.now[:notice] = "ツイートしました"
     else
       flash.now[:alert] = "#{@tweet.errors.count}件のエラーがあります"
-      @tweets = Tweet.all
-      render "index"
     end
   end
 

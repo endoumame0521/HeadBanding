@@ -41,6 +41,17 @@ class Member < ApplicationRecord
 
   accepts_nested_attributes_for :artists
 
+  # バリデーションSTART------------------------------------------------------------------------------------------
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :introduction, presence: true, length: { maximum: 5000 }
+  validates :gender, presence: true
+  validates :address_prefecture, presence: true
+  validates :address_city, presence: true
+  validates :part_member_ids, presence: true
+  validates :genre_member_ids, presence: true
+  validates :sound, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
+  # バリデーションEND--------------------------------------------------------------------------------------------
+
   #メンバーをフォローする
   def follow(member_id)
     follower.create(followed_id: member_id)

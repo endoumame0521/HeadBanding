@@ -3,15 +3,29 @@
 <!-- バリデーションのエラーメッセージ -->
 <%= render "/layouts/error_messages", model: @notice %>
 
-<h4>通報対象</h4>
+<h4 class="mt-5">通報対象</h4>
 <!-- 通報する対象を表示する -->
-<% if @tweet.present? %>
-  <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag, show_path: @show_path } %>
-<% elsif @article.present? %>
-  <%= render "members/articles/article", { article: @article, article_path: article_path(@article.id) } %>
+<% if @tweet.nil? == false %>
+  <!-- ツイートの通報詳細 -->
+  <div class="twitter__container">
+    <div class="twitter__title">
+      <span class="twitter-logo">♬</span>
+    </div>
+    <div class="twitter__contents" id="tweets">
+      <div class="twitter__block" id="tweet-<%= @tweet.id %>">
+        <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag, show_path: @show_path } %>
+      </div>
+    </div>
+  </div>
+<% elsif @article.nil? == false %>
+  <!-- バンド記事の通報詳細 -->
+  <div class="row">
+    <!-- 記事 -->
+    <%= render "members/articles/article", { article: @article, article_path: article_path(@article.id) } %>
+  </div>
 <% end %>
 
-<!-- 記事更新フォームを表示 -->
+<!-- 通報投稿フォームを表示 -->
 <%= form_with model: @notice, local: true, class: "row" do |f| %>
   <div class="field col-lg-6">
     <%= f.label :body, "通報内容" %><br>

@@ -1,7 +1,7 @@
 <h2>タイムライン</h2>
 
 <!-- バリデーションのエラーメッセージ -->
-<%= render "/layouts/error_messages", model: @tweet %>
+<span class="error_messages"><%= render "/layouts/error_messages", model: @tweet %></span>
 
 <!-- ツイート検索フォーム -->
 <%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: false } %>

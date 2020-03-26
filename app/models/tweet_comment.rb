@@ -7,6 +7,10 @@ class TweetComment < ApplicationRecord
 
   enum status: { enable: true, disable: false }
 
+  # バリデーションSTART------------------------------------------------------------------------------------------
+  validates :body, presence: true, length: { maximum: 300 }
+  # バリデーションEND--------------------------------------------------------------------------------------------
+
   #ツイートコメントが自分によって既にいいねされていればtrue返す
   def favorited_by?(member)
     tweet_comment_favorites.where(member_id: member.id).any?

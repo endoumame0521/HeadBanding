@@ -6,7 +6,7 @@
 
     <%= f.label(:status, model.class.human_attribute_name(:status), class: "ml-3") %>
     <%= f.collection_radio_buttons(:status, model.class.statuses, :first, :first) do |r| %>
-      <%= r.radio_button(checked: true) + f.label(model.class.human_attribute_name("status.#{r.text}")) %>
+      <%= r.radio_button(checked: r.value == model.class.statuses.first[0] ) + f.label(model.class.human_attribute_name("status.#{r.text}")) %>
     <% end %>
 
     <% if model.id.nil? %>

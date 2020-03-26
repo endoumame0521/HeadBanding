@@ -56,10 +56,12 @@
     <% end %>
   </div>
 
-  <div class="field">
+  <div class="field form-inline">
     <span>年齢</span>
-    <%= f.text_field :age_min, value: search_params[:age_min] %><%= f.label :age_min, "歳" %>〜
-    <%= f.text_field :age_max, value: search_params[:age_max] %><%= f.label :age_max, "歳"  %>
+    <%= f.text_field :age_min, value: search_params[:age_min], class: "form-control ml-2" %>
+    <%= f.label :age_min, "歳", class: "ml-2" %>〜
+    <%= f.text_field :age_max, value: search_params[:age_max], class: "form-control ml-2" %>
+    <%= f.label :age_max, "歳", class: "ml-2"  %>
   </div>
 
   <div class="field">
@@ -73,14 +75,14 @@
   </div>
 
   <div class="field">
-    <%= f.label :part, Part.model_name.human %>
+    <%= f.label :part, Part.model_name.human %><br>
     <%= f.collection_check_boxes(:part_ids, Part.all, :id, :name) do |b| %>
       <%= b.label { b.check_box(checked: Array(@search_params[:part_ids]).include?(b.value.to_s)) + b.text } %>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :genre, Genre.model_name.human %>
+    <%= f.label :genre, Genre.model_name.human %><br>
     <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
       <%= b.label { b.check_box(checked: Array(@search_params[:genre_ids]).include?(b.value.to_s)) + b.text } %>
     <% end %>

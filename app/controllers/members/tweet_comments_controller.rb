@@ -9,8 +9,6 @@ class Members::TweetCommentsController < Members::ApplicationController
       flash.now[:notice] = "コメントしました"
     else
       flash.now[:alert] = "#{@tweet_comment.errors.count}件のエラーがあります"
-      @tweet = Tweet.find(params[:tweet_id])
-      render "tweets/show"
     end
   end
 
