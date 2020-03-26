@@ -14,7 +14,7 @@
         </span>
         <span class="ProfilePart">
           <% partString = "" %>
-          <% member.part_members.each do |part_member| %>
+          <% member.part_members.includes(:part).each do |part_member| %>
             <% partString += part_member.part.name + " " %>
           <% end %>
           <%= partString.truncate(25) %>

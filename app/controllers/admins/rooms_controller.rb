@@ -1,6 +1,7 @@
 class Admins::RoomsController < Admins::ApplicationController
   def index
     @rooms = Room.all
+    @rooms = @rooms.includes([:entries, :entry_members])
   end
 
   def update

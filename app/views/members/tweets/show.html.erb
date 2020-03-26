@@ -11,7 +11,7 @@
       <%= render "members/tweets/tweet", { tweet: @tweet, tweet_flag: true, show_path: tweet_path(@tweet.id) } %>
     </div>
     <!-- ツイートコメント一覧 -->
-    <% @tweet.tweet_comments.each do |tweet_comment| %>
+    <% @tweet.tweet_comments.includes([:member, member: :blocking_member]).each do |tweet_comment| %>
       <!-- ブロックされている会員のツイートは表示され無い -->
       <% unless tweet_comment.member.blocking?(current_member) %>
         <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">

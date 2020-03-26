@@ -2,6 +2,7 @@ class Admins::MembersController < Admins::ApplicationController
   def index
     @search_params = member_search_params
     @members = Member.search(@search_params)
+    @members = @members.includes([part_members: :part])
   end
 
   def show

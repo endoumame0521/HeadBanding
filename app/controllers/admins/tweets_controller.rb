@@ -2,6 +2,7 @@ class Admins::TweetsController < Admins::ApplicationController
   def index
     @search_params = tweet_search_params
     @tweets = Tweet.search(@search_params)
+    @tweets = @tweets.includes([:member])
   end
 
   def show

@@ -6,6 +6,7 @@ class Members::MembersController < Members::ApplicationController
   def index
     @search_params = member_search_params
     @members = Member.search(@search_params).status_is("enable")
+    @members = @members.includes([:blocking_member, part_members: :part])
   end
 
   def show
@@ -42,6 +43,7 @@ class Members::MembersController < Members::ApplicationController
 
   def article_favorites
     @favorited_articles = current_member.favorited_articles
+    @favorited_articles = @favorited_articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre, member: :blocking_member])
   end
 
   def cancel

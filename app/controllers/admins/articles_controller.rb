@@ -2,6 +2,7 @@ class Admins::ArticlesController < Admins::ApplicationController
   def index
     @search_params = article_search_params
     @articles = Article.search(@search_params)
+    @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
   end
 
   def show
