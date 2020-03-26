@@ -156,7 +156,7 @@
     </h3>
     <div class="row">
       <div class="col-lg-12 mx-auto mb-2 pl-5">
-        <% @member.part_members.each { |part_member| %><%= part_member.part.name %>、<% } %>
+        <% @member.part_members.includes(:part).each { |part_member| %><%= part_member.part.name %>、<% } %>
       </div>
     </div>
     <h3 class="mt-3">
@@ -164,7 +164,7 @@
     </h3>
     <div class="row">
       <div class="col-lg-12 mx-auto mb-2 pl-5">
-        <% @member.genre_members.each { |genre_member| %><%= genre_member.genre.name %>、<% } %>
+        <% @member.genre_members.includes(:genre).each { |genre_member| %><%= genre_member.genre.name %>、<% } %>
       </div>
     </div>
     <h3 class="mt-3">
@@ -197,7 +197,7 @@
   <div class="col-6">
     <div class="row ml-3">
       <h3 class="mb-4">タイムライン</h3>
-      <% if @member.tweets.count > 0 %>
+      <% if @member.tweets.exists? %>
         <div class="twitter__container">
           <div class="twitter__title">
             <span class="twitter-logo">♬</span>
@@ -235,7 +235,7 @@
 <!-- バンド記事一覧 -->
 <h3 class="mt-5 mb-4">バンド記事一覧</h3>
 <div class="row">
-  <% if @member.articles.count > 0 %>
+  <% if @member.articles.exists? 0 %>
     <!-- 記事一覧 -->
     <% @member.articles.each do |article| %>
       <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->

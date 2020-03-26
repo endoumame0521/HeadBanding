@@ -8,6 +8,7 @@ class Members::TweetsController < Members::ApplicationController
     @search_params = tweet_search_params
     @tweets = Tweet.search(@search_params).status_is("enable")
     @tweets = @tweets.where(member_id: Member.where(status: "enable"))
+    @tweets = @tweets.includes([:member, member: :blocking_member])
   end
 
   def create

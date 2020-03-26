@@ -61,7 +61,7 @@
         <% if @article.article_cities.empty? %>
           <p>指定無し</p>
         <% else %>
-          <p><% @article.article_cities.each { |article_city| %><%= article_city.city.name %><span>、</span><% } %></p>
+          <p><% @article.article_cities.includes(:city).each { |article_city| %><%= article_city.city.name %><span>、</span><% } %></p>
         <% end %>
 
         <p><%= Article.human_attribute_name("day_of_the_week.#{@article.day_of_the_week}") %></p>
@@ -83,10 +83,10 @@
 
     <!-- パート -->
     <h4><%= Part.model_name.human %></h4>
-    <p><% @article.part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %></p>
+    <p><% @article.part_articles.includes(:part).each { |part_article| %><%= part_article.part.name %>、<% } %></p>
 
     <!-- ジャンル -->
     <h4><%= Genre.model_name.human %></h4>
-    <p><% @article.genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
+    <p><% @article.genre_articles.includes(:genre).each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
   </div>
 </div>

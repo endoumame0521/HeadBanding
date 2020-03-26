@@ -1,6 +1,6 @@
 <h2>ブロックリスト</h2>
 
-<% if @members.count > 0 %>
+<% if @members.exists? %>
   <div class="row">
     <!-- メンバー一覧 -->
     <% @members.each do |member| %>

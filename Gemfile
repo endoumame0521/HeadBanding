@@ -53,6 +53,7 @@ group :development do
   gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem "bullet"
 end
 
 group :test do
@@ -73,5 +74,4 @@ gem "refile-mini_magick"
 gem 'jquery-rails'
 gem 'dotenv-rails'
 gem 'rails-i18n', '~> 5.1'
-
 gem 'bootstrap', '~> 4.3.1'

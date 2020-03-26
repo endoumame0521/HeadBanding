@@ -1,6 +1,7 @@
 class Members::RoomsController < Members::ApplicationController
   def index
     @entry_rooms = current_member.entry_rooms
+    @entry_rooms = @entry_rooms.includes([:entries, :entry_members])
   end
 
   def create
@@ -31,8 +32,8 @@ class Members::RoomsController < Members::ApplicationController
     @room = Room.find(params[:id])
 
     if Entry.where(member_id: current_member.id, room_id: @room.id).present?
-      @messages = @room.messages
-      @entries = @room.entries
+      @messages = @room.messages.includes([:member])
+      @entries = @room.entries.includes([:member])
       @entries.each do |entry|
         if entry.member.id != current_member.id
           @member = entry.member

@@ -6,7 +6,7 @@
 <h4>通報対象</h4>
 <!-- 通報する対象を表示する -->
 <% if @tweet.present? %>
-  <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag } %>
+  <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag, show_path: @show_path } %>
 <% elsif @article.present? %>
   <%= render "members/articles/article", { article: @article, article_path: article_path(@article.id) } %>
 <% end %>

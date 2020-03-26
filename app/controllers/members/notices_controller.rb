@@ -5,9 +5,11 @@ class Members::NoticesController < Members::ApplicationController
     if params[:tweet_id].present?
       @tweet = Tweet.find(params[:tweet_id])
       @tweet_flag = true
+      @show_path = tweet_path(@tweet.id)
     elsif params[:tweet_comment_id].present?
       @tweet_flag = false
       @tweet = TweetComment.find(params[:tweet_comment_id])
+      @show_path = tweet_tweet_comment_path(@tweet.tweet_id, @tweet.id)
     elsif params[:article_id].present?
       @article = Article.find(params[:article_id])
     end

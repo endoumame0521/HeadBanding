@@ -1,8 +1,8 @@
 class Admins::NoticesController < Admins::ApplicationController
   def index
-    @tweets = Notice.where.not(tweet_id: nil)
-    @tweet_comments = Notice.where.not(tweet_comment_id: nil)
-    @articles = Notice.where.not(article_id: nil)
+    @tweets = Notice.where.not(tweet_id: nil).includes([:member])
+    @tweet_comments = Notice.where.not(tweet_comment_id: nil).includes([:member])
+    @articles = Notice.where.not(article_id: nil).includes([:member])
   end
 
   def show

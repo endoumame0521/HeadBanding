@@ -13,11 +13,11 @@ class Members::RelationshipsController < Members::ApplicationController
   end
 
   def follower
-    @members = @member.following_member
+    @members = @member.following_member.includes([:blocking_member, part_members: :part])
   end
 
   def followed
-    @members = @member.follower_member
+    @members = @member.follower_member.includes([:blocking_member, part_members: :part])
   end
 
   private

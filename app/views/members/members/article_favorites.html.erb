@@ -1,6 +1,6 @@
 <h2>お気に入り</h2>
 
-<% if @favorited_articles.count > 0 %>
+<% if @favorited_articles.exists? %>
   <div class="row">
     <!-- 記事一覧 -->
     <% @favorited_articles.each do |favorited_article| %>
