@@ -6,6 +6,10 @@ class Part < ApplicationRecord
 
   enum status: { enable: true, disable: false }
 
+  # バリデーションSTART------------------------------------------------------------------------------------------
+  validates :name, presence: true, length: { maximum: 100 }
+  # バリデーションEND--------------------------------------------------------------------------------------------
+
   # 最新順に並び替え
   default_scope -> { order(created_at: :desc)}
 end

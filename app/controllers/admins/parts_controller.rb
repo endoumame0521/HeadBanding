@@ -8,6 +8,7 @@ class Admins::PartsController < Admins::ApplicationController
     if @part.save
       redirect_to admins_parts_path, notice: "パートを追加しました"
     else
+      flash.now[:alert] = "#{@part.errors.count}件のエラーがあります"
       @parts = Part.all
       render "index"
     end

@@ -61,7 +61,11 @@
         <% if @article.article_cities.empty? %>
           <p>指定無し</p>
         <% else %>
-          <p><% @article.article_cities.includes(:city).each { |article_city| %><%= article_city.city.name %><span>、</span><% } %></p>
+          <p>
+            <% @article.article_cities.includes(:city).each { |article_city| %>
+              <%= article_city.city.name %><span>、</span>
+            <% } %>
+          </p>
         <% end %>
 
         <p><%= Article.human_attribute_name("day_of_the_week.#{@article.day_of_the_week}") %></p>

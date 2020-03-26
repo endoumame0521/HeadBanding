@@ -16,7 +16,6 @@ class Members::ArticlesController < Members::ApplicationController
   end
 
   def new
-    @article = Article.new
   end
 
   def create
@@ -25,7 +24,6 @@ class Members::ArticlesController < Members::ApplicationController
       redirect_to @article, notice: "記事が投稿されました"
     else
       flash.now[:alert] = "#{@article.errors.count}件のエラーが有ります"
-      @article = Article.new
       render "new"
     end
   end

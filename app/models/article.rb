@@ -19,6 +19,39 @@ class Article < ApplicationRecord
   has_many :cities, through: :article_cities
   has_many :notices, dependent: :destroy
 
+  # バリデーションSTART-------------------------------------------------------------------------------------------
+  validates :published_status, presence: true
+  validates :category, presence: true
+  validates :day_of_the_week, presence: true
+  validates :band_intention, presence: true
+  validates :music_intention, presence: true
+  validates :gender, presence: true
+  validates :band_theme, presence: true
+  validates :sound, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
+  validates :body, presence: true, length: { maximum: 5000 }
+  validates :subject, presence: true, length: { maximum: 100 }
+  validates :part_article_ids, presence: true
+  validates :genre_article_ids, presence: true
+  validates :age_min, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: true}
+  validates :age_max, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_blank: true}
+
+  # age_maxとage_minに正しい大小関係で年齢が保存されるようにバリデーション
+  class CheckAgeValidator < ActiveModel::Validator
+    def validate(record)
+      if record.age_max.present? && record.age_min.present?
+        if record.age_max < record.age_min
+          record.errors[:age_max] << "は#{Article.human_attribute_name(:age_min)}より大きい値を入力してください"
+          record.errors[:age_min] << "は#{Article.human_attribute_name(:age_max)}より小さい値を入力してください"
+        end
+      end
+    end
+  end
+  # 上記のカスタムバリデーション呼び出し
+  validates_with CheckAgeValidator
+# バリデーションEND---------------------------------------------------------------------------------------------
+
+
+  # お気に入りしていればtrueを返す
   def favorited_by?(member)
     article_favorites.where(member_id: member.id).any?
   end
@@ -26,7 +59,8 @@ class Article < ApplicationRecord
   # 最新順に並び替え（最終更新日）
   default_scope -> { order(updated_at: :desc)}
 
-  #記事検索----------------------------------------------------------------------------------
+
+  #記事検索START----------------------------------------------------------------------------------------------
   def self.search(search_params)
     return all if search_params.blank?
 
