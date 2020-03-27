@@ -4,7 +4,7 @@
   <!-- ツイートの場合はツイート投稿フォームを、コメントの場合はコメント投稿フォームを表示 -->
   <% model = tweet_flag ? Tweet.new : [ tweet, TweetComment.new ] %>
 
-  <%= form_with model: model, class:"row" do |f| %>
+  <%= form_with model: model, class:"row tweet_form" do |f| %>
     <!-- ツイートの場合とコメントの場合でテキストエリアの表示内容を変える -->
     <% if tweet_flag %>
       <div class="field col-6">
