@@ -11,7 +11,7 @@
   overflow: hidden;
   margin: 20px 20px;
   background-size: contain;
-  background-image: url('letter.jpg');
+  // background-image: url('letter.jpg'); <==== application.scss に移動
 }
 
 .MessageContent{

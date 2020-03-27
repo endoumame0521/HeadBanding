@@ -14,7 +14,18 @@
 
   <body>
     <header>
-      <%= image_tag 'logo.jpg', height: "150px"%>
+      <div class="row">
+        <div class="col-6">
+          <%= image_tag 'logo.jpg', height: "150px"%>
+        </div>
+        <div class="col-6 text-right">
+          <!-- 記事新規投稿ページへのリンク -->
+          <%= link_to new_article_path do %>
+            <i class="fas fa-plus fa-2x" style="color: #F99292;"></i>
+            <i class="fas fa-newspaper fa-3x" style="color: #F99292;"></i>
+          <% end %>
+        </div>
+      </div>
     </header>
     <%= render "layouts/navbar.html.erb" %>
     <main>

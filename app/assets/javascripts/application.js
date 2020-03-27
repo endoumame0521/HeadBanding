@@ -60,7 +60,28 @@ $(document).on('turbolinks:load', function() {
   });
 });
 
+
 // 通知が表示されてから2000msで非表示にする
 $(document).on('turbolinks:load', function() {
   setTimeout("$('#notice').fadeOut('slow')", 2000);
+});
+
+
+// 検索フォームのクリアボタン
+$(document).on('turbolinks:load', function() {
+    $(".clear-button").on("click", function () {
+        clearForm(this.form);
+    });
+
+    function clearForm (form) {
+        $(form)
+            .find("input, select, textarea")
+            .not(":button, :submit, :reset, :hidden")
+            .val("")
+            .prop("checked", false)
+            .prop("selected", false)
+        ;
+
+        $(form).find(":radio").filter("[data-default]").prop("checked", true);
+    }
 });
