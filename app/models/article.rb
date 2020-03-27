@@ -50,6 +50,8 @@ class Article < ApplicationRecord
   validates_with CheckAgeValidator
 # バリデーションEND---------------------------------------------------------------------------------------------
 
+  # Gem kamirariの表示ページ数
+  paginates_per 10
 
   # お気に入りしていればtrueを返す
   def favorited_by?(member)

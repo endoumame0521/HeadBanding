@@ -9,6 +9,7 @@ class Members::ArticlesController < Members::ApplicationController
     @articles = Article.search(@search_params).status_is("enable").published_status_is("open")
     @articles = @articles.where(member_id: Member.where(status: "enable"))
     @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre, member: :blocking_member])
+    @articles = @articles.page(params[:page])
   end
 
   def index

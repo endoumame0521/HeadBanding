@@ -1,15 +1,15 @@
 <h2>ブロックリスト</h2>
 
 <% if @members.exists? %>
-  <div class="row">
-    <!-- メンバー一覧 -->
-    <% @members.each do |member| %>
-      <!-- ブロックされているメンバーは表示され無い -->
-      <% unless member.blocking?(current_member) %>
-        <%= render partial: "members/members/member", locals: { member: member, member_path: member_path(member.id) } %>
-      <% end %>
-    <% end %>
+  <div class="row" id="blocker_lists">
+    <!-- ブロックリスト一覧 -->
+    <%= render "members/members/member_lists", { members: @members }  %>
   </div>
 <% else %>
   <p>ブロックしている人はいません</p>
 <% end %>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @members, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

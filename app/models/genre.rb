@@ -10,6 +10,9 @@ class Genre < ApplicationRecord
   validates :name, presence: true, length: { maximum: 100 }
   # バリデーションEND--------------------------------------------------------------------------------------------
 
+  # Gem kamirariの表示ページ数
+  paginates_per 10
+
   # 最新順に並び替え
   default_scope -> { order(created_at: :desc)}
 end

@@ -1,6 +1,7 @@
 class Admins::GenresController < Admins::ApplicationController
   def index
     @genres = Genre.all
+    @genres = @genres.page(params[:page])
   end
 
   def create

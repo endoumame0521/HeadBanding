@@ -7,11 +7,13 @@ class Members::MembersController < Members::ApplicationController
     @search_params = member_search_params
     @members = Member.search(@search_params).status_is("enable")
     @members = @members.includes([:blocking_member, part_members: :part])
+    @members = @members.page(params[:page])
   end
 
   def show
     @member_tweets = @member.tweets
     @member_articles = @member.articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
+    @member_articles = @member_articles.page(params[:page])
 
     # メッセージルーム関係START----------------------------------------------------------
     @current_member_entry = Entry.where(member_id: current_member.id)
@@ -49,6 +51,7 @@ class Members::MembersController < Members::ApplicationController
   def article_favorites
     @favorited_articles = current_member.favorited_articles
     @favorited_articles = @favorited_articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre, member: :blocking_member])
+    @favorited_articles = @favorited_articles.page(params[:page])
   end
 
   def cancel

@@ -1,0 +1,8 @@
+<% tweets.each do |tweet| %>
+  <!-- ブロックされている会員のツイートは表示され無い -->
+  <% unless tweet.member.blocking?(current_member) %>
+    <div class="twitter__block" id="tweet-<%= tweet.id %>">
+      <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id) } %>
+    </div>
+  <% end %>
+<% end %>

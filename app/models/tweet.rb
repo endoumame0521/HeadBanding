@@ -11,6 +11,9 @@ class Tweet < ApplicationRecord
   validates :body, presence: true, length: { maximum: 300 }
   # バリデーションEND--------------------------------------------------------------------------------------------
 
+  # Gem kamirariの表示ページ数
+  paginates_per 20
+
   #ツイートが自分によって既にいいねされていればtrue返す
   def favorited_by?(member)
     tweet_favorites.where(member_id: member.id).any?

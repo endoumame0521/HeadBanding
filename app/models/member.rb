@@ -52,6 +52,9 @@ class Member < ApplicationRecord
   validates :sound, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
   # バリデーションEND--------------------------------------------------------------------------------------------
 
+  # Gem kamirariの表示ページ数
+  paginates_per 10
+
   #メンバーをフォローする
   def follow(member_id)
     follower.create(followed_id: member_id)

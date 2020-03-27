@@ -3,10 +3,14 @@ class Admins::MembersController < Admins::ApplicationController
     @search_params = member_search_params
     @members = Member.search(@search_params)
     @members = @members.includes([part_members: :part])
+    @members = @members.page(params[:page])
   end
 
   def show
     @member = Member.find(params[:id])
+    @member_tweets = @member.tweets
+    @member_articles = @member.articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
+    @member_articles = @member_articles.page(params[:page])
   end
 
   def edit
@@ -16,10 +20,9 @@ class Admins::MembersController < Admins::ApplicationController
   def update
     @member = Member.find(params[:id])
     if @member.update(member_params)
-      redirect_to request.referer, notice: "会員情報を更新しました"
+      redirect_to request.referer, notice: "会員ステータスを更新しました"
     else
-      flas.now[:alert] = "#{@member.errors.count}件のエラーがあります"
-      render "edit"
+      redirect_to request.referer, alert: "会員ステータスの更新に失敗しました"
     end
   end
 

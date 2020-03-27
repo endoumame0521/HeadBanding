@@ -3,17 +3,12 @@
 
 <h2>メンバー一覧</h2>
 
-<div class="row">
+<div class="row" id="member_lists">
   <!-- メンバー一覧 -->
-  <% @members.each do |member| %>
-    <div class="col-lg-6">
-      <div class="row">
-        <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
-      </div>
-      <!-- メンバーステータス更新フォーム -->
-      <div class="row justify-content-center">
-        <%= render "layouts/status_form", { model: member, action: admins_member_path(member.id) } %>
-      </div>
-    </div>
-  <% end %>
+  <%= render "admins/members/member_lists", { members: @members }  %>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @members, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
 </div>
