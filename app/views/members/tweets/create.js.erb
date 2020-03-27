@@ -5,6 +5,6 @@ $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
 $(".error_messages").html("");
 $('#tweets').prepend('<div class="twitter__block" id="tweet-<%= @tweet.id %>">' + '<%= j(render partial: "tweet", locals: { tweet: @tweet, tweet_flag: true, show_path: tweet_path(@tweet.id) }) %>' + '</div>');
 $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
-$("textarea").val('');
+$(".tweet_form").find("input, textarea").not(":button, :submit, :reset, :hidden").val("");
 setTimeout("$('#notice').fadeOut('slow')", 2000);
 <% end %>

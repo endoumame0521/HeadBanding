@@ -7,6 +7,6 @@ $('#tweet_comments').append('<div class="twitter__block" id="tweet_comment-<%= @
 $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
 $(".error_messages").html("<%= j(render "/layouts/error_messages", model: @tweet_comment) %>");
 $(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
-$("textarea").val('');
+$(".tweet_form").find("input, textarea").not(":button, :submit, :reset, :hidden").val("");
 setTimeout("$('#notice').fadeOut('slow')", 2000);
 <% end %>
