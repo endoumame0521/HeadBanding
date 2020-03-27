@@ -1,15 +1,5 @@
-<!-- 記事新規投稿ページへのリンク -->
-<div class="row">
-  <div class="col-6">
-    <!-- 記事検索フォーム -->
-    <%= render "members/articles/search_form", { search_params: @search_params, admin_flag: false } %>
-      </div>
-      <div class="col-6 text-right mt-2">
-    <%= link_to new_article_path do %>
-      <i class="fas fa-plus-circle fa-3x faa-shake animated-hover" style="color: #F99292;"></i>
-    <% end %>
-  </div>
-</div>
+<!-- 記事検索フォーム -->
+<%= render "members/articles/search_form", { search_params: @search_params, admin_flag: false } %>
 
 <h2>バンド記事一覧</h2>
 

@@ -43,7 +43,7 @@
 
       <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
       <div class="field" id="ajax_cities_radio_buttons">
-        <%= render partial: "members/registrations/cities_select", locals: { prefecture_id: "" } %>
+        <%= render partial: "members/registrations/cities_select", locals: { prefecture_id: Prefecture.find_by(name: @member.address_prefecture).id } %>
       </div>
 
       <!-- 会員新規登録フォームには存在しない -->
