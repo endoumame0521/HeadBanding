@@ -17,6 +17,7 @@ class Members::ArticlesController < Members::ApplicationController
   end
 
   def new
+    @article = Article.new
   end
 
   def create
