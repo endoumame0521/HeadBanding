@@ -15,12 +15,14 @@
  */
  @import "bootstrap";
 
+// 全体へ適用
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+// ナビゲーションバーのレイアウト
 nav {
   background-color: #FFBC61;
   .profile_image{
@@ -34,22 +36,34 @@ nav {
   }
 }
 
+// ヘッダー右上の警告・通知メッセージ
 #notice, #alert {
   height: 40px;
   padding: 0px 10px;
   line-height: 40px;
 }
+// ヘッダー右上の通知メッセージ
+#notice {
+  margin-bottom: 0px;
+}
 
+// ヘッダー右上の警告メッセージ
+#alert {
+  margin-bottom: 0px;
+}
 
+// 管理者ログイン時のみナビゲーションバーの背景を黒っぽくする
 .navbar-admins {
   background-color: #4C4C4C;
 }
 
+// ナビゲーションバーより上のヘッダー
 header {
   padding-top: 1.5rem;
   background-color: white !important;
 }
 
+// ナビゲーションバーの下のメイン部分
 main {
   color: #757575;
   background-color: #FFF4E0;
@@ -60,31 +74,22 @@ body {
   background-color: #FFF4E0;
 }
 
-#notice {
-  margin-bottom: 0px;
-}
-
-#alert {
-  margin-bottom: 0px;
-}
-
+// フォーム類のマージンボトム
 .field {
   margin-bottom: 1.1em;
 }
 
+// 全ページの見出し
 h2 {
   margin-top: 1em;
   margin-bottom: 1em;
-}
-
-
-h2 {
   position: relative;
   padding: 0.5em;
   background: #a6d3c8;
   color: white;
 }
 
+// 全ページの見出しのラベルデザイン
 h2::before {
   position: absolute;
   content: '';
@@ -95,10 +100,12 @@ h2::before {
   border-right: solid 20px rgb(149, 158, 155);
 }
 
+// 全てのbootstrapのフォームに影をつける
 .form-control {
   box-shadow: 0px 1px 3px rgba(0,0,0,.18);
 }
 
+// 全てのリンクにマウスを乗せると少し拡大する動きをつける
 a {
   display: inline-block;
   padding: 0.3em;
@@ -116,6 +123,7 @@ a:link, a:visited, a:hover, a:active {
   color: #757575;
 }
 
+// bootstrapのプライマリーカラーを変更
 .btn-primary {
   color: #ffffff;
   background-color: #F99292;
@@ -138,6 +146,7 @@ a:link, a:visited, a:hover, a:active {
   background-image: none;
 }
 
+// ブロック・アンブロックのボタンのレイアウト
 .BlockButton {
   a:link, a:visited, a:hover, a:active {
     text-decoration: none;
@@ -145,6 +154,7 @@ a:link, a:visited, a:hover, a:active {
   }
 }
 
+// フォロー・フォロワーのボタンのレイアウト
 .FollowButton {
   a:link, a:visited, a:hover, a:active {
     text-decoration: none;
@@ -152,40 +162,17 @@ a:link, a:visited, a:hover, a:active {
   }
 }
 
+//全てのラベルのマージンライト
 label {
   margin-right: 10px;
 }
 
-.MessageCard {
-  width: 120%;
-  max-width: 450px;
-  position: relative;
-  overflow: hidden;
-  margin: 20px 20px;
-  background-size: contain;
-  background-image: url('letter.jpg');
-}
-
-.MessageContent{
-  padding: 20px;
-  height: 280px;
-}
-
-.MessageContent span{
-  display: block;
-}
-
-.MessageRoom {
-  position: absolute;
-  top: 320px;
-  left: 165px;
-}
-
-// 検索フォームのデフォルト非表示
+// 検索フォームのデフォルトを非表示に
 .search_form {
   display: none;
 }
 
+// 検索ボタン（虫眼鏡）のデフォルトレイアウトを無くす
 .search_button{
   margin-top: 15px;
   background-color: transparent;
@@ -196,86 +183,6 @@ label {
   appearance: none;
 }
 
-
-/*以下、①背景色など*/
-.line-bc {
-  padding: 20px 10px;
-  max-width: 900px;
-  margin: 15px auto;
-  text-align: right;
-  font-size: 16px;
-  background: #FFF4E0;
-}
-
-/*以下、②左側のコメント*/
-.balloon6 {
-  width: 100%;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-.balloon6 .faceicon {
-  float: left;
-  margin-right: -50px;
-  width: 40px;
-}
-
-.balloon6 .faceicon img{
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-}
-.balloon6 .chatting {
-  width: 100%;
-  text-align: left;
-}
-.says {
-  display: inline-block;
-  position: relative;
-  margin: 0 0 0 50px;
-  padding: 10px;
-  max-width: 250px;
-  border-radius: 12px;
-  background: #F0F4C3;
-}
-
-.says:after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 3px;
-  left: -19px;
-  border: 8px solid transparent;
-  border-right: 18px solid #F0F4C3;
-  -webkit-transform: rotate(35deg);
-  transform: rotate(35deg);
-}
-.says p {
-  margin: 0;
-  padding: 0;
-}
-
-/*以下、③右側の緑コメント*/
-.mycomment {
-  margin: 10px 0;
-}
-.mycomment p {
-  display: inline-block;
-  position: relative;
-  margin: 0 10px 0 0;
-  padding: 8px;
-  max-width: 250px;
-  border-radius: 12px;
-  background: #AFB42B;
-}
-
-.mycomment p:after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  right: -19px;
-  border: 8px solid transparent;
-  border-left: 18px solid #AFB42B;
-  -webkit-transform: rotate(-35deg);
-  transform: rotate(-35deg);
+.field_with_errors {
+  display: contents;
 }
