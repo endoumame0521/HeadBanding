@@ -26,7 +26,11 @@ class Members::TweetsController < Members::ApplicationController
 
   def destroy
     if @tweet.destroy
-      flash.now[:notice] = "ツイートが削除されました"
+      if params[:id].to_i == @tweet.id
+        redirect_to tweets_path, notice: "ツイートが削除されました"
+      else
+        flash.now[:notice] = "ツイートが削除されました"
+      end
     else
       flash.now[:alert] = "ツイートの削除に失敗しました"
     end
