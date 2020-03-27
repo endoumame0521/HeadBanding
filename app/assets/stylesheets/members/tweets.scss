@@ -37,7 +37,7 @@ $baseColor:   #FFBC61; //基本色
     line-height: 150%;
 
     &.scroll {
-      height: 1600px;
+      max-height: 2000px;
       overflow-y: scroll;
     }
 

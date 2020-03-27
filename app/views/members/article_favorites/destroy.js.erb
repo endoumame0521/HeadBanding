@@ -1,2 +1,3 @@
 $("#article-<%= @article.id %>").html("<%= j(render partial: "members/articles/favorites", locals: { article: @article }) %>");
 $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+setTimeout("$('#notice').fadeOut('slow')", 2000);

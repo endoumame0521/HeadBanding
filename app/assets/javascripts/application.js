@@ -51,3 +51,16 @@ $(document).on('turbolinks:load', function() {
       })
     });
 });
+
+
+// 検索フォームの収納・引き出し
+$(document).on('turbolinks:load', function() {
+  $('.search_button').on('click', function(){
+    $('.search_form').slideToggle();
+  });
+});
+
+// 通知が表示されてから2000msで非表示にする
+$(document).on('turbolinks:load', function() {
+  setTimeout("$('#notice').fadeOut('slow')", 2000);
+});

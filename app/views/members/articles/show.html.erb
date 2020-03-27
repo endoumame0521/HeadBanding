@@ -83,7 +83,7 @@
 
     <!-- 音源 -->
     <h4><%= Article.human_attribute_name(:sound) %></h4>
-    <p><%= @article.sound %></p>
+    <iframe width="100%" height="500" src="https://www.youtube.com/embed/<%= @article.sound.last(11) %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <!-- パート -->
     <h4><%= Part.model_name.human %></h4>

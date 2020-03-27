@@ -1,7 +1,7 @@
 <!-- 管理者ログインしている場合は、いいね数とスターだけを表示 -->
 <% if current_member.nil? && admin_signed_in? %>
   <!-- 記事のお気に入り数を表示 -->
-  <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+  <i class="fa fa-heart faa-wrench animated-hover" aria-hidden="true" style="color: red;"></i>
   <span>×</span><%= tweet_flag ? tweet.tweet_favorites.count : tweet.tweet_comment_favorites.count %>
 
 <% elsif %>
@@ -16,10 +16,10 @@
   <% if member_signed_in? %>
     <% method = tweet.favorited_by?(current_member) ? "delete" : "post" %>
     <% color = tweet.favorited_by?(current_member) ? "#F99292" : "" %>
-    <% heart = tweet.favorited_by?(current_member) ? "fa fa-heart" : "fa fa-heart-o" %>
+    <% heart = tweet.favorited_by?(current_member) ? "fa fa-heart faa-wrench animated-hover" : "fa fa-heart-o faa-wrench animated-hover" %>
   <% else %>
     <% color = "#F99292" %>
-    <% heart = "fa fa-heart" %>
+    <% heart = "fa fa-heart faa-wrench animated-hover" %>
   <% end %>
 
   <!-- 会員がログインしている場合のみいいねが出来るように-->

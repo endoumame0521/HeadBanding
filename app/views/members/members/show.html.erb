@@ -13,7 +13,6 @@
 <% end %>
 <!-- 足跡機能END -->
 
-
 <!-- 自分のページ、管理者としてログインしていない場合 -->
 <% if @member == current_member && admin_signed_in? == false %>
   <h2>マイページ</h2>
@@ -21,8 +20,8 @@
   <h2><%= @member.name %>さんのページ</h2>
 <% end %>
 
-<!-- プロフィールエリア（画面左半分） -->
-<div class="row">
+<div class="row ProfileWrap">
+  <!-- プロフィールエリア（画面左半分） -->
   <div class="col-6 pr-3">
     <h3 class="mb-5">プロフィール</h3>
     <div class="row">
@@ -143,14 +142,7 @@
         <%= @member.address_city %>
       </div>
     </div>
-    <h3 class="mt-3">
-      <small><%= Member.human_attribute_name(:sound) %></small>
-    </h3>
-    <div class="row">
-      <div class="col-lg-12 mx-auto mb-2 pl-5">
-        <%= @member.sound %>
-      </div>
-    </div>
+
     <h3 class="mt-3">
       <small>担当<%= Part.model_name.human %></small>
     </h3>
@@ -191,8 +183,15 @@
         <%= I18n.l(@member.created_at, format: :original) %>
       </div>
     </div>
+    <h3 class="mt-3">
+      <small><%= Member.human_attribute_name(:sound) %></small>
+    </h3>
+    <div class="row">
+      <div class="col-lg-12 mx-auto mb-2">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/<%= @member.sound.last(11) %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
   </div>
-
   <!-- メンバーのタイムラインエリア（画面右半分） -->
   <div class="col-6">
     <div class="row ml-3">

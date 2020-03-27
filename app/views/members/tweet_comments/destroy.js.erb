@@ -1,3 +1,4 @@
 $("#tweet_comment-<%= @tweet_comment.id %>").remove();
 $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
 $(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
+setTimeout("$('#notice').fadeOut('slow')", 2000);

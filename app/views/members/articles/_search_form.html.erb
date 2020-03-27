@@ -1,3 +1,5 @@
+<button type="button" class="search_button fas fa-search-plus fa-3x faa-shake animated-hover" style="color: #F99292;"></button>
+<div class="search_form">
 <h2>バンド記事検索フォーム</h2>
 
 <!-- admin_flagの値によって会員側フォームか管理者側フォームかを判断 -->
@@ -108,7 +110,9 @@
     <%= f.hidden_field :published_status, value: :open %>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "検索", class: "btn btn-primary mb-5" %>
+  <div class="actions form-inline mb-5">
+    <%= f.submit "検索", class: "btn btn-primary form-control" %>
+    <%= f.button "フォームリセット", type: :reset, class: "btn btn-secondary form-control ml-3" %>
   </div>
 <% end %>
+</div>
