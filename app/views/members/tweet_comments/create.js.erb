@@ -8,4 +8,5 @@ $(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
 $(".error_messages").html("<%= j(render "/layouts/error_messages", model: @tweet_comment) %>");
 $(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
 $("textarea").val('');
+setTimeout("$('#notice').fadeOut('slow')", 2000);
 <% end %>
