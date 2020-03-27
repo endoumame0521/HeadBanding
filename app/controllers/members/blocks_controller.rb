@@ -18,6 +18,7 @@ class Members::BlocksController < Members::ApplicationController
   def blocker
     @members = @member.blocking_member
     @members = @members.includes([:blocking_member, part_members: :part])
+    @members = @members.page(params[:page])
   end
 
   private

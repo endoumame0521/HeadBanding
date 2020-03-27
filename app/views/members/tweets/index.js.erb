@@ -1,0 +1,2 @@
+$("#tweets").append('<%= j(render "members/tweets/tweet_lists", { tweets: @tweets }) %>');
+$("#view_more").replaceWith("<%= j(link_to_next_page @tweets, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;") %>");

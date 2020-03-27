@@ -2,6 +2,7 @@ class Admins::RoomsController < Admins::ApplicationController
   def index
     @rooms = Room.all
     @rooms = @rooms.includes([:entries, :entry_members])
+    @rooms = @rooms.page(params[:page])
   end
 
   def update

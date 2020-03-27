@@ -2,6 +2,7 @@ class Members::RoomsController < Members::ApplicationController
   def index
     @entry_rooms = current_member.entry_rooms
     @entry_rooms = @entry_rooms.includes([:entries, :entry_members])
+    @entry_rooms = @entry_rooms.page(params[:page])
   end
 
   def create
@@ -33,6 +34,8 @@ class Members::RoomsController < Members::ApplicationController
 
     if Entry.where(member_id: current_member.id, room_id: @room.id).present?
       @messages = @room.messages.includes([:member])
+      @messages = @messages.page(params[:page])
+
       @entries = @room.entries.includes([:member])
       @entries.each do |entry|
         if entry.member.id != current_member.id

@@ -3,6 +3,7 @@ class Admins::TweetsController < Admins::ApplicationController
     @search_params = tweet_search_params
     @tweets = Tweet.search(@search_params)
     @tweets = @tweets.includes([:member])
+    @tweets = @tweets.page(params[:page])
   end
 
   def show

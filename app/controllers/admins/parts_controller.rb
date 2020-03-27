@@ -1,6 +1,7 @@
 class Admins::PartsController < Admins::ApplicationController
   def index
     @parts = Part.all
+    @parts = @parts.page(params[:page])
   end
 
   def create

@@ -1,0 +1,8 @@
+<% entry_rooms.each do |entry_room| %>
+  <% entry_room.entry_members.each do |entry_member| %>
+    <!-- 自分以外のルームメンバーを表示 -->
+    <% unless entry_member == current_member %>
+      <%= render partial: "members/rooms/room", locals: { member: entry_member, entry_room: entry_room } %>
+    <% end %>
+  <% end %>
+<% end %>

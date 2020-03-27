@@ -9,6 +9,7 @@ class Members::TweetsController < Members::ApplicationController
     @tweets = Tweet.search(@search_params).status_is("enable")
     @tweets = @tweets.where(member_id: Member.where(status: "enable"))
     @tweets = @tweets.includes([:member, member: :blocking_member])
+    @tweets = @tweets.page(params[:page])
   end
 
   def create

@@ -14,10 +14,12 @@ class Members::RelationshipsController < Members::ApplicationController
 
   def follower
     @members = @member.following_member.includes([:blocking_member, part_members: :part])
+    @members = @members.page(params[:page])
   end
 
   def followed
     @members = @member.follower_member.includes([:blocking_member, part_members: :part])
+    @members = @members.page(params[:page])
   end
 
   private

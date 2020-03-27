@@ -9,11 +9,11 @@
 </div>
 
 <div class="line-bc" id="messages">
-  <% @messages.each do |message| %>
-    <% if message.member_id == current_member.id %>
-      <%= render "members/messages/my_message", { message: message } %>
-    <% else %>
-      <%= render "members/messages/message", { message: message } %>
-    <% end %>
-  <% end %>
+  <!-- kaminariでページネーションのため部分テンプレート化 -->
+  <%= render "members/messages/message_lists", { messages: @messages } %>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @messages, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
 </div>

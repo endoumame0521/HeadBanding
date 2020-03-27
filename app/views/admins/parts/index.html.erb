@@ -15,7 +15,12 @@
       <th>ステータス</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="part_lists">
     <%= render @parts %>
   </tbody>
 </table>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @parts, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>
