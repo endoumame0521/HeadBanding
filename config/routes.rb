@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :tweets, only: [:index, :show, :update, :destroy] do
       resources :tweet_comments, only: [:update, :destroy]
     end
-    resources :members, only: [:index, :show, :edit, :update, :destroy] do
+    resources :members, only: [:index, :show, :update, :destroy] do
       get "following" => "members#follower", as: "following" #フォロー一覧
       get "followers" => "members#followed", as: "followers" #フォロワー一覧
       get "blocking" => "members#blocker", as: "blocking" #ブロックしているリスト一覧

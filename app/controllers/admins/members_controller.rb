@@ -13,10 +13,6 @@ class Admins::MembersController < Admins::ApplicationController
     @member_articles = @member_articles.page(params[:page])
   end
 
-  def edit
-    @member = Member.find(params[:id])
-  end
-
   def update
     @member = Member.find(params[:id])
     if @member.update(member_params)
