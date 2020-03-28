@@ -1,0 +1,30 @@
+// Place all the styles related to the members::rooms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+// メッセージボックス（手紙の背景画像）のレイアウト
+.MessageCard {
+  width: 120%;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 20px;
+  background-size: contain;
+  // background-image: url('letter.jpg'); <==== application.scss に移動
+}
+
+.MessageContent{
+  padding: 20px;
+  height: 280px;
+}
+
+.MessageContent span{
+  display: block;
+}
+
+.MessageRoom {
+  position: absolute;
+  top: 320px;
+  left: 165px;
+}

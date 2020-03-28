@@ -1,0 +1,19 @@
+<h2>タイムライン</h2>
+
+<!-- ツイート検索フォーム -->
+<%= render "members/tweets/search_form", { search_params: @search_params, admin_flag: true } %>
+
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweets">
+    <!-- ツイート一覧 -->
+    <%= render "admins/tweets/tweet_lists", { tweets: @tweets }  %>
+  </div>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @tweets, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

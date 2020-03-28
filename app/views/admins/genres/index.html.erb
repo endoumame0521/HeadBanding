@@ -1,0 +1,27 @@
+<h2>ジャンル一覧</h2>
+
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @genre %>
+
+<!-- ジャンル追加フォーム -->
+<%= render "layouts/admin_add_form", { scope: :genre, model: Genre.new, action: admins_genres_path } %>
+
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>ジャンル名</th>
+      <th>登録日</th>
+      <th>更新日</th>
+      <th></th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
+  <tbody id="genre_lists">
+    <%= render @genres %>
+  </tbody>
+</table>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @genres, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

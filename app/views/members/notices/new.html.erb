@@ -1,0 +1,47 @@
+<h2>通報投稿フォーム</h2>
+
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @notice %>
+
+<h4 class="mt-5">通報対象</h4>
+<!-- 通報する対象を表示する -->
+<% if @tweet.nil? == false %>
+  <!-- ツイートの通報詳細 -->
+  <div class="twitter__container">
+    <div class="twitter__title">
+      <span class="twitter-logo">♬</span>
+    </div>
+    <div class="twitter__contents" id="tweets">
+      <div class="twitter__block" id="tweet-<%= @tweet.id %>">
+        <%= render partial: "members/tweets/tweet", locals: { tweet: @tweet, tweet_flag: @tweet_flag, show_path: @show_path } %>
+      </div>
+    </div>
+  </div>
+<% elsif @article.nil? == false %>
+  <!-- バンド記事の通報詳細 -->
+  <div class="row">
+    <!-- 記事 -->
+    <%= render "members/articles/article", { article: @article, article_path: article_path(@article.id) } %>
+  </div>
+<% end %>
+
+<!-- 通報投稿フォームを表示 -->
+<%= form_with model: @notice, local: true, class: "row" do |f| %>
+  <div class="field col-lg-6">
+    <%= f.label :body, "通報内容" %><br>
+    <%= f.text_area :body, class: "form-control", rows: "5" %>
+  </div>
+
+  <!-- 通報する対象によってパラメータで送る値を分岐させる -->
+  <% if @tweet.nil? == false && @tweet_flag %>
+    <%= f.hidden_field :tweet_id, value: @tweet.id %>
+  <% elsif @tweet.nil? == false && @tweet_flag == false %>
+    <%= f.hidden_field :tweet_comment_id, value: @tweet.id %>
+  <% elsif @article.nil? == false %>
+    <%= f.hidden_field :article_id, value: @article.id  %>
+  <% end %>
+
+  <div class="actions col-lg-12">
+    <%= f.submit "投稿", class: "btn btn-primary mb-5" %>
+  </div>
+<% end %>

@@ -1,0 +1,3 @@
+$("#tweet_favorite-<%= @tweet.id %>").html("<%= j(render partial: "members/tweets/favorites", locals: { tweet: @tweet, tweet_flag: true }) %>");
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+setTimeout("$('#notice').fadeOut('slow')", 2000);

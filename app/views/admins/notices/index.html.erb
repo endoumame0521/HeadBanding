@@ -1,0 +1,77 @@
+<h2>通報一覧</h2>
+
+<!-- 通報のあったツイート一覧 -->
+<h4 class="mt-5">ツイート一覧</h4>
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>通報内容</th>
+      <th>投稿者</th>
+      <th>投稿日時</th>
+      <th>詳細</th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tweets.each do |tweet| %>
+    <tr>
+      <td><%= tweet.body %></td>
+      <td><%= tweet.member.name %></td>
+      <td><%= I18n.l(tweet.created_at, format: :original) %></td>
+      <td><%= link_to "通報詳細", admins_notice_path(tweet), class: "btn btn-success", style: "color: white;" %></td>
+      <td><%= render "layouts/status_form", { model: tweet, action: admins_notice_path(tweet) } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- 通報のあったツイートコメント一覧 -->
+<h4 class="mt-5">ツイートコメント一覧</h4>
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>通報内容</th>
+      <th>投稿者</th>
+      <th>投稿日時</th>
+      <th>詳細</th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tweet_comments.each do |tweet_comment| %>
+    <tr>
+      <td><%= tweet_comment.body %></td>
+      <td><%= tweet_comment.member.name %></td>
+      <td><%= I18n.l(tweet_comment.created_at, format: :original) %></td>
+      <td><%= link_to "通報詳細", admins_notice_path(tweet_comment), class: "btn btn-success", style: "color: white;" %></td>
+      <td><%= render "layouts/status_form", { model: tweet_comment, action: admins_notice_path(tweet_comment) } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<!-- 通報のあった記事一覧 -->
+<h4 class="mt-5">バンド記事一覧</h4>
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>通報内容</th>
+      <th>投稿者</th>
+      <th>投稿日時</th>
+      <th>詳細</th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.body %></td>
+      <td><%= article.member.name %></td>
+      <td><%= I18n.l(article.created_at, format: :original) %></td>
+      <td><%= link_to "通報詳細", admins_notice_path(article), class: "btn btn-success", style: "color: white;" %></td>
+      <td><%= render "layouts/status_form", { model: article, action: admins_notice_path(article) } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,8 @@
+<!-- 記事ステータス更新フォーム -->
+<div class="row mt-5">
+  <div class="col-lg-12 d-flex justify-content-end">
+    <%= render "layouts/status_form", { model: @article, action: admins_article_path(@article.id) } %>
+  </div>
+</div>
+<!-- 管理者にログインメンバーの権限を付与する -->
+<%= render file: "members/articles/show", locals: { current_member: @article.member } %>

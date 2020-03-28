@@ -1,0 +1,5 @@
+<!-- 都道府県と連動して市区町村の絞り込みを行う為のパーシャル -->
+<div class="field">
+  住所（<%= label(:address_city, Member.human_attribute_name(:address_city)) %>）
+  <%= collection_select(:member, :address_city, City.where(prefecture_id: prefecture_id), :name, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
+</div>

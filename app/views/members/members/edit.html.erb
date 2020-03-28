@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+
+    <!-- バリデーションのエラーメッセージ -->
+    <%= render "/layouts/error_messages", model: @member %>
+
+    <h2>会員情報編集</h2>
+
+    <%= form_with model: @member, local: true do |f| %>
+
+      <!-- 会員新規登録フォームには存在しない -->
+      <div class="field">
+        <%= f.label(:profile_image, Member.human_attribute_name(:profile_image)) %>
+        <%= f.attachment_field :profile_image, class: "form-control-file" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:email, Member.human_attribute_name(:email)) %>
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:name, Member.human_attribute_name(:name)) %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
+        <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
+          <%= r.radio_button() + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
+        <% end %>
+      </div>
+
+      <div class="field form-inline">
+        <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
+        <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control ml-1" %>
+      </div>
+
+      <div class="field">
+        住所（<%= f.label(:address_prefecture, Prefecture.human_attribute_name(:name)) %>）
+        <%= f.collection_select(:address_prefecture, Prefecture.all, :name, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
+      </div>
+
+      <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
+      <div class="field" id="ajax_cities_radio_buttons">
+        <%= render partial: "members/registrations/cities_select", locals: { prefecture_id: Prefecture.find_by(name: @member.address_prefecture).id } %>
+      </div>
+
+      <!-- 会員新規登録フォームには存在しない -->
+      <%= f.label(:sound, Member.human_attribute_name(:sound)) %>
+      <div class="field input-group">
+        <div class="input-group-prepend"><div class="input-group-text">URL</div></div>
+        <%= f.text_field :sound, class: "form-control", placeholder: "YouTubeのURLを入力" %>
+      </div>
+
+      <div class="field">
+        <span>担当</span><%= f.label :part, Part.model_name.human %><br>
+        <%= f.collection_check_boxes :part_ids, Part.all.enable, :id, :name %>
+      </div>
+
+      <div class="field">
+        <span>好きな</span><%= f.label :genre, Genre.model_name.human %><br>
+        <%= f.collection_check_boxes :genre_ids, Genre.all.enable, :id, :name %>
+      </div>
+
+      <!-- 会員新規登録フォームとコードは違う -->
+      <div class="field">
+        <span>好きな</span><%= f.label :artist, Artist.model_name.human %><br>
+        <%= f.fields_for :artists do |a| %>
+          <%= a.text_field :name, class: "form-control mb-2" %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label(:introduction, Member.human_attribute_name(:introduction)) %><br>
+        <%= f.text_area :introduction, class: "form-control", rows: "10" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "更新", class: "btn btn-primary mb-5" %>
+      </div>
+    <% end %>
+  </div>
+</div>

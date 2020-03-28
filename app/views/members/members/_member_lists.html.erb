@@ -1,0 +1,3 @@
+<% members.each do |member| %>
+  <%= render partial: "members/members/member", locals: { member: member, member_path: member_path(member.id) } %>
+<% end %>

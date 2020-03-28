@@ -1,0 +1,52 @@
+<h2>通報内容の詳細</h2>
+
+<!-- ツイートの通報詳細 -->
+<% if @notice.tweet.nil? == false %>
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweets">
+    <div class="twitter__block" id="tweet-<%= @notice.tweet.id %>">
+      <%= render "members/tweets/tweet", { tweet: @notice.tweet, tweet_flag: true, current_member: @notice.tweet.member, show_path: admins_tweet_path(@notice.tweet.id) } %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+<!-- ツイートコメントの通報詳細 -->
+<% if @notice.tweet_comment.nil? == false %>
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweet_comments">
+    <!-- ツイートコメント -->
+    <div class="twitter__block" id="tweet_comment-<%= @notice.tweet_comment.id %>">
+        <%= render partial: "members/tweets/tweet", locals: {
+          tweet: @notice.tweet_comment, tweet_flag: false, current_member: @notice.tweet_comment.member,
+          show_path: admins_tweet_tweet_comment_path(@notice.tweet_comment.tweet_id, @notice.tweet_comment.id)
+        } %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+<!-- バンド記事の通報詳細 -->
+<% if @notice.article.nil? == false %>
+  <div class="row">
+    <!-- 記事 -->
+    <%= render partial: "members/articles/article", locals: { article: @notice.article, article_path: admins_article_path(@notice.article.id) } %>
+  </div>
+<% end %>
+
+
+<h3 class="mt-3">通報内容</h3>
+<p><%= simple_format(@notice.body) %></p>
+
+
+<h3 class="mt-5">通報ステータス</h3>
+<%= render "layouts/status_form", { model: @notice, action: admins_notice_path(@notice) } %>
+

@@ -1,0 +1,118 @@
+<button type="button" class="search_button fas fa-search-plus fa-3x faa-shake animated-hover" style="color: #F99292;"></button>
+<div class="search_form">
+<h2>バンド記事検索フォーム</h2>
+
+<!-- admin_flagの値によって会員側フォームか管理者側フォームかを判断 -->
+<% action = admin_flag ? admins_articles_path : articles_path %>
+
+<%= form_with scope: :search, url: action, method: :get, local: true do |f| %>
+  <div class="field">
+    <%= f.label(:name, Article.human_attribute_name(:subject)) %>
+    <%= f.text_field :subject, value: search_params[:subject], class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:body, Article.human_attribute_name(:body)) %>
+    <%= f.text_field :body, value: search_params[:body], class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:category, Article.human_attribute_name(:category)) %>
+    <%= f.collection_radio_buttons(:category, Article.categories, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:category]) + f.label(Article.human_attribute_name("category.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:day_of_the_week, Article.human_attribute_name(:day_of_the_week)) %>
+    <%= f.collection_radio_buttons(:day_of_the_week, Article.day_of_the_weeks, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:day_of_the_week]) + f.label(Article.human_attribute_name("day_of_the_week.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:band_intention, Article.human_attribute_name(:band_intention)) %>
+    <%= f.collection_radio_buttons(:band_intention, Article.band_intentions, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:band_intention]) + f.label(Article.human_attribute_name("band_intention.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:music_intention, Article.human_attribute_name(:music_intention)) %>
+    <%= f.collection_radio_buttons(:music_intention, Article.music_intentions, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:music_intention]) + f.label(Article.human_attribute_name("music_intention.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:band_theme, Article.human_attribute_name(:band_theme)) %>
+    <%= f.collection_radio_buttons(:band_theme, Article.band_themes, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:band_theme]) + f.label(Article.human_attribute_name("band_theme.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:gender, Article.human_attribute_name(:gender)) %>
+    <%= f.collection_radio_buttons(:gender, Article.genders, :first, :first) do |r| %>
+      <%= r.radio_button(checked: r.value == @search_params[:gender]) + f.label(Article.human_attribute_name("gender.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field form-inline">
+    <span>年齢</span>
+    <%= f.text_field :age_min, value: search_params[:age_min], class: "form-control ml-2" %>
+    <%= f.label :age_min, "歳", class: "ml-2" %>〜
+    <%= f.text_field :age_max, value: search_params[:age_max], class: "form-control ml-2" %>
+    <%= f.label :age_max, "歳", class: "ml-2"  %>
+  </div>
+
+  <div class="field">
+    <%= f.label(:prefecture_id, Prefecture.human_attribute_name(:name)) %>
+    <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
+  </div>
+
+  <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
+  <div class="field" id="ajax_cities_check_boxes">
+    <%= render partial: "layouts/cities_select", locals: { prefecture_id: "" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :part, Part.model_name.human %><br>
+    <%= f.collection_check_boxes(:part_ids, Part.all.enable, :id, :name) do |b| %>
+      <%= b.label { b.check_box(checked: Array(@search_params[:part_ids]).include?(b.value.to_s)) + b.text } %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :genre, Genre.model_name.human %><br>
+    <%= f.collection_check_boxes(:genre_ids, Genre.all.enable, :id, :name) do |b| %>
+      <%= b.label { b.check_box(checked: Array(@search_params[:genre_ids]).include?(b.value.to_s)) + b.text } %>
+    <% end %>
+  </div>
+
+  <% if admin_flag %>
+    <div class="field">
+      <p>記事のステータス：</p>
+      <%= f.collection_radio_buttons(:status, Article.statuses, :first, :first) do |r| %>
+        <%= r.radio_button(checked: r.value == @search_params[:status]) + f.label(Article.human_attribute_name("status.#{r.text}")) %>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <p>記事の公開状態：</p>
+      <%= f.collection_radio_buttons(:published_status, Article.published_statuses, :first, :first) do |r| %>
+        <%= r.radio_button(checked: r.value == @search_params[:published_status]) + f.label(Article.human_attribute_name("published_status.#{r.text}")) %>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- 会員側の検索時はステータス、公開ステータスが有効な記事しか表示させない -->
+    <%= f.hidden_field :status, value: :enable %>
+    <%= f.hidden_field :published_status, value: :open %>
+  <% end %>
+
+  <div class="actions form-inline mb-5">
+    <%= f.submit "検索", class: "btn btn-primary form-control" %>
+    <%= f.button "フォームクリア", type: :button, class: "btn btn-secondary form-control ml-3 clear-button" %>
+  </div>
+<% end %>
+</div>
