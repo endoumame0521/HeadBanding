@@ -1,0 +1,2 @@
+$("#favorited_article_lists").append('<%= j(render "members/articles/article_lists", { articles: @favorited_articles }) %>');
+$("#view_more").replaceWith("<%= j(link_to_next_page @favorited_articles, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;") %>");

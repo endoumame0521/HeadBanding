@@ -13,4 +13,75 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap
 //= require_tree .
+
+// 検索フォームでの都道府県選択に連動する市区町村
+$(document).on('turbolinks:load', function() {
+  $(document).on('change', '.prefecture_id_select', function(){
+      $.ajax({
+        type: 'GET',
+        url: '/cities_select',
+        data: {
+        prefecture_id: $(this).val()
+        }
+      }).done(function(data){
+        $('#ajax_cities_check_boxes').html(data);
+      }).fail(function(){
+        alert("通信失敗");
+      })
+    });
+});
+
+// 会員新規登録フォームでの都道府県選択に連動する市区町村
+$(document).on('turbolinks:load', function() {
+  $(document).on('change', '#member_address_prefecture', function(){
+      $.ajax({
+        type: 'GET',
+        url: '/cities_select_regist',
+        data: {
+        prefecture_name: $(this).val()
+        }
+      }).done(function(data){
+        $('#ajax_cities_radio_buttons').html(data);
+      }).fail(function(){
+        alert("通信失敗");
+      })
+    });
+});
+
+
+// 検索フォームの収納・引き出し
+$(document).on('turbolinks:load', function() {
+  $('.search_button').on('click', function(){
+    $('.search_form').slideToggle();
+  });
+});
+
+
+// 通知が表示されてから2000msで非表示にする
+$(document).on('turbolinks:load', function() {
+  setTimeout("$('#notice').fadeOut('slow')", 2000);
+});
+
+
+// 検索フォームのクリアボタン
+$(document).on('turbolinks:load', function() {
+    $(".clear-button").on("click", function () {
+        clearForm(this.form);
+    });
+
+    function clearForm (form) {
+        $(form)
+            .find("input, select, textarea")
+            .not(":button, :submit, :reset, :hidden")
+            .val("")
+            .prop("checked", false)
+            .prop("selected", false)
+        ;
+
+        $(form).find(":radio").filter("[data-default]").prop("checked", true);
+    }
+});

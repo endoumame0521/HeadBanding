@@ -1,0 +1,7 @@
+<tr>
+  <td><%= part.name %></td>
+  <td><%= I18n.l(part.created_at, format: :original) %></td>
+  <td><%= I18n.l(part.updated_at, format: :original) %></td>
+  <td><%= link_to "編集", edit_admins_part_path(part), class: "btn btn-success", style: "color: white;" %></td>
+  <td><%= render "layouts/status_form", { model: part, action: admins_part_path(part) } %></td>
+</tr>

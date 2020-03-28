@@ -1,0 +1,7 @@
+<%= label :city, City.model_name.human %>
+<%= collection_check_boxes :search, :city_ids, City.where(prefecture_id: prefecture_id), :id, :name %>
+
+<!-- 都道府県を選択していない場合、以下のメッセージが表示される -->
+<% if prefecture_id.blank? %>
+  <span>：都道府県を選択してください</span>
+<% end %>

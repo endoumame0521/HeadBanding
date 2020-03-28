@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-6">
+    <h2>バンド記事の詳細</h2>
+  </div>
+  <div class="col-6 form-inline d-flex justify-content-end">
+    <!-- 自分の記事の場合、編集ボタンと削除ボタンを表示 -->
+    <% unless admin_signed_in? %>
+      <% if member_signed_in? && @article.member == current_member %>
+          <%= link_to "編集", edit_article_path, class: "btn btn-primary mt-4", style: "color: white;" %>
+          <%= link_to "削除", article_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, class: "btn btn-danger mt-4 ml-3", style: "color: white;" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row pr-3 mb-4">
+  <div class="ArticleShow col-lg-12">
+    <!-- 記事の表題 -->
+    <h4><%= Article.human_attribute_name(:subject) %></h4>
+    <p><%= @article.subject %></p>
+
+    <!-- 記事の内容 -->
+    <h4><%= Article.human_attribute_name(:body) %></h4>
+    <!-- 文章の改行を反映して表示 -->
+    <p><%= simple_format(@article.body) %></p>
+
+    <!-- 基本データ -->
+    <h4>基本データ</h4>
+    <div class="row">
+      <div class="col-3">
+        <!-- メンバーログイン中、または管理者としてログイン中の場合のみ -->
+        <% if member_signed_in? || admin_signed_in? %>
+          <!-- 自分の記事の場合、公開ステータスを表示する -->
+          <% if @article.member.id == current_member.id %>
+            <p><%= Article.human_attribute_name(:published_status) %></p>
+          <% end %>
+        <% end %>
+
+        <p><%= Article.human_attribute_name(:category) %></p>
+        <p><%= Article.human_attribute_name(:prefecture_id) %></p>
+        <p><%= City.model_name.human %></p>
+        <p><%= Article.human_attribute_name(:day_of_the_week) %></p>
+        <p><%= Article.human_attribute_name(:band_intention) %></p>
+        <p><%= Article.human_attribute_name(:music_intention) %></p>
+        <p><%= Article.human_attribute_name(:gender) %></p>
+        <p>募集年齢</p>
+      </div>
+
+      <div class="col-9">
+        <!-- メンバーログイン中、または管理者としてログイン中の場合のみ -->
+        <% if member_signed_in? || admin_signed_in? %>
+          <!-- 自分の記事の場合、公開ステータスを表示する -->
+          <% if @article.member.id == current_member.id %>
+            <p><%= Article.human_attribute_name("published_status.#{@article.published_status}") %></p>
+          <% end %>
+        <% end %>
+
+        <p><%= Article.human_attribute_name("category.#{@article.category}") %></p>
+        <p><%= Article.human_attribute_name("prefecture_id.#{@article.prefecture.name}") %></p>
+
+        <% if @article.article_cities.empty? %>
+          <p>指定無し</p>
+        <% else %>
+          <p>
+            <% @article.article_cities.includes(:city).each { |article_city| %>
+              <%= article_city.city.name %><span>、</span>
+            <% } %>
+          </p>
+        <% end %>
+
+        <p><%= Article.human_attribute_name("day_of_the_week.#{@article.day_of_the_week}") %></p>
+        <p><%= Article.human_attribute_name("band_intention.#{@article.band_intention}") %></p>
+        <p><%= Article.human_attribute_name("music_intention.#{@article.music_intention}") %></p>
+        <p><%= Article.human_attribute_name("gender.#{@article.gender}") %></p>
+
+        <% if @article.age_min.blank? && @article.age_max.blank? %>
+          <p>指定無し</p>
+        <% else %>
+          <p><%= @article.age_min %><span>〜</span><%= @article.age_max %>歳</p>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 音源 -->
+    <h4><%= Article.human_attribute_name(:sound) %></h4>
+    <% if @article.sound.blank? %>
+      <span>音源はありません</span>
+    <% else %>
+      <iframe width="100%" height="500" src="https://www.youtube.com/embed/<%= @article.sound.last(11) %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <% end %>
+
+    <!-- パート -->
+    <h4><%= Part.model_name.human %></h4>
+    <p><% @part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %></p>
+
+    <!-- ジャンル -->
+    <h4><%= Genre.model_name.human %></h4>
+    <p><% @genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
+  </div>
+</div>

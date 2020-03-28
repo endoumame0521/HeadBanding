@@ -1,0 +1,13 @@
+<!-- 対象会員が自分でないかつ、自分が対象会員にブロックされていなければフォローボタンを表示する -->
+<% if current_member != member && current_member.blocking?(member) == false %>
+  <!-- フォローしていればフォローするボタンを、フォローしていればフォロー外すボタンを表示 -->
+  <% if current_member.following?(member) %>
+    <span class="FollowButton">
+      <%= link_to 'フォロー外す', member_relationships_path(member.id), method: :delete, remote: true, class: "btn btn-sm btn-primary" %>
+    </span>
+  <% else %>
+    <span class="FollowButton">
+      <%= link_to 'フォローする', member_relationships_path(member.id), method: :post, remote: true, class: "btn btn-sm btn-primary" %>
+    </span>
+  <% end %>
+<% end %>

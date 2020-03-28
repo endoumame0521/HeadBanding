@@ -15,5 +15,10 @@ module HeadBanding
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+    config.time_zone = 'Osaka' #rails上での表示をタイムゾーンOSAKAに設定
+    config.active_record.default_timezone = :local #データベース保存時のタイムゾーンをOSのタイムゾーンに設定
+    # i18nのロケールファイルを読み込む為のpathを通す
+    config.i18n.default_locale = :ja #jaに変更
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
   end
 end

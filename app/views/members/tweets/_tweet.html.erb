@@ -1,0 +1,53 @@
+<figure>
+  <%= attachment_image_tag tweet.member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+</figure>
+<div class="twitter__block-text">
+  <div class="name"><%= tweet.member.name %><span class="name_reply"></span></div>
+  <div class="date"><%= time_ago_in_words(tweet.updated_at) + "前" %></div>
+  <div class="text">
+    <%= tweet.body %>
+    <div class="in-pict">
+      <%= attachment_image_tag tweet, :image, :fill, 300, 300, format: 'jpeg' %>
+    </div>
+  </div>
+  <div class="twitter__icon">
+    <span class="twitter-bubble">
+      <!-- ツイートの場合はコメント数(ツイート詳細画面へのリンク)を表示 -->
+      <% if tweet_flag %>
+        <%= link_to show_path do %>
+          <i class="fa fa-comment-dots" style="color: #4C4C4C;"></i>
+        <% end %>
+        <span class="comment-count">x<%= tweet.tweet_comments.count %></span>
+      <% end %>
+    </span>
+    <!-- ツイートの場合とツイートコメントの場合でid名を分けている。jqueryによる非同期通信の為。 -->
+    <% id_name = tweet_flag ? "tweet_favorite" : "tweet_comment_favorite" %>
+    <span class="twitter-heart" id="<%= id_name %>-<%= tweet.id %>">
+      <%= render partial: "members/tweets/favorites", locals: { tweet: tweet, tweet_flag: tweet_flag } %>
+    </span>
+
+    <!-- 会員がログインしている場合のみ削除・通報ボタンが表示される-->
+    <% if member_signed_in? || admin_signed_in? %>
+      <!-- 自分のツイート（orコメント）の場合は削除リンクを表示。そうでない場合は通報リンクを表示 -->
+      <% if tweet.member == current_member %>
+        <span class="twitter-loop">
+          <%= link_to show_path, method: :delete, data: { confirm: "本当に削除してもよろしいですか？" }, remote: true do %>
+            <i class="fas fa-trash" style="color: #4C4C4C;"></i>
+          <% end %>
+        </span>
+      <% elsif tweet_flag %>
+        <span class="twitter-loop">
+          <%= link_to controller: "members/notices", action: "new", tweet_id: tweet.id do %>
+            <i class="fas fa-exclamation-triangle" style="color: #FFBC61;"></i>
+          <% end %>
+        </span>
+      <% elsif tweet_flag == false %>
+        <span class="twitter-loop">
+          <%= link_to controller: "members/notices", action: "new", tweet_comment_id: tweet.id do %>
+            <i class="fas fa-exclamation-triangle" style="color: #FFBC61;"></i>
+          <% end %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

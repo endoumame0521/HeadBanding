@@ -1,0 +1,11 @@
+<h2>メッセージルーム一覧</h2>
+
+<div class="row" id="room_lists">
+  <!-- メッセージルーム一覧 -->
+  <%= render "admins/rooms/room_lists", { rooms: @rooms }  %>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @rooms, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

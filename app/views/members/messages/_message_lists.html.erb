@@ -1,0 +1,7 @@
+<% messages.each do |message| %>
+  <% if message.member_id == current_member.id %>
+    <%= render "members/messages/my_message", { message: message } %>
+  <% else %>
+    <%= render "members/messages/message", { message: message } %>
+  <% end %>
+<% end %>

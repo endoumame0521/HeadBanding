@@ -1,0 +1,156 @@
+// Place all the styles related to the members::tweets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$baseColor:   #FFBC61; //基本色
+
+.twitter__container {
+  padding:0;
+  background: #ffffff;
+  overflow: hidden;
+  width: 100%;
+  margin: 20px auto;
+  border: solid 1px #eeeeee;
+
+  a {
+    color: $baseColor;
+  }
+
+  .twitter__title {
+    background: $baseColor;
+    padding: 10px;
+    text-align: center;
+    font-size: 150%;
+    color: #ffffff;
+
+    .twitter-logo {
+      margin:  0 auto;
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+  }
+
+  .twitter__contents {
+    overflow: hidden;
+    position: relative;
+    line-height: 150%;
+
+    &.scroll {
+      max-height: 2000px;
+      overflow-y: scroll;
+    }
+
+    .twitter__block {
+      width: 100%;
+      display: block;
+      padding: 15px;
+      margin-bottom: 5px;
+      border-bottom: solid 1px #eeeeee;
+      overflow: hidden;
+
+      &:last-child {
+        border-bottom: solid 0px;
+      }
+
+      figure {
+        width: 50px;
+        padding: 0;
+        margin: 0;
+        float: left;
+        width: 50px;
+
+        img{
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+        }
+      }
+
+      .twitter__block-text {
+        margin: 0;
+        position: relative;
+        margin-left: 80px;
+        padding-right: 10px;
+
+        .name {
+          font-weight: bold;
+
+          .name_reply {
+            color: #8a9aa4;
+            margin-left: 10px;
+          }
+        }
+
+        .date {
+          position: absolute;
+          top:0;
+          right: 20px;
+          text-align:right;
+          color: #8a9aa4;
+        }
+
+        .text {
+          margin: 15px 0;
+
+          .in-pict img{
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            margin: 5px 0;
+            width: 95%;
+            height: 400px;
+            object-fit: cover;
+          }
+        }
+
+        .twitter__icon {
+          height: 18px;
+          br {
+            display: none;
+          }
+
+          $icons: 'twitter-bubble', 'twitter-heart', 'twitter-loop';
+
+          @each $icon in $icons {
+            .#{$icon} {
+              width: 14px;
+              height: 14px;
+              display: block;
+              padding-left: 20px;
+              padding-bottom: 5px;
+              width: 20%;
+              float: left;
+              color: #8a9aa4;
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+    // ツイート詳細画面のツイートだけ表示を大きくする
+    #tweet_comment_tweet {
+      border-bottom: solid 2px #eeeeee;
+      line-height: 200%;
+      figure {
+        /* 正方形を用意 */
+        img{
+          width: 100px;
+          height: 100px;
+        }
+      }
+      .twitter__block-text {
+        margin-left: 120px;
+        padding-right: 10px;
+      }
+
+      $icons: 'twitter-bubble', 'twitter-heart', 'twitter-loop';
+
+      @each $icon in $icons {
+        .#{$icon} {
+          padding-bottom: 30px;
+        }
+      }
+    }
+  }
+}

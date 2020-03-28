@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-md sticky-top navbar-dark navbar-<%= request.url.split('/')[3] %>">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar" aria-controls="Navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="Navbar">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><%= link_to 'TOP', top_path, class: "nav-link" %></li>
+      <!-- URLがadminsの場合、管理者用のヘッダーを表示 -->
+      <% if request.url.split('/')[3] == "admins" %>
+        <%= render "layouts/menu_admin.html.erb" %>
+      <% else %>
+        <%= render "layouts/menu_member.html.erb" %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="notification"><%= render "layouts/notification.html.erb" %></div>
+</nav>

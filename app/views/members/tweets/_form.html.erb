@@ -1,0 +1,35 @@
+<!-- 会員がログインしている場合のみ投稿フォームが表示される-->
+<% if member_signed_in? %>
+
+  <!-- ツイートの場合はツイート投稿フォームを、コメントの場合はコメント投稿フォームを表示 -->
+  <% model = tweet_flag ? Tweet.new : [ tweet, TweetComment.new ] %>
+
+  <%= form_with model: model, class:"row tweet_form" do |f| %>
+    <!-- ツイートの場合とコメントの場合でテキストエリアの表示内容を変える -->
+    <% if tweet_flag %>
+      <div class="field col-6">
+        <%= f.text_area :body, class: "form-control", rows: "3", placeholder: "いまどうしてる？" %>
+      </div>
+    <% else %>
+      <div class="field col-6">
+        <%= f.text_area :body, class: "form-control", rows: "3", placeholder: "どうおもう？" %>
+      </div>
+    <% end %>
+
+    <div class="field col-6 mt-3">
+      <%= f.attachment_field :image, class: "form-control-file" %>
+
+      <!-- ツイートの場合はツイート投稿ボタンを、コメントの場合はコメント投稿ボタンを表示 -->
+      <% if tweet_flag %>
+        <div class="actions mt-1">
+          <%= f.submit "つぶやく", class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="actions mt-1">
+          <%= f.submit "コメントする", class: "btn btn-primary mb-3" %>
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+<% end %>

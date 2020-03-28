@@ -1,0 +1,6 @@
+<h2>ジャンル編集</h2>
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @genre %>
+
+<!-- ジャンル編集フォーム -->
+<%= render "layouts/admin_add_form", { scope: :genre, model: @genre, action: admins_genre_path(@genre.id) } %>

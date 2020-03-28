@@ -1,0 +1,2 @@
+$("#follower_lists").append('<%= j(render "members/members/member_lists", { members: @members }) %>');
+$("#view_more").replaceWith("<%= j(link_to_next_page @members, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;") %>");

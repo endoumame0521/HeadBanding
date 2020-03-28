@@ -1,0 +1,12 @@
+<% if @tweet_comment.errors.any? %>
+$(".error_messages").html("<%= j(render "/layouts/error_messages", model: @tweet_comment) %>");
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+<% else %>
+$(".error_messages").html("");
+$('#tweet_comments').append('<div class="twitter__block" id="tweet_comment-<%= @tweet_comment.id %>">' + '<%= j(render partial: "members/tweets/tweet", locals: { tweet: @tweet_comment, tweet_flag: false, show_path: tweet_tweet_comment_path(@tweet_comment.tweet_id, @tweet_comment.id) }) %>' + '</div>');
+$(".notification").html("<%= j(render "layouts/notification.html.erb") %>");
+$(".error_messages").html("<%= j(render "/layouts/error_messages", model: @tweet_comment) %>");
+$(".comment-count").html("<%= @tweet_comment.tweet.tweet_comments.count %>");
+$(".tweet_form").find("input, textarea").not(":button, :submit, :reset, :hidden").val("");
+setTimeout("$('#notice').fadeOut('slow')", 2000);
+<% end %>

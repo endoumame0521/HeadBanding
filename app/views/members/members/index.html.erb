@@ -1,0 +1,14 @@
+<!-- 会員検索フォーム -->
+<%= render "members/members/search_form", { search_params: @search_params, admin_flag: false } %>
+
+<h2>メンバー一覧</h2>
+
+<div class="row" id="member_lists">
+  <!-- メンバー一覧 -->
+  <%= render "members/members/member_lists", { members: @members }  %>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @members, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

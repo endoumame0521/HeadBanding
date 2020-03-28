@@ -1,0 +1,12 @@
+<h2>フォロワー</h2>
+
+<% if @members.count > 0 %>
+  <div class="row">
+    <!-- フォロワー一覧 -->
+    <% @members.each do |member| %>
+      <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
+    <% end %>
+  </div>
+<% else %>
+  <p>フォロワーはいません</p>
+<% end %>

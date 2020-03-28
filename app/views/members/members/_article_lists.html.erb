@@ -1,0 +1,14 @@
+<div class="row">
+  <% member_articles.each do |article| %>
+    <div class="col-lg-6">
+      <div class="row">
+        <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->
+        <% if admin_signed_in? %>
+          <%= render partial: "members/articles/article", locals: { article: article, article_path: admins_article_path(article.id) } %>
+        <% else %>
+          <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

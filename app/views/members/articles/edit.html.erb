@@ -1,0 +1,7 @@
+<h2>バンド記事編集</h2>
+
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @article %>
+
+<!-- 記事更新フォームを表示 -->
+<%= render "form", { model: @article } %>

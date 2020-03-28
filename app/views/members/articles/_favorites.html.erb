@@ -1,0 +1,29 @@
+<!-- 管理者ログインしている場合は、いいね数とスターだけを表示 -->
+<% if current_member.nil? && admin_signed_in? %>
+  <!-- 記事のお気に入り数を表示 -->
+  <i class="fa fa-star fa-2x faa-wrench animated-hover" aria-hidden="true" style="color: yellow;" ></i>
+  <span>×</span><%= article.article_favorites.count %>
+
+<% elsif %>
+  <!-- 記事がログインしている会員によって既にいいねされているかどうかを確認 -->
+  <% if member_signed_in? %>
+    <% method = article.favorited_by?(current_member) ? "delete" : "post" %>
+    <% color = article.favorited_by?(current_member) ? "yellow" : "" %>
+    <% star = article.favorited_by?(current_member) ? "fa fa-star fa-2x faa-wrench animated-hover" : "fa fa-star-o fa-2x faa-wrench animated-hover" %>
+  <% else %>
+    <% color = "yellow" %>
+    <% star = "fa fa-star fa-2x faa-wrench animated-hover" %>
+  <% end %>
+
+  <!-- 会員がログインしている場合のみ記事のお気に入りが押せるように -->
+  <% if member_signed_in? %>
+    <%= link_to article_article_favorites_path(article), method: method, remote: true do %>
+      <i class="<%= star %>" aria-hidden="true" style="color: <%= color %>;" ></i>
+    <% end %>
+  <% else %>
+    <i class="<%= star %>" aria-hidden="true" style="color: <%= color %>;" ></i>
+  <% end %>
+
+  <!-- 記事のお気に入り数を表示 -->
+  <span>×</span><%= article.article_favorites.count %>
+<% end %>

@@ -1,0 +1,26 @@
+<div class="justify-content-center col-lg-6 pb-3">
+  <div class="MessageCard">
+    <div class="ProfileCardInner">
+      <div class="ProfileThumb">
+        <%= attachment_image_tag member, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: 100 %>
+      </div>
+      <div class="MessageContent">
+        <span class="ProfileName">
+          <%= member.name %>
+          （<%= member.address_prefecture %>&nbsp;<%= member.age %>歳&nbsp;
+          <%= Member.human_attribute_name("gender.#{member.gender}") %>）
+        </span>
+        <span class="ProfilePart">
+          <% partString = "" %>
+          <% member.part_members.includes(:part).each do |part_member| %>
+            <% partString += part_member.part.name + " " %>
+          <% end %>
+          <%= partString.truncate(25) %>
+        </span>
+      </div>
+    </div>
+  </div>
+  <span class="MessageRoom">
+    <%= link_to "メッセージルームへ", room_path(entry_room.id), class: "btn-gradient-radius" %>
+  </span>
+</div>

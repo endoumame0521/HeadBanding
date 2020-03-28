@@ -1,0 +1,26 @@
+<h2>パート一覧</h2>
+<!-- バリデーションのエラーメッセージ -->
+<%= render "/layouts/error_messages", model: @part %>
+
+<!-- パート追加フォーム -->
+<%= render "layouts/admin_add_form", { scope: :part, model: Part.new, action: admins_parts_path } %>
+
+<table class="table table-hover table-inverse mt-3 bg-white">
+  <thead class="thead-light">
+    <tr>
+      <th>パート名</th>
+      <th>登録日</th>
+      <th>更新日</th>
+      <th></th>
+      <th>ステータス</th>
+    </tr>
+  </thead>
+  <tbody id="part_lists">
+    <%= render @parts %>
+  </tbody>
+</table>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @parts, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>

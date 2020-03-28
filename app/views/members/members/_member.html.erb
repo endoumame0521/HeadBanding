@@ -1,0 +1,40 @@
+<div class="justify-content-center col-lg-6">
+  <%= link_to member_path do %>
+  <div class="ProfileCard">
+    <div class="ProfileCardInner">
+      <div class="ProfileThumb">
+        <%= attachment_image_tag member, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg", size: 100 %>
+      </div>
+      <div class="ProfileContent">
+        <span class="ProfileName">
+          <%= member.name %>
+          （<%= member.address_prefecture %>&nbsp;<%= member.age %>歳&nbsp;
+          <%= Member.human_attribute_name("gender.#{member.gender}") %>）
+        </span>
+        <span class="ProfilePart">
+          <% partString = "" %>
+          <% member.part_members.each do |part_member| %>
+            <% partString += part_member.part.name + " " %>
+          <% end %>
+          <%= partString.truncate(25) %>
+        </span>
+        <span class="ProfileIntro">
+          <!-- 表示文字数を制限して表示 -->
+          <%= member.introduction.truncate(200) %>
+        </span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <!-- メンバーがログインしているときだけフォロー・ブロックボタンを表示 -->
+  <% if member_signed_in? %>
+    <span class="ProfileRelation">
+      <span id="relation-member-<%= member.id %>">
+        <%= render "members/relationships/follow_button", { member: member } %>
+      </span>
+      <span id="block-member-<%= member.id %>">
+        <%= render "members/blocks/block_button", { member: member } %>
+      </span>
+    </span>
+  <% end %>
+</div>

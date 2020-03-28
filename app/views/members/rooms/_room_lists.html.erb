@@ -1,0 +1,5 @@
+<% entry_rooms.each do |entry_room| %>
+  <% entry_room.entry_members.where.not(id: current_member.blocker_member).where.not(id: current_member).each do |entry_member| %>
+    <%= render partial: "members/rooms/room", locals: { member: entry_member, entry_room: entry_room } %>
+  <% end %>
+<% end %>

@@ -1,0 +1,25 @@
+<!-- バリデーションのエラーメッセージ -->
+<span class="error_messages"><%= render "/layouts/error_messages", model: @tweet %></span>
+
+<div class="twitter__container">
+  <div class="twitter__title">
+    <span class="twitter-logo">♬</span>
+  </div>
+  <div class="twitter__contents" id="tweet_comments">
+    <!-- ツイートの詳細 -->
+    <div class="twitter__block" id="tweet_comment_tweet">
+      <%= render "members/tweets/tweet", { tweet: @tweet, tweet_flag: true, show_path: tweet_path(@tweet.id) } %>
+    </div>
+    <!-- ツイートコメント一覧 -->
+    <%= render "members/tweets/tweet_comment_lists", { tweet_comments: @tweet_comments }  %>
+  </div>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @tweet_comments, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
+</div>
+
+<!-- コメント投稿フォーム -->
+<%= render "form", { tweet: @tweet, tweet_flag: false } %>
+

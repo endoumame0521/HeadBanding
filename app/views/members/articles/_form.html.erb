@@ -1,0 +1,124 @@
+<!-- サブミットアクションがPATCHかPOSTかを確認し、パスを代入 -->
+<% action = model.id.nil? ? articles_path : article_path %>
+
+<%= form_with model: model, url: action, local: true do |f| %>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:category, Article.human_attribute_name(:category)) %>
+    <%= f.collection_radio_buttons(:category, Article.categories, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("category.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:published_status, Article.human_attribute_name(:published_status)) %>
+    <%= f.collection_radio_buttons(:published_status, Article.published_statuses, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("published_status.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:name, Article.human_attribute_name(:subject)) %>
+    <%= f.text_field :subject, class: "form-control", placeholder: "※100文字以内で入力してください" %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:prefecture_id, Prefecture.human_attribute_name(:name)) %>
+    <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {prompt: "選択してください"}, class: "prefecture_id_select form-control") %>
+  </div>
+
+  <!-- 市区町村のセレクトボックス。ajaxで都道府県のセレクトボックスと連動させる為、パーシャル化した。 -->
+  <span class="badge badge-success">任意</span>
+  <div class="field" id="ajax_cities_check_boxes">
+    <%= render partial: "layouts/cities_select", locals: { prefecture_id: "" } %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:day_of_the_week, Article.human_attribute_name(:day_of_the_week)) %>
+    <%= f.collection_radio_buttons(:day_of_the_week, Article.day_of_the_weeks, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("day_of_the_week.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <span>募集する</span><%= f.label(:gender, Article.human_attribute_name(:gender)) %>
+    <%= f.collection_radio_buttons(:gender, Article.genders, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("gender.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field form-inline">
+    <span class="badge badge-success">任意</span>
+    <span class="ml-2">年齢</span>
+    <%= f.text_field :age_min, class: "form-control ml-2" %><%= f.label :age_min, "歳", class: "ml-2" %>〜
+    <%= f.text_field :age_max, class: "form-control ml-2" %><%= f.label :age_max, "歳", class: "ml-2"  %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:music_intention, Article.human_attribute_name(:music_intention)) %>
+    <%= f.collection_radio_buttons(:music_intention, Article.music_intentions, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("music_intention.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:band_intention, Article.human_attribute_name(:band_intention)) %>
+    <%= f.collection_radio_buttons(:band_intention, Article.band_intentions, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("band_intention.#{r.text}")) %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:band_theme, Article.human_attribute_name(:band_theme)) %>
+    <%= f.collection_radio_buttons(:band_theme, Article.band_themes, :first, :first) do |r| %>
+      <%= r.radio_button() + f.label(Article.human_attribute_name("band_theme.#{r.text}")) %>
+    <% end %>
+  </div>
+
+    <span class="badge badge-success">任意</span>
+  <%= f.label(:sound, Article.human_attribute_name(:sound)) %>
+  <div class="field input-group">
+    <div class="input-group-prepend"><div class="input-group-text">URL</div></div>
+    <%= f.text_field :sound, class: "form-control", placeholder: "YouTubeのURLを入力してください" %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label(:body, Article.human_attribute_name(:body)) %>
+    <%= f.text_area :body, class: "form-control", rows: "20", placeholder: "※5000文字以内で入力してください" %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label :part, Part.model_name.human %><br>
+    <%= f.collection_check_boxes(:part_ids, Part.all.enable, :id, :name) do |b| %>
+      <%= b.label { b.check_box() + b.text } %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <span class="badge badge-danger">必須</span>
+    <%= f.label :genre, Genre.model_name.human %><br>
+    <%= f.collection_check_boxes(:genre_ids, Genre.all.enable, :id, :name) do |b| %>
+      <%= b.label { b.check_box() + b.text } %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <% if model.id.nil? %>
+      <%= f.submit "投稿", class: "btn btn-primary mb-5" %>
+    <% else %>
+      <%= f.submit "更新", class: "btn btn-primary mb-5" %>
+    <% end %>
+  </div>
+<% end %>
+
