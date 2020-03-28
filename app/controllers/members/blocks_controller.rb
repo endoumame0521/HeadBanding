@@ -1,6 +1,7 @@
 class Members::BlocksController < Members::ApplicationController
   before_action :set_member
-  before_action :withdrawed_member?, only: [:create, :destroy]
+  before_action :signed_in_member?, only: [:blocker]
+  before_action :withdrawed_member?, only: [:create, :destroy, :blocker]
 
   def create
     current_member.block(params[:member_id])
@@ -17,8 +18,9 @@ class Members::BlocksController < Members::ApplicationController
 
   def blocker
     @members = @member.blocking_member
-    @members = @members.includes([:blocking_member, part_members: :part])
+    @members = @members.where.not(id: current_member.blocker_member)
     @members = @members.page(params[:page])
+    @members = @members.includes([part_members: :part])
   end
 
   private
@@ -26,7 +28,13 @@ class Members::BlocksController < Members::ApplicationController
     @member = Member.find(params[:member_id])
   end
 
-  def withdrawed_member? # 会員が退会済であればブロック、アンブロックできない
+  def signed_in_member? #ログインメンバー以外のアクセス、編集を禁止
+    unless current_member.id == @member.id
+      redirect_to top_path, alert: "アクセスが拒否されました"
+    end
+  end
+
+  def withdrawed_member? # 会員が退会済であればブロック、アンブロックできない。アクセスもできない。
     if @member.disable?
       redirect_to top_path, alert: "アクセスできません"
     end

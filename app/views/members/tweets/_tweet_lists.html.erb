@@ -1,8 +1,13 @@
 <% tweets.each do |tweet| %>
-  <!-- ブロックされている会員のツイートは表示され無い -->
-  <% unless tweet.member.blocking?(current_member) %>
+  <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->
+  <% if admin_signed_in? %>
     <div class="twitter__block" id="tweet-<%= tweet.id %>">
-      <%= render partial: "tweet", locals: { tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id) } %>
+      <%= render partial: "members/tweets/tweet", locals: { tweet: tweet, tweet_flag: true, current_member: tweet.member, show_path: admins_tweet_path(tweet.id) } %>
+    </div>
+  <!-- 管理者としてログインしていない場合はメンバー側のパスをパーシャルに渡す -->
+  <% else %>
+    <div class="twitter__block" id="tweet-<%= tweet.id %>">
+      <%= render partial: "members/tweets/tweet", locals: { tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id) } %>
     </div>
   <% end %>
 <% end %>

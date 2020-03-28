@@ -1,9 +1,0 @@
-<div class="row">
-  <% articles.each do |article| %>
-    <div class="col-lg-6">
-      <div class="row">
-        <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
-      </div>
-    </div>
-  <% end %>
-</div>

@@ -91,10 +91,10 @@
 
     <!-- パート -->
     <h4><%= Part.model_name.human %></h4>
-    <p><% @article.part_articles.includes(:part).each { |part_article| %><%= part_article.part.name %>、<% } %></p>
+    <p><% @part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %></p>
 
     <!-- ジャンル -->
     <h4><%= Genre.model_name.human %></h4>
-    <p><% @article.genre_articles.includes(:genre).each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
+    <p><% @genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %></p>
   </div>
 </div>

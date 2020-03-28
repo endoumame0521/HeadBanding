@@ -6,10 +6,11 @@ class Members::TweetsController < Members::ApplicationController
 
   def index
     @search_params = tweet_search_params
-    @tweets = Tweet.search(@search_params).status_is("enable")
-    @tweets = @tweets.where(member_id: Member.where(status: "enable"))
-    @tweets = @tweets.includes([:member, member: :blocking_member])
+    @tweets = Tweet.search(@search_params).enable
+    @tweets = @tweets.where(member_id: Member.enable)
+    @tweets = @tweets.where.not(member_id: current_member.blocker_member)
     @tweets = @tweets.page(params[:page])
+    @tweets = @tweets.includes([:member])
   end
 
   def create
@@ -22,11 +23,17 @@ class Members::TweetsController < Members::ApplicationController
   end
 
   def show
+    @tweet_comments = @tweet.tweet_comments.enable
+    @tweet_comments = @tweet_comments.where(member_id: Member.enable)
+    @tweet_comments = @tweet_comments.where.not(member_id: current_member.blocker_member)
+    @tweet_comments = @tweet_comments.page(params[:page])
+    @tweet_comments = @tweet_comments.includes([:member])
   end
 
   def destroy
     if @tweet.destroy
-      if params[:id].to_i == @tweet.id
+      # 削除する前のURLがshowページならindexページへリダイレクトさせる
+      if request.referer.split('/')[4].to_i == @tweet.id
         redirect_to tweets_path, notice: "ツイートが削除されました"
       else
         flash.now[:notice] = "ツイートが削除されました"
@@ -47,6 +54,9 @@ class Members::TweetsController < Members::ApplicationController
 
   def set_tweet
     @tweet = Tweet.find(params[:id])
+    if @tweet.disable?
+      redirect_to top_path, alert: "無効なツイートです"
+    end
   end
 
   def signed_in_member? #ログインメンバー以外のアクセス、編集を禁止

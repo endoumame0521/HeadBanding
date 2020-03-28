@@ -55,12 +55,12 @@
 
       <div class="field">
         <span>担当</span><%= f.label :part, Part.model_name.human %><br>
-        <%= f.collection_check_boxes :part_ids, Part.all, :id, :name %>
+        <%= f.collection_check_boxes :part_ids, Part.all.enable, :id, :name %>
       </div>
 
       <div class="field">
         <span>好きな</span><%= f.label :genre, Genre.model_name.human %><br>
-        <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
+        <%= f.collection_check_boxes :genre_ids, Genre.all.enable, :id, :name %>
       </div>
 
       <!-- 会員新規登録フォームとコードは違う -->

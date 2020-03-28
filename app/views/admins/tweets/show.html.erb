@@ -12,19 +12,11 @@
         show_path: admins_tweet_path(@tweet.id) } %>
     </div>
     <!-- ツイートコメント一覧 -->
-    <% @tweet.tweet_comments.includes([:member]).each do |tweet_comment| %>
-      <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
-        <%= render partial: "members/tweets/tweet", locals: {
-          tweet: tweet_comment, tweet_flag: false, current_member: tweet_comment.member,
-          show_path: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
-        } %>
-        <div class="row justify-content-end text-right mr-5">
-          <!-- 記事ステータス更新フォーム -->
-          <%= render "layouts/status_form", {
-            model: tweet_comment, action: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
-          } %>
-        </div>
-      </div>
-    <% end %>
+    <%= render "admins/tweets/tweet_comment_lists", { tweet_comments: @tweet_comments }  %>
   </div>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @tweet_comments, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
 </div>

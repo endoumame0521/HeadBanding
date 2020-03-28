@@ -78,14 +78,14 @@
 
   <div class="field">
     <%= f.label :part, Part.model_name.human %><br>
-    <%= f.collection_check_boxes(:part_ids, Part.all, :id, :name) do |b| %>
+    <%= f.collection_check_boxes(:part_ids, Part.all.enable, :id, :name) do |b| %>
       <%= b.label { b.check_box(checked: Array(@search_params[:part_ids]).include?(b.value.to_s)) + b.text } %>
     <% end %>
   </div>
 
   <div class="field">
     <%= f.label :genre, Genre.model_name.human %><br>
-    <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+    <%= f.collection_check_boxes(:genre_ids, Genre.all.enable, :id, :name) do |b| %>
       <%= b.label { b.check_box(checked: Array(@search_params[:genre_ids]).include?(b.value.to_s)) + b.text } %>
     <% end %>
   </div>
