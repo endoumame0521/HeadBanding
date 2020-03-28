@@ -1,9 +1,6 @@
 <% tweets.each do |tweet| %>
   <div class="twitter__block" id="tweet-<%= tweet.id %>">
-    <%= render partial: "members/tweets/tweet", locals: {
-      tweet: tweet, tweet_flag: true, current_member: tweet.member,
-      show_path: admins_tweet_path(tweet.id)
-    } %>
+    <%= render partial: "members/tweets/tweet", locals: { tweet: tweet, tweet_flag: true, current_member: tweet.member, show_path: admins_tweet_path(tweet.id) } %>
     <div class="row justify-content-end text-right mr-5">
       <!-- 記事ステータス更新フォーム -->
       <%= render "layouts/status_form", { model: tweet, action: admins_tweet_path(tweet.id) } %>

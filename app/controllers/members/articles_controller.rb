@@ -6,14 +6,15 @@ class Members::ArticlesController < Members::ApplicationController
 
   def top
     @search_params = article_search_params
-    @articles = Article.search(@search_params).status_is("enable").published_status_is("open")
-    @articles = @articles.where(member_id: Member.where(status: "enable"))
-    @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre, member: :blocking_member])
+    @articles = Article.search(@search_params).enable.open
+    @articles = @articles.where(member_id: Member.enable)
     @articles = @articles.page(params[:page])
+    @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
   end
 
   def index
     top
+    @articles = @articles.where.not(member_id: current_member.blocker_member)
   end
 
   def new
@@ -31,6 +32,8 @@ class Members::ArticlesController < Members::ApplicationController
   end
 
   def show
+    @part_articles = @article.part_articles.includes(:part)
+    @genre_articles = @article.genre_articles.includes(:genre)
   end
 
   def edit
@@ -70,6 +73,11 @@ class Members::ArticlesController < Members::ApplicationController
 
   def set_article
     @article = Article.find(params[:id])
+    if @article.disable?
+      redirect_to top_path, alert: "無効な記事です"
+    elsif @article.close? && @article.member.id != current_member.id
+      redirect_to top_path, alert: "非公開記事です"
+    end
   end
 
   def signed_in_member? #ログインメンバー以外のアクセス、編集を禁止

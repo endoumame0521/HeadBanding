@@ -1,8 +1,8 @@
 class Members::RoomsController < Members::ApplicationController
   def index
-    @entry_rooms = current_member.entry_rooms
-    @entry_rooms = @entry_rooms.includes([:entries, :entry_members])
+    @entry_rooms = current_member.entry_rooms.enable
     @entry_rooms = @entry_rooms.page(params[:page])
+    # @entry_rooms = @entry_rooms.includes([:entries, :entry_members])
   end
 
   def create
@@ -32,8 +32,10 @@ class Members::RoomsController < Members::ApplicationController
   def show
     @room = Room.find(params[:id])
 
+    # 自分のメッセージルームでない場合はアクセスできない
     if Entry.where(member_id: current_member.id, room_id: @room.id).present?
-      @messages = @room.messages.includes([:member])
+      @messages = @room.messages.where.not(member_id: current_member.blocker_member)
+      @messages = @messages.includes([:member])
       @messages = @messages.page(params[:page])
 
       @entries = @room.entries.includes([:member])
@@ -48,7 +50,7 @@ class Members::RoomsController < Members::ApplicationController
         redirect_to top_path, alert: "アクセスできません"
       end
     else
-      redirect_to request.referer
+      redirect_to top_path, alert: "アクセスできません"
     end
   end
 

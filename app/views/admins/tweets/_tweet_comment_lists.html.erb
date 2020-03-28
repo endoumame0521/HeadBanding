@@ -1,0 +1,14 @@
+<% tweet_comments.each do |tweet_comment| %>
+  <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
+    <%= render partial: "members/tweets/tweet", locals: {
+      tweet: tweet_comment, tweet_flag: false, current_member: tweet_comment.member,
+      show_path: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
+    } %>
+    <div class="row justify-content-end text-right mr-5">
+      <!-- 記事ステータス更新フォーム -->
+      <%= render "layouts/status_form", {
+        model: tweet_comment, action: admins_tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
+      } %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,5 @@
+<% tweet_comments.each do |tweet_comment| %>
+  <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
+    <%= render partial: "members/tweets/tweet", locals: { tweet: tweet_comment, tweet_flag: false, show_path: tweet_tweet_comment_path(@tweet.id, tweet_comment.id) } %>
+  </div>
+<% end %>

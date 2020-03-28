@@ -100,7 +100,7 @@
   <div class="field">
     <span class="badge badge-danger">必須</span>
     <%= f.label :part, Part.model_name.human %><br>
-    <%= f.collection_check_boxes(:part_ids, Part.all, :id, :name) do |b| %>
+    <%= f.collection_check_boxes(:part_ids, Part.all.enable, :id, :name) do |b| %>
       <%= b.label { b.check_box() + b.text } %>
     <% end %>
   </div>
@@ -108,7 +108,7 @@
   <div class="field">
     <span class="badge badge-danger">必須</span>
     <%= f.label :genre, Genre.model_name.human %><br>
-    <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+    <%= f.collection_check_boxes(:genre_ids, Genre.all.enable, :id, :name) do |b| %>
       <%= b.label { b.check_box() + b.text } %>
     <% end %>
   </div>

@@ -3,6 +3,6 @@
 <%= form_with model: @member, url: member_withdraw_path(@member), local: true do |f| %>
   <div class="field">
     <%= f.hidden_field :status, value: :disable %>
-    <%= f.submit "退会する", class: "actions" %>
+    <%= f.submit "退会する", class: "actions btn btn-danger" %>
   </div>
 <% end %>

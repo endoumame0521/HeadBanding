@@ -113,6 +113,7 @@ ja:
         article_city_ids: 市区町村
         updated_at: 更新日時
         prefecture: 都道府県
+        prefecture_id: 都道府県
         part_article_ids: 担当パート
         genre_article_ids: 好きなジャンル
       article/published_status:

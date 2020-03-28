@@ -2,10 +2,7 @@
   <% articles.each do |article| %>
     <div class="col-lg-6">
       <div class="row">
-        <!-- ブロックされている会員の記事は表示され無い -->
-        <% unless article.member.blocking?(current_member) %>
-          <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
-        <% end %>
+        <%= render partial: "members/articles/article", locals: { article: article, article_path: article_path(article.id) } %>
       </div>
     </div>
   <% end %>

@@ -1,6 +1,6 @@
 class Members::RelationshipsController < Members::ApplicationController
   before_action :set_member
-  before_action :blocked_member?, only: [:create, :destroy]
+  before_action :blocked_member?, only: [:create, :destroy, :follower, :followed]
 
   def create
     current_member.follow(params[:member_id])
@@ -13,13 +13,17 @@ class Members::RelationshipsController < Members::ApplicationController
   end
 
   def follower
-    @members = @member.following_member.includes([:blocking_member, part_members: :part])
+    @members = @member.following_member
+    @members = @members.where.not(id: current_member.blocker_member)
     @members = @members.page(params[:page])
+    @members = @members.includes([part_members: :part])
   end
 
   def followed
-    @members = @member.follower_member.includes([:blocking_member, part_members: :part])
+    @members = @member.follower_member
+    @members = @members.where.not(id: current_member.blocker_member)
     @members = @members.page(params[:page])
+    @members = @members.includes([part_members: :part])
   end
 
   private
@@ -27,7 +31,7 @@ class Members::RelationshipsController < Members::ApplicationController
     @member = Member.find(params[:member_id])
   end
 
-  def blocked_member? # 会員が退会済、またはブロックされていればフォロー、アンフォローできない
+  def blocked_member? # 会員が退会済、またはブロックされていればフォロー、アンフォローできない。アクセスもできない。
     if @member.blocking?(current_member) || @member.disable?
       redirect_to top_path, alert: "アクセスできません"
     end

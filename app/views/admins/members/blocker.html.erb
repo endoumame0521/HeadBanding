@@ -1,12 +1,12 @@
 <h2>ブロックリスト</h2>
 
 <% if @members.count > 0 %>
-<div class="row">
-  <!-- ブロックリスト -->
-  <% @members.each do |member| %>
-    <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
-  <% end %>
-</div>
+  <div class="row">
+    <!-- ブロックリスト -->
+    <% @members.each do |member| %>
+      <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
+    <% end %>
+  </div>
 <% else %>
   <p>ブロックしている人はいません</p>
 <% end %>

@@ -1,4 +1,6 @@
 class Admins::TweetsController < Admins::ApplicationController
+  before_action :set_tweet, only: [:show, :update, :destroy]
+
   def index
     @search_params = tweet_search_params
     @tweets = Tweet.search(@search_params)
@@ -7,11 +9,12 @@ class Admins::TweetsController < Admins::ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
+    @tweet_comments = @tweet.tweet_comments
+    @tweet_comments = @tweet_comments.page(params[:page])
+    @tweet_comments = @tweet_comments.includes([:member])
   end
 
   def update
-    @tweet = Tweet.find(params[:id])
     if @tweet.update(tweet_params)
       redirect_to request.referer, notice: "ツイートのステータスが更新されました"
     else
@@ -20,8 +23,7 @@ class Admins::TweetsController < Admins::ApplicationController
   end
 
   def destroy
-    tweet = Tweet.find(params[:id])
-    if tweet.destroy
+    if @tweet.destroy
       redirect_to admins_tweets_path, notice: "ツイートが削除されました"
     else
       redirect_to admins_tweets_path, alert: "ツイートの削除に失敗しました"
@@ -35,5 +37,9 @@ class Admins::TweetsController < Admins::ApplicationController
 
   def tweet_search_params
     params.fetch(:search, {}).permit(:body, :status)
+  end
+
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
   end
 end

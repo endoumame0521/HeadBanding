@@ -27,6 +27,9 @@ class Members::TweetCommentsController < Members::ApplicationController
 
   def set_tweet_comment
     @tweet_comment = TweetComment.find_by(tweet_id: params[:tweet_id], id: params[:id])
+    if @tweet_comment.disable?
+      redirect_to top_path, alert: "無効なツイートコメントです"
+    end
   end
 
   def signed_in_member? #ログインメンバー以外のアクセス、編集を禁止

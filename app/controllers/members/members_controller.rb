@@ -1,19 +1,22 @@
 class Members::MembersController < Members::ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :cancel, :withdraw]
-  before_action :signed_in_member?, only: [:edit, :update, :cancel, :withdraw]
+  before_action :set_member, only: [:show, :edit, :update, :article_favorites, :cancel, :withdraw]
+  before_action :signed_in_member?, only: [:edit, :update, :article_favorites, :cancel, :withdraw]
   before_action :blocked_member?, only: [:show]
 
   def index
     @search_params = member_search_params
-    @members = Member.search(@search_params).status_is("enable")
-    @members = @members.includes([:blocking_member, part_members: :part])
+    @members = Member.search(@search_params).enable
+    @members = @members.where.not(id: current_member.blocker_member)
     @members = @members.page(params[:page])
+    @members = @members.includes([part_members: :part])
   end
 
   def show
-    @member_tweets = @member.tweets
-    @member_articles = @member.articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
+    @member_tweets = @member.tweets.enable
+
+    @member_articles = @member.articles.enable.open
     @member_articles = @member_articles.page(params[:page])
+    @member_articles = @member_articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
 
     # メッセージルーム関係START----------------------------------------------------------
     @current_member_entry = Entry.where(member_id: current_member.id)
@@ -49,9 +52,10 @@ class Members::MembersController < Members::ApplicationController
   end
 
   def article_favorites
-    @favorited_articles = current_member.favorited_articles
-    @favorited_articles = @favorited_articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre, member: :blocking_member])
+    @favorited_articles = current_member.favorited_articles.enable.open
+    @favorited_articles = @favorited_articles.where.not(member_id: current_member.blocker_member)
     @favorited_articles = @favorited_articles.page(params[:page])
+    @favorited_articles = @favorited_articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
   end
 
   def cancel

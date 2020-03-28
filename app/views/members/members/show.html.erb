@@ -207,25 +207,7 @@
           </div>
           <div class="twitter__contents scroll" id="tweets">
             <!-- ツイート一覧 -->
-            <% @member_tweets.each do |tweet| %>
-              <!-- 管理者としてログインしている場合は管理者側のパスをパーシャルに渡す -->
-              <% if admin_signed_in? %>
-                <div class="twitter__block" id="tweet-<%= tweet.id %>">
-                    <%= render partial: "members/tweets/tweet", locals: {
-                    tweet: tweet, tweet_flag: true, current_member: tweet.member, show_path: admins_tweet_path(tweet.id)
-                  } %>
-                  </div>
-              <% else %>
-                <!-- ブロックされている会員のツイートは表示され無い -->
-                <% unless tweet.member.blocking?(current_member) %>
-                  <div class="twitter__block" id="tweet-<%= tweet.id %>">
-                    <%= render partial: "members/tweets/tweet", locals: {
-                    tweet: tweet, tweet_flag: true, show_path: tweet_path(tweet.id)
-                  } %>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
+            <%= render "members/tweets/tweet_lists", { tweets: @member_tweets }  %>
           </div>
         </div>
       <% else %>

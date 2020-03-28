@@ -11,18 +11,15 @@
       <%= render "members/tweets/tweet", { tweet: @tweet, tweet_flag: true, show_path: tweet_path(@tweet.id) } %>
     </div>
     <!-- ツイートコメント一覧 -->
-    <% @tweet.tweet_comments.includes([:member, member: :blocking_member]).each do |tweet_comment| %>
-      <!-- ブロックされている会員のツイートは表示され無い -->
-      <% unless tweet_comment.member.blocking?(current_member) %>
-        <div class="twitter__block" id="tweet_comment-<%= tweet_comment.id %>">
-          <%= render partial: "members/tweets/tweet", locals: {
-            tweet: tweet_comment, tweet_flag: false, show_path: tweet_tweet_comment_path(@tweet.id, tweet_comment.id)
-          } %>
-        </div>
-      <% end %>
-    <% end %>
+    <%= render "members/tweets/tweet_comment_lists", { tweet_comments: @tweet_comments }  %>
   </div>
+</div>
+
+<!-- もっと見るボタン -->
+<div class="w-100 text-center mx-auto">
+  <%= link_to_next_page @tweet_comments, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
 </div>
 
 <!-- コメント投稿フォーム -->
 <%= render "form", { tweet: @tweet, tweet_flag: false } %>
+
