@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-if Prefecture.blank? && City.blank?
+unless Prefecture.blank? && City.blank?
   require "csv"
 
   # 都道府県・市区町村CSVを読み込みテーブルに保存
