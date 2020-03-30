@@ -107,7 +107,7 @@
   <% else %>
     <!-- 会員側の検索時はステータス、公開ステータスが有効な記事しか表示させない -->
     <%= f.hidden_field :status, value: :enable %>
-    <%= f.hidden_field :published_status, value: :open %>
+    <%= f.hidden_field :published_status, value: :opening %>
   <% end %>
 
   <div class="actions form-inline mb-5">
