@@ -4,7 +4,7 @@ class Notice < ApplicationRecord
   belongs_to :tweet_comment, optional: true
   belongs_to :article, optional: true
 
-  enum status: { open: 0, close: 1, missreporting: 2 }
+  enum status: { open: 0, close: 1, missreporting: 2 }, _prefix: true
 
   # バリデーションSTART------------------------------------------------------------------------------------------
   validates :body, presence: true, length: { maximum: 5000 }
