@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-if Prefecture.blank? && City.blank?
+unless Prefecture.blank? && City.blank?
   require "csv"
 
   # 都道府県・市区町村CSVを読み込みテーブルに保存
@@ -24,49 +24,3 @@ Admin.create!(
    email: ENV["ADMIN_MAIL"],
    password: ENV["ADMIN_PASS"]
 )
-
-
-[
-  ["ロック", "true"],
-  ["ポップス", "true"],
-  ["パンク", "true"],
-  ["メタル", "false"],
-  ["ファンク", "true"],
-  ["ジャズ", "true"],
-  ["R&B", "false"],
-  ["ラウドロック", "true"],
-  ["EDM", "true"],
-  ["エレクトロニコア", "true"]
-].each do |a, b|
-  Genre.create!(
-    [
-      {
-        name: a,
-        status: b
-      }
-    ]
-  )
-end
-
-[
-  ["ギター", "true"],
-  ["ベース", "true"],
-  ["ドラム", "true"],
-  ["キーボード", "false"],
-  ["ボーカル", "true"],
-  ["尺八", "true"],
-  ["バイオリン", "false"],
-  ["オルガン", "true"],
-  ["シンセサイザー", "false"],
-  ["和太鼓", "true"],
-  ["ピアノ", "true"]
-].each do |a, b|
-  Part.create!(
-    [
-      {
-        name: a,
-        status: b
-      }
-    ]
-  )
-end
