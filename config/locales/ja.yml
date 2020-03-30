@@ -175,8 +175,8 @@ ja:
         body: 通報内容
         status: 通報ステータス
       notice/status:
-        open: 確認中
-        close: 確認完了
+        checking: 確認中
+        confirmed: 確認完了
         missreporting: 問題無し
 
       part:
