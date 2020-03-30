@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   get "cities_select" => "searches#cities_select"
   get "cities_select_regist" => "searches#cities_select_regist"
 
+
   mount ActionCable.server => '/cable'
 
 end
