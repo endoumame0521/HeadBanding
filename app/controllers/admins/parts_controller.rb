@@ -43,6 +43,6 @@ class Admins::PartsController < Admins::ApplicationController
   end
 
   def set_part
-    @parts = Parts.find(params[:id])
+    @parts = Part.find(params[:id])
   end
 end
