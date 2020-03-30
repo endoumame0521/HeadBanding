@@ -1,5 +1,5 @@
 class Article < ApplicationRecord
-  enum published_status: { open: true, close: false }, _prefix: true
+  enum published_status: { open: true, close: false }
   enum category: { recruit: 0, entry: 1 }
   enum day_of_the_week: { saturday: 0, sunday: 1, both: 2, other: 3, any: 4 }, _prefix: true
   enum band_intention: { professional: 0, indies: 1, hobby: 2, any: 3 }, _prefix: true
