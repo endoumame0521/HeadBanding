@@ -14,7 +14,7 @@ class Members::MembersController < Members::ApplicationController
   def show
     @member_tweets = @member.tweets.enable
 
-    @member_articles = @member.articles.enable.open
+    @member_articles = @member.articles.enable.opening
     @member_articles = @member_articles.page(params[:page])
     @member_articles = @member_articles.includes([:prefecture, part_articles: :part, genre_articles: :genre])
 
@@ -52,7 +52,7 @@ class Members::MembersController < Members::ApplicationController
   end
 
   def article_favorites
-    @favorited_articles = current_member.favorited_articles.enable.open
+    @favorited_articles = current_member.favorited_articles.enable.opening
     @favorited_articles = @favorited_articles.where.not(member_id: current_member.blocker_member)
     @favorited_articles = @favorited_articles.page(params[:page])
     @favorited_articles = @favorited_articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
