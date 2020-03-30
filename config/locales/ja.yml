@@ -117,7 +117,7 @@ ja:
         part_article_ids: 担当パート
         genre_article_ids: 好きなジャンル
       article/published_status:
-        open: 公開中
+        opening: 公開中
         close: 非公開
       article/category:
         recruit: バンドメンバー募集

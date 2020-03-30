@@ -6,7 +6,7 @@ class Members::ArticlesController < Members::ApplicationController
 
   def top
     @search_params = article_search_params
-    @articles = Article.search(@search_params).enable.open
+    @articles = Article.search(@search_params).enable.opening
     @articles = @articles.where(member_id: Member.enable)
     @articles = @articles.page(params[:page])
     @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
