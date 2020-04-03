@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <%= link_to (attachment_image_tag access.visitor, :profile_image, :fill, 50, 50, format: 'jpeg',
+    <%= link_to (attachment_image_tag access.visitor, :profile_image, size: 50, format: 'jpeg',
     fallback: "no_image.jpg", size: 50), access.visitor %>
   </td>
   <td><%= access.visitor.name %></td>
