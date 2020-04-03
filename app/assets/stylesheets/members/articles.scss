@@ -18,13 +18,27 @@
 
 .ArticleProfileImage {
   height: 100px;
+
+  figure {
+    height: 90px;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 90px;
+
+    img{
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+    }
+  }
 }
 
 .ArticleSubject {
   height: 100px;
   background: #FFBC61;
   color: #FFF;
-  border-radius: 10px 0px 0px 10px;/*角の丸み*/
+  border-radius: 10px 10px 10px 10px;/*角の丸み*/
   position: relative;
   border: solid 3px #FFBC61;
 }
