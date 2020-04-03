@@ -24,8 +24,8 @@
   <!-- プロフィールエリア（画面左半分） -->
   <div class="col-6 pr-3">
     <h3 class="mb-5">プロフィール</h3>
-    <div class="row">
-    <%= attachment_image_tag @member, :profile_image, size: 300, format: 'jpeg', fallback: "no_image.jpg", size: 300 %>
+    <div class="row ShowProfImg">
+      <%= attachment_image_tag @member, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: 300 %>
     </div>
     <!-- 管理者としてログイン中の場合は除く -->
     <% unless admin_signed_in? %>
