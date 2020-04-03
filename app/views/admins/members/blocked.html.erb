@@ -1,12 +1,12 @@
 <h2>ブロッカーリスト</h2>
 
 <% if @members.count > 0 %>
-<div class="row">
-  <!-- ブロッカーリスト -->
-  <% @members.each do |member| %>
-    <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
-  <% end %>
-</div>
+  <div class="row">
+    <!-- ブロッカーリスト -->
+    <% @members.each do |member| %>
+      <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
+    <% end %>
+  </div>
 <% else %>
-  <p>ブロックされている人はいません</p>
+  <p class="NoCount">ブロックされている人はいません</p>
 <% end %>
