@@ -204,6 +204,11 @@ label {
   width: 100%;
 }
 
+// 管理者ログイン時のみフッターの背景を黒っぽくする
+.footer-admins {
+  background-color: #4C4C4C;
+}
+
 .NoCount {
   margin-bottom: calc(100vh - 174px - 56px - 70px - 64px - 24px - 60px);
 }
