@@ -183,14 +183,17 @@ label {
   appearance: none;
 }
 
+// バリデーションでエラー発生時のレイアウト
 .field_with_errors {
   display: contents;
 }
 
+// メッセージルーム一覧の背景画像
 .MessageCard {
   background-image: image-url('letter.jpg');
 }
 
+// フッターのレイアウト
 .footer {
   margin-top: 50px;
   color: #FFF;
@@ -199,4 +202,8 @@ label {
   background-color: #FFBC61;
   height: 60px;
   width: 100%;
+}
+
+.NoCount {
+  margin-bottom: calc(100vh - 174px - 56px - 70px - 64px - 24px - 60px);
 }
