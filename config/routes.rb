@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     resource :notices, only: [:new, :create]
 
     get "top" => "articles#top", as: "top"
+    get "about" => "articles#about", as: "about"
+
     root 'articles#top'
   end
 

@@ -4,6 +4,9 @@ class Members::ArticlesController < Members::ApplicationController
   before_action :signed_in_member?, only: [:edit, :update, :destroy]
   before_action :blocked_member?, only: [:show]
 
+  def about
+  end
+
   def top
     @search_params = article_search_params
     @articles = Article.search(@search_params).enable.opening
