@@ -1,5 +1,5 @@
 class Members::ArticlesController < Members::ApplicationController
-  skip_before_action :authenticate_member!, only: [:top, :show]
+  skip_before_action :authenticate_member!, only: [:top, :show, :about]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_member?, only: [:edit, :update, :destroy]
   before_action :blocked_member?, only: [:show]
