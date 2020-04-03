@@ -1,12 +1,15 @@
 <h2>足跡一覧</h2>
 
-<table class="table table-hover table-inverse mt-3">
-  <tbody id="access_lists">
-    <%= render partial: "access", collection: @accesses %>
-  </tbody>
-</table>
+
+<% if @accesses.exists? %>
+  <table class="table table-hover table-inverse mt-3">
+    <tbody id="access_lists">
+      <%= render partial: "access", collection: @accesses %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="NoCount">足跡はありません</p>
+<% end %>
 
 <!-- もっと見るボタン -->
-<div class="w-100 text-center mx-auto">
-  <%= link_to_next_page @accesses, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
-</div>
+<%= render "layouts/and_more_button", { model: @accesses } %>
