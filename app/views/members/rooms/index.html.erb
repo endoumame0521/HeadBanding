@@ -1,11 +1,13 @@
 <h2>メッセージ一覧</h2>
 
-<div class="row" id="room_lists">
-  <!-- メッセージルーム一覧 -->
-  <%= render "members/rooms/room_lists", { entry_rooms: @entry_rooms }  %>
-</div>
+<% if @entry_rooms.exists? %>
+  <div class="row" id="room_lists">
+    <!-- メッセージルーム一覧 -->
+    <%= render "members/rooms/room_lists", { entry_rooms: @entry_rooms }  %>
+  </div>
+<% else %>
+  <p class="NoCount">メッセージはありません</p>
+<% end %>
 
 <!-- もっと見るボタン -->
-<div class="w-100 text-center mx-auto">
-  <%= link_to_next_page @entry_rooms, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
-</div>
+<%= render "layouts/and_more_button", { model: @entry_rooms } %>

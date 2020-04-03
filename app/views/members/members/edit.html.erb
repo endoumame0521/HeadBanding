@@ -15,16 +15,19 @@
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:email, Member.human_attribute_name(:email)) %>
         <%= f.email_field :email, class: "form-control" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:name, Member.human_attribute_name(:name)) %>
         <%= f.text_field :name, class: "form-control" %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger">必須</span>
         <%= f.label(:gender, Member.human_attribute_name(:gender)) %><br>
         <%= f.collection_radio_buttons(:gender, Member.genders, :first, :first) do |r| %>
           <%= r.radio_button() + f.label(Member.human_attribute_name("gender.#{r.text}")) %>
@@ -32,6 +35,7 @@
       </div>
 
       <div class="field form-inline">
+        <span class="badge badge-danger mr-1">必須</span>
         <%= f.label(:birthday, Member.human_attribute_name(:birthday)) %>
         <%= f.date_select :birthday, {use_month_numbers: true, start_year: 1940, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)}, class: "form-control ml-1" %>
       </div>
@@ -54,11 +58,13 @@
       </div>
 
       <div class="field">
+        <span class="badge badge-danger mr-1">必須</span>
         <span>担当</span><%= f.label :part, Part.model_name.human %><br>
         <%= f.collection_check_boxes :part_ids, Part.all.enable, :id, :name %>
       </div>
 
       <div class="field">
+        <span class="badge badge-danger mr-1">必須</span>
         <span>好きな</span><%= f.label :genre, Genre.model_name.human %><br>
         <%= f.collection_check_boxes :genre_ids, Genre.all.enable, :id, :name %>
       </div>

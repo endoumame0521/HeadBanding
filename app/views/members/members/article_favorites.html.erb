@@ -9,10 +9,8 @@
     </div>
   </div>
 <% else %>
-  <p>お気に入り記事はありません</p>
+  <p class="NoCount">お気に入り記事はありません</p>
 <% end %>
 
 <!-- もっと見るボタン -->
-<div class="w-100 text-center mx-auto">
-  <%= link_to_next_page @favorited_articles, 'もっと見る', remote: true, id: 'view_more', class: "m-5 btn btn-primary", style: "color: white;" %>
-</div>
+<%= render "layouts/and_more_button", { model: @favorited_articles } %>
