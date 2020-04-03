@@ -1,5 +1,5 @@
 <figure>
-  <%= attachment_image_tag tweet.member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+  <%= attachment_image_tag tweet.member, :profile_image, size: 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
 </figure>
 <div class="twitter__block-text">
   <div class="name"><%= tweet.member.name %><span class="name_reply"></span></div>
@@ -7,7 +7,7 @@
   <div class="text">
     <%= tweet.body %>
     <div class="in-pict">
-      <%= attachment_image_tag tweet, :image, :fill, 300, 300, format: 'jpeg' %>
+      <%= attachment_image_tag tweet, :image, size: 300, format: 'jpeg' %>
     </div>
   </div>
   <div class="twitter__icon">

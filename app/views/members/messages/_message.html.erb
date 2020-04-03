@@ -1,7 +1,7 @@
 <!--②左コメント始-->
 <div class="balloon6">
   <div class="faceicon">
-    <%= attachment_image_tag message.member, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+    <%= attachment_image_tag message.member, :profile_image, size: 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
   </div>
   <div class="chatting">
     <div class="says">
