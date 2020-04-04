@@ -6,22 +6,9 @@ document.addEventListener 'turbolinks:load', ->
 
     received: (data) ->
       if ($('#room').data('member_id') == data['message_member_id'])
-        $.ajax
-          url: "/my_message"
-          type: "get"  #HTTPメソッドの指定
-          dataType: "script" #レスポンスのデータタイプ指定
-          async: true #非同期通信フラグ
-          data: { message : data['message'] }
-        .done (response) ->
-
+        $('#messages').prepend data['my_message']
       else
-        $.ajax
-          url: "/message"
-          type: "get"  #HTTPメソッドの指定
-          dataType: "script" #レスポンスのデータタイプ指定
-          async: true #非同期通信フラグ
-          data: { message : data['message'] }
-        .done (response) ->
+        $('#messages').prepend data['message']
 
     speak: (message) ->
       @perform 'speak', message: message
