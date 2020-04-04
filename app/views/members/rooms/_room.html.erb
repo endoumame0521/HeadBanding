@@ -4,6 +4,9 @@
       <div class="ProfileThumb">
         <%= attachment_image_tag member, :profile_image, size: 100, format: 'jpeg', fallback: "no_image.jpg", size: 100 %>
       </div>
+      <div class="row justify-content-center">
+        <%= render "members/member_histries/online_members", { member: member } %>
+      </div>
       <div class="MessageContent">
         <span class="ProfileName">
           <%= member.name %>

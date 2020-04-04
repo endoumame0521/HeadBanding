@@ -55,6 +55,16 @@ class Member < ApplicationRecord
   # Gem kamirariの表示ページ数
   paginates_per 10
 
+  # memberモデルがアップデートされた直後に実行
+  after_update_commit :online_self
+
+  # データベースのonlineカラムが変更された場合のみJobを実行
+  def online_self
+    if saved_change_to_online?
+      AppearanceBroadcastJob.perform_later(self)
+    end
+  end
+
   #メンバーをフォローする
   def follow(member_id)
     follower.create(followed_id: member_id)
