@@ -1,11 +1,16 @@
-<h2 id="room" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>"><%= @member.name %>さんとのメッセージ</h2>
+<h2 id="room" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>">
+  <%= @member.name %>さんとのメッセージ
+</h2>
+<span class="row justify-content-start">
+  <%= render "members/member_histries/online_members", { member: @member } %>
+</span>
 <div class="row justify-content-end">
-<div class="col-6">
-  <form>
-    <label>メッセージ:</label><br>
-    <textarea id="chat-input" data-behavior="room_speaker" placeholder="メッセージを入力" class="form-control" rows="5"></textarea>
-  </form>
-</div>
+  <div class="col-6">
+    <form>
+      <label>メッセージ:</label><br>
+      <textarea id="chat-input" data-behavior="room_speaker" placeholder="メッセージを入力" class="form-control" rows="4"></textarea>
+    </form>
+  </div>
 </div>
 
 <div class="line-bc" id="messages">
