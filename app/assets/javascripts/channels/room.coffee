@@ -5,6 +5,7 @@ document.addEventListener 'turbolinks:load', ->
     disconnected: ->
 
     received: (data) ->
+      $("#message-#{data['message_id']}").remove()
       if ($('#room').data('member_id') == data['message_member_id'])
         $('#messages').prepend data['my_message']
       else
@@ -12,6 +13,9 @@ document.addEventListener 'turbolinks:load', ->
 
     speak: (message) ->
       @perform 'speak', message: message
+
+    remove: (message_id) ->
+      @perform 'remove', message_id: message_id
 
   $('#chat-input').on 'keypress', (event) ->
     if event.keyCode is 13
@@ -21,3 +25,6 @@ document.addEventListener 'turbolinks:load', ->
         alert('文字を入力してください')
       event.target.value = ''
       event.preventDefault()
+
+  $(document).on 'click', '.delete_button', ->
+    App.room.remove($(this).data('message_id'))
