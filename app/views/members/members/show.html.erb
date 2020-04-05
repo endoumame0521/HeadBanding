@@ -24,6 +24,9 @@
   <!-- プロフィールエリア（画面左半分） -->
   <div class="col-6 pr-3">
     <h3 class="mb-5">プロフィール</h3>
+    <div class="row justify-content-start mb-2">
+      <%= render "members/member_histries/online_members", { member: @member } %>
+    </div>
     <div class="row ShowProfImg">
       <%= attachment_image_tag @member, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: 300 %>
     </div>

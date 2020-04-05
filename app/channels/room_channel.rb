@@ -13,10 +13,7 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def remove(data)
-    message = Message.find(data['message_id'])
-    room_id = message.room_id
-    message.destroy!
-    ActionCable.server.broadcast "room_channel_#{room_id}", message_id: data['message_id']
+    Message.find(data['message_id']).destroy!
   end
 end
 
