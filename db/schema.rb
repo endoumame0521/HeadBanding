@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_04_142522) do
+ActiveRecord::Schema.define(version: 2020_04_05_031256) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id", null: false
@@ -163,6 +163,8 @@ ActiveRecord::Schema.define(version: 2020_04_04_142522) do
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "read", default: false
+    t.datetime "read_at"
     t.index ["member_id"], name: "index_messages_on_member_id"
     t.index ["room_id"], name: "index_messages_on_room_id"
   end

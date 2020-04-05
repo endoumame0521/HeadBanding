@@ -14,4 +14,7 @@ class Message < ApplicationRecord
 
   #Messageをcreateした直後にJobを実行。RoomChannelに対してcreateしたMessageをBroadCastする。
   after_create_commit { MessageBroadcastJob.perform_later self }
+
+  #Messageをdestroyする直前にJobを実行。RoomChannelに対してdestroyするMessageをBroadCastして非表示にする。
+  before_destroy { MessageRemoveBroadcastJob.perform_later self }
 end
