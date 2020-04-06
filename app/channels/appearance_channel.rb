@@ -3,7 +3,7 @@ class AppearanceChannel < ApplicationCable::Channel
     # stream_from "some_channel"
     member = Member.where(id: current_member.id).first
     return unless member
-    member.update(online: true, online_at: DateTime.now)
+    member.update_columns(online: true, online_at: DateTime.now)
     stream_from "appearance_member"
   end
 
@@ -11,7 +11,7 @@ class AppearanceChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
     member = Member.where(id: current_member.id).first
     return unless member
-    member.update(online: false, online_at: DateTime.now)
+    member.update_columns(online: false, online_at: DateTime.now)
     stream_from "appearance_member"
   end
 end

@@ -17,4 +17,12 @@ class Message < ApplicationRecord
 
   #Messageをdestroyする直前にJobを実行。RoomChannelに対してdestroyするMessageをBroadCastして非表示にする。
   before_destroy { MessageRemoveBroadcastJob.perform_later self }
+
+  after_update_commit :read_self
+
+  def read_self
+    if saved_change_to_read?
+      MessageReadBroadcastJob.perform_later(self)
+    end
+  end
 end

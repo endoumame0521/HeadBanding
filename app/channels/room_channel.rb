@@ -15,5 +15,9 @@ class RoomChannel < ApplicationCable::Channel
   def remove(data)
     Message.find(data['message_id']).destroy!
   end
+
+  def read(data)
+    Message.find(data['message_id']).update(read: true, read_at: DateTime.now)
+  end
 end
 
