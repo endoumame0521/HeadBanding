@@ -41,7 +41,7 @@ class Members::RoomsController < Members::ApplicationController
       @entries = @room.entries.includes([:member])
       @entries.each do |entry|
         if entry.member.id != current_member.id
-          @member = entry.member
+          @member = Member.find(entry.member_id)
         end
       end
 
@@ -52,6 +52,15 @@ class Members::RoomsController < Members::ApplicationController
     else
       redirect_to top_path, alert: "アクセスできません"
     end
+  end
+
+  def all_message_read
+    # アクセスした部屋の相手のメッセージ全てに既読をつける（readカラムをtrueに更新する）
+    Message.where(read: false, room_id: params[:room_id], member_id: params[:other_member_id]).update_all(read: true)
+    # 相手のチャットルーム画面のメッセージに{既読}を表示させる為にbroadcastする
+    ActionCable.server.broadcast "room_channel_#{params[:room_id]}",
+                                  other_member_id: params[:other_member_id].to_i,
+                                  all_read_flag: true
   end
 
   private

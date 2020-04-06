@@ -1,10 +1,9 @@
-class MessageRemoveBroadcastJob < ApplicationJob
+class MessageReadBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(message)
     ActionCable.server.broadcast "room_channel_#{message.room_id}",
-                                  message: render_json(message),
-                                  delete_flag: true
+                                  message: render_json(message)
   end
 
   private

@@ -1,6 +1,11 @@
 <!--③右コメント始-->
 <div id="message-<%= message.id %>">
 <div class="mycomment">
+<span id="read-<%= message.id %>" class="read-message">
+  <% if message.read %>
+    既読
+  <% end %>
+</span>
   <p><%= message.body %></p>
 </div>
 <p>

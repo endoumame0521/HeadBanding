@@ -1,4 +1,20 @@
-<h2 id="room" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>">
+<!-- メッセージ全てに既読を付ける機能START-->
+<script>
+  $(function() {
+    $.ajax({
+      url: "/all_message_read",
+      type: "get",
+      dataType: "script",
+      async: true,
+      data: { room_id: $('#room').data('room_id'), other_member_id: $('#room').data('other_member_id')  }
+    }).fail(function(){
+      alert("通信に失敗しました");
+    })
+  });
+</script>
+<!-- メッセージ全てに既読を付ける機能END-->
+
+<h2 id="room" data-room_id="<%= @room.id %>" data-member_id="<%= current_member.id %>" data-other_member_id="<%= @member.id %>">
   <%= @member.name %>さんとのメッセージ
 </h2>
 <span class="row justify-content-start">
