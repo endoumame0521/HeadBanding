@@ -1,0 +1,9 @@
+<% if member.online == true %>
+  <span id="member-online-<%= member.id %>">
+    <%= render "members/member_histries/online", { member: member } %>
+  </span>
+<% elsif member.online == false %>
+  <span id="member-online-<%= member.id %>">
+    <%= render "members/member_histries/offline", { member: member } %>
+  </span>
+<% end %>

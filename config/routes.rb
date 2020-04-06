@@ -26,8 +26,6 @@ Rails.application.routes.draw do
   end
 
   scope module: :members do
-    get "message" => "messages#message", as: "message"
-    get "my_message" => "messages#my_message", as: "my_message"
     resources :articles do
       resource :article_favorites, only: [:create, :destroy]
     end
@@ -51,6 +49,9 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]
+
+    # 訪れたメッセージルームの相手のメッセージルーム全てに既読をつける為（非同期通信）
+    get "all_message_read" => "rooms#all_message_read", as: "all_message_read"
 
     get "top" => "articles#top", as: "top"
     get "about" => "articles#about", as: "about"

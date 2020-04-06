@@ -1,6 +1,16 @@
 <!--③右コメント始-->
+<div id="message-<%= message.id %>">
 <div class="mycomment">
+<span id="read-<%= message.id %>" class="read-message">
+  <% if message.read %>
+    既読
+  <% end %>
+</span>
   <p><%= message.body %></p>
 </div>
-<p><%= I18n.l(message.updated_at, format: :original) %></p>
+<p>
+  <%= I18n.l(message.updated_at, format: :original) %>
+  <button type="button" data-message_id="<%= message.id %>" class="delete_button fas fa-times" style="color: #757575;"></button>
+</p>
+</div>
 <!--/③右コメント終-->
