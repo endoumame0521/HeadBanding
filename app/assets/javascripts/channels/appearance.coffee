@@ -1,4 +1,4 @@
-$(document).on 'turbolinks:load', ->
+document.addEventListener 'turbolinks:load', ->
   App.appearance = App.cable.subscriptions.create { channel: 'AppearanceChannel'},
     connected: ->
 
