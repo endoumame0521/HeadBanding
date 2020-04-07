@@ -1,8 +1,15 @@
 document.addEventListener 'turbolinks:load', ->
   App.appearance = App.cable.subscriptions.create { channel: 'AppearanceChannel'},
     connected: ->
+      setTimeout =>
+        @perform 'subscribed'
+      , 1000
 
     disconnected: ->
+      @perform 'unsubscribed'
+
+    rejected: ->
+      @perform 'unsubscribed'
 
     received: (data) ->
       member = JSON.parse(data['member'])
