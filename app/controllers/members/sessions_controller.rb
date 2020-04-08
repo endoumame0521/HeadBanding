@@ -14,9 +14,11 @@ class Members::SessionsController < Devise::SessionsController
   # end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    member = Member.where(id: current_member.id).first
+    member.update(online: false, online_at: DateTime.now)
+    super
+  end
 
   # protected
 
