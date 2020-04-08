@@ -1,5 +1,6 @@
 class Admins::MembersController < Admins::ApplicationController
   before_action :set_member, only: [:show, :update, :destroy]
+  before_action :check_guest, only: [:destroy]
 
   def index
     @search_params = member_search_params
@@ -63,5 +64,11 @@ class Admins::MembersController < Admins::ApplicationController
 
   def set_member
     @member = Member.find(params[:id])
+  end
+
+  def check_guest #ゲストユーザーの削除を禁止
+    if @member.email = ENV["GUEST_LOGIN_USER_PASSWORD"]
+      redirect_to request.referer, notice: "ゲストユーザーは削除できません"
+    end
   end
 end
