@@ -6,6 +6,11 @@ Rails.application.routes.draw do
     :sessions => "members/sessions",
   }
 
+  # ゲストユーザーログイン用のルート
+  devise_scope :member do
+    post 'members/guest_sign_in', to: 'members/sessions#guest_create'
+  end
+
   namespace :admins do
     resources :articles, only: [:index, :show, :update, :destroy]
     resources :tweets, only: [:index, :show, :update, :destroy] do

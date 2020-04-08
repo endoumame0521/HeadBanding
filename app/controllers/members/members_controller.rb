@@ -2,6 +2,7 @@ class Members::MembersController < Members::ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :article_favorites, :cancel, :withdraw]
   before_action :signed_in_member?, only: [:edit, :update, :article_favorites, :cancel, :withdraw]
   before_action :blocked_member?, only: [:show]
+  before_action :check_guest, only: [:edit, :update, :cancel, :withdraw]
 
   def index
     @search_params = member_search_params
@@ -102,6 +103,12 @@ class Members::MembersController < Members::ApplicationController
   def blocked_member? #会員が退会済、またはブロックされていればアクセスできない
     if @member.blocking?(current_member) || @member.disable?
       redirect_to top_path, alert: "アクセスできません"
+    end
+  end
+
+  def check_guest #ゲストユーザーのみ機能制限
+    if @member.email = ENV["GUEST_LOGIN_USER_PASSWORD"]
+      redirect_to top_path, notice: "ゲストユーザーでは実行できません"
     end
   end
 end
