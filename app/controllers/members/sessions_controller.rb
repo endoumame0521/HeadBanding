@@ -15,6 +15,15 @@ class Members::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  # ゲストユーザーログイン機能
+  def guest_create
+    self.resource = resource_class.find_by(email: ENV["GUEST_LOGIN_USER_PASSWORD"])
+    set_flash_message!(:notice, :signed_in)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
+  end
+
   # DELETE /resource/sign_out
   # def destroy
   #   super
