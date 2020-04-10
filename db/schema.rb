@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_031256) do
+ActiveRecord::Schema.define(version: 2020_04_08_132228) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "visitor_id", null: false
@@ -31,6 +31,23 @@ ActiveRecord::Schema.define(version: 2020_04_05_031256) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "announces", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "announcer_id", null: false
+    t.integer "reciever_id", null: false
+    t.bigint "article_id"
+    t.bigint "tweet_id"
+    t.bigint "tweet_comment_id"
+    t.bigint "message_id"
+    t.integer "action", default: 0, null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_announces_on_article_id"
+    t.index ["message_id"], name: "index_announces_on_message_id"
+    t.index ["tweet_comment_id"], name: "index_announces_on_tweet_comment_id"
+    t.index ["tweet_id"], name: "index_announces_on_tweet_id"
   end
 
   create_table "article_cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

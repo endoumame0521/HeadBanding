@@ -1,0 +1,11 @@
+<!-- メッセージ未読件数の通知マークSTART -->
+<% sum = 0 %>
+<% current_member.rooms.each do |room| %>
+  <% sum = sum + room.messages.where(read: false).where.not(member_id: current_member.id).count %>
+<% end %>
+<% if sum != 0  %>
+  <div class="CountNotice d-flex align-items-center justify-content-center" id="CountNoticeMessage">
+    <%= sum %>
+  </div>
+<% end %>
+<!-- メッセージ未読件数の通知マークEND -->

@@ -38,6 +38,8 @@ class Member < ApplicationRecord
   has_many :blocked, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy #ブロックされている人を取得
   has_many :blocker_member, through: :blocked, source: :blocker #自分をブロックした人
   has_many :blocking_member, through: :blocker, source: :blocked #自分がブロックしている人
+  has_many :announcer, class_name: "Announce", foreign_key: "announcer_id", dependent: :destroy #通知を送った人を取得
+  has_many :reciever, class_name: "Announce", foreign_key: "reciever_id", dependent: :destroy #通知が送られてきた人を取得
 
   accepts_nested_attributes_for :artists
 
@@ -64,6 +66,9 @@ class Member < ApplicationRecord
       AppearanceBroadcastJob.perform_later(self)
     end
   end
+
+  # 最新順に並び替え（最終更新日）
+  default_scope -> { order(updated_at: :desc)}
 
   #メンバーをフォローする
   def follow(member_id)
@@ -105,6 +110,15 @@ class Member < ApplicationRecord
   #会員のステータスが有効かどうか確認し、有効でなければログイン出来無い
   def active_for_authentication?
     super && (self.enable?)
+  end
+
+  # フォロー通知を作成する
+  def create_announce_follow!(member)
+    Announce.find_or_create_by(
+      announcer_id: member.id,
+      reciever_id: id,
+      action: "follow"
+    )
   end
 
   # 最新順に並び替え

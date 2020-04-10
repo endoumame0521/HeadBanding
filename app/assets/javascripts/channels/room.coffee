@@ -13,9 +13,9 @@ document.addEventListener 'turbolinks:load', ->
 
         # 相手の画面のメッセージ全てに{既読}を表示する
         if data['other_member_id'] == roomMemberId
-          $('.read-message').html '既読'
+          return $('.read-message').html '既読'
         else
-          return
+          return $('#CountNoticeMessage').remove()
 
       else
         message = JSON.parse(data['message'])

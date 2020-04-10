@@ -55,12 +55,15 @@ class Members::RoomsController < Members::ApplicationController
   end
 
   def all_message_read
-    # アクセスした部屋の相手のメッセージ全てに既読をつける（readカラムをtrueに更新する）
-    Message.where(read: false, room_id: params[:room_id], member_id: params[:other_member_id]).update_all(read: true)
-    # 相手のチャットルーム画面のメッセージに{既読}を表示させる為にbroadcastする
-    ActionCable.server.broadcast "room_channel_#{params[:room_id]}",
-                                  other_member_id: params[:other_member_id].to_i,
-                                  all_read_flag: true
+    # アクセスした部屋の相手のメッセージに未読がある場合、全てに既読をつける（readカラムをtrueに更新する）
+    messages = Message.where(read: false, room_id: params[:room_id], member_id: params[:other_member_id])
+    if messages.present?
+      messages.update_all(read: true)
+      # 相手のチャットルーム画面のメッセージに{既読}を表示させる為にbroadcastする
+      ActionCable.server.broadcast "room_channel_#{params[:room_id]}",
+                                    other_member_id: params[:other_member_id].to_i,
+                                    all_read_flag: true
+    end
   end
 
   private
