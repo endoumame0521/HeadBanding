@@ -11,14 +11,7 @@
     <li class="nav-item">
       <%= link_to announces_path, class: "nav-link member-menu", id: "announce-nav-link" do %>
         <span>お知らせ</span>
-        <!-- お知らせ未読件数の通知マークSTART -->
-        <% unchecked = current_member.reciever.where(checked: false) %>
-        <% if unchecked.exists?  %>
-          <div class="CountNotice d-flex align-items-center justify-content-center">
-            <%= unchecked.count %>
-          </div>
-        <% end %>
-        <!-- お知らせ未読件数の通知マークEND -->
+        <%= render "layouts/uncheck_announce.html.erb" %>
       <% end %>
     </li>
     <%= attachment_image_tag current_member, :profile_image, size: 40, format: 'jpeg', fallback: "no_image.jpg", size: 40 %>

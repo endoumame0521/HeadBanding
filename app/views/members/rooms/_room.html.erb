@@ -26,4 +26,10 @@
   <span class="MessageRoom">
     <%= link_to "メッセージルームへ", room_path(entry_room.id), class: "btn-gradient-radius" %>
   </span>
+  <% unread_count = entry_room.messages.where.not(member_id: current_member.id, read: true).size %>
+  <% if unread_count != 0  %>
+   <div class="CountNotice d-flex align-items-center justify-content-center" id="CountNoticeMessageInRooms">
+     <%= unread_count %>
+    </div>
+  <% end %>
 </div>
