@@ -58,10 +58,19 @@ class Members::RoomsController < Members::ApplicationController
     # アクセスした部屋の相手のメッセージに未読がある場合、全てに既読をつける（readカラムをtrueに更新する）
     messages = Message.where(read: false, room_id: params[:room_id], member_id: params[:other_member_id])
     if messages.present?
+
+      all_unread_messages = 0
+
+      current_member.rooms.each do |room|
+        room_messages       = room.messages.where(read: false).where.not(member_id: current_member.id).size
+        all_unread_messages = all_unread_messages + room_messages
+      end
+
       messages.update_all(read: true)
       # 相手のチャットルーム画面のメッセージに{既読}を表示させる為にbroadcastする
       ActionCable.server.broadcast "room_channel_#{params[:room_id]}",
                                     other_member_id: params[:other_member_id].to_i,
+                                    unread_sum: all_unread_messages - messages.size,
                                     all_read_flag: true
     end
   end

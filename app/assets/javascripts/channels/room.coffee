@@ -15,7 +15,10 @@ document.addEventListener 'turbolinks:load', ->
         if data['other_member_id'] == roomMemberId
           return $('.read-message').html '既読'
         else
-          return $('#CountNoticeMessage').remove()
+          if data['unread_sum'] == 0
+            return $('#CountNoticeMessage').remove()
+          else
+            return $('#CountNoticeMessage').html data['unread_sum']
 
       else
         message = JSON.parse(data['message'])
