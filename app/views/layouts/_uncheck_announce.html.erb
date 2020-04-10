@@ -1,0 +1,8 @@
+<!-- お知らせ未読件数の通知マークSTART -->
+<% unchecked = current_member.reciever.where(checked: false) %>
+<% if unchecked.exists?  %>
+  <div class="CountNotice d-flex align-items-center justify-content-center">
+    <%= unchecked.size %>
+  </div>
+<% end %>
+<!-- お知らせ未読件数の通知マークEND -->
