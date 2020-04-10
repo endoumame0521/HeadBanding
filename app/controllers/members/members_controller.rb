@@ -107,7 +107,7 @@ class Members::MembersController < Members::ApplicationController
   end
 
   def check_guest #ゲストユーザーのみ機能制限
-    if @member.email = ENV["GUEST_LOGIN_USER_PASSWORD"]
+    if @member.email == ENV["GUEST_LOGIN_USER_PASSWORD"]
       redirect_to top_path, notice: "ゲストユーザーでは実行できません"
     end
   end
