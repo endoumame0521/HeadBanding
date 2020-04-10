@@ -9,7 +9,9 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    Message.create! body: data['message'], member_id: current_member.id, room_id: params['room']
+    message = Message.new(body: data['message'], member_id: current_member.id, room_id: params['room'])
+    message.save!
+    message.create_announce_message!(current_member.id, params['room'])
   end
 
   def remove(data)

@@ -1,11 +1,29 @@
 <% if member_signed_in? %>
-    <li class="nav-item"><%= link_to 'バンド記事', articles_path, class: "nav-link" %></li>
-    <li class="nav-item"><%= link_to 'タイムライン', tweets_path, class: "nav-link" %></li>
-    <li class="nav-item"><%= link_to 'メンバ一', members_path, class: "nav-link" %></li>
-    <li class="nav-item"><%= link_to 'メッセージ', rooms_path, class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to 'バンド記事', articles_path, class: "nav-link member-menu" %></li>
+    <li class="nav-item"><%= link_to 'タイムライン', tweets_path, class: "nav-link member-menu" %></li>
+    <li class="nav-item"><%= link_to 'メンバ一', members_path, class: "nav-link member-menu" %></li>
+    <li class="nav-item">
+      <%= link_to rooms_path, class: "nav-link member-menu", id: "announce-nav-link" do %>
+        <span>メッセージ</span>
+        <%= render "layouts/message_unread_announce.html.erb" %>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to announces_path, class: "nav-link member-menu", id: "announce-nav-link" do %>
+        <span>お知らせ</span>
+        <!-- お知らせ未読件数の通知マークSTART -->
+        <% unchecked = current_member.reciever.where(checked: false) %>
+        <% if unchecked.exists?  %>
+          <div class="CountNotice d-flex align-items-center justify-content-center">
+            <%= unchecked.count %>
+          </div>
+        <% end %>
+        <!-- お知らせ未読件数の通知マークEND -->
+      <% end %>
+    </li>
     <%= attachment_image_tag current_member, :profile_image, size: 40, format: 'jpeg', fallback: "no_image.jpg", size: 40 %>
     <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link member-menu dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <%= current_member.name %>
     </a>
 
@@ -20,8 +38,8 @@
     </div>
   </li>
 <% else %>
-  <li class="nav-item"><%= link_to 'メンバー登録', new_member_registration_path, class: "nav-link" %></li>
-  <li class="nav-item"><%= link_to 'ログイン', new_member_session_path, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'メンバー登録', new_member_registration_path, class: "nav-link member-menu" %></li>
+  <li class="nav-item"><%= link_to 'ログイン', new_member_session_path, class: "nav-link member-menu" %></li>
   <!-- ゲストログイン -->
-  <li class="nav-item"><%= link_to 'ゲストログイン', members_guest_sign_in_path, method: :post, class: "nav-link" %></li>
+  <li class="nav-item"><%= link_to 'ゲストログイン', members_guest_sign_in_path, method: :post, class: "nav-link member-menu" %></li>
 <% end %>

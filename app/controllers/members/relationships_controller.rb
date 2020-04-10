@@ -5,6 +5,8 @@ class Members::RelationshipsController < Members::ApplicationController
   def create
     current_member.follow(params[:member_id])
     flash.now[:notice] = "#{@member.name}さんをフォローしました"
+    # フォロー通知を作成
+    @member.create_announce_follow!(current_member)
   end
 
   def destroy

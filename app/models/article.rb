@@ -18,6 +18,7 @@ class Article < ApplicationRecord
   has_many :article_cities, dependent: :destroy
   has_many :cities, through: :article_cities
   has_many :notices, dependent: :destroy
+  has_many :announces, dependent: :destroy
 
   # バリデーションSTART-------------------------------------------------------------------------------------------
   validates :published_status, presence: true
@@ -61,6 +62,17 @@ class Article < ApplicationRecord
   # 最新順に並び替え（最終更新日）
   default_scope -> { order(updated_at: :desc)}
 
+  # 記事に対するお気に入り追加の通知を作成
+  def create_announce_article_favorite!(member)
+    unless member.id == member_id
+      Announce.find_or_create_by(
+        announcer_id: member.id,
+        reciever_id: member_id,
+        article_id: id,
+        action: "article_favorite"
+      )
+    end
+  end
 
   #記事検索START----------------------------------------------------------------------------------------------
   def self.search(search_params)

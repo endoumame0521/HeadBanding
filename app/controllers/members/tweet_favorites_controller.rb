@@ -6,6 +6,8 @@ class Members::TweetFavoritesController < Members::ApplicationController
     tweet_favorite.tweet_id = params[:tweet_id]
     if tweet_favorite.save
       flash.now[:notice] = "ツイートをいいねしました"
+      # ツイートのいいね通知を作成
+      Tweet.find(params[:tweet_id]).create_announce_tweet_favorite!(current_member)
     else
       flash.now[:alert] = "ツイートのいいねに失敗しました"
     end
