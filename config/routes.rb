@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [:index, :show, :create]
     resource :notices, only: [:new, :create]
+    resources :announces, only: :index
 
     # 訪れたメッセージルームの相手のメッセージルーム全てに既読をつける為（非同期通信）
     get "all_message_read" => "rooms#all_message_read", as: "all_message_read"

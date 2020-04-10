@@ -1,0 +1,12 @@
+<h2>お知らせ一覧</h2>
+
+<% if @announces.exists? %>
+  <div id="announce_lists">
+    <%= render partial: "announce", collection: @announces %>
+  </div>
+<% else %>
+  <p class="NoCount">お知らせはありません</p>
+<% end %>
+
+<!-- もっと見るボタン -->
+<%= render "layouts/and_more_button", { model: @announces } %>

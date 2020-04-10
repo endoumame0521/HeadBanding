@@ -7,6 +7,8 @@ class Members::TweetCommentsController < Members::ApplicationController
     @tweet_comment.tweet_id = params[:tweet_id]
     if @tweet_comment.save
       flash.now[:notice] = "コメントしました"
+      # ツイートコメント通知を作成
+      Tweet.find(params[:tweet_id]).create_announce_tweet_comment!(current_member, @tweet_comment.id)
     else
       flash.now[:alert] = "#{@tweet_comment.errors.count}件のエラーがあります"
     end

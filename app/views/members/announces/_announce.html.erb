@@ -1,0 +1,20 @@
+<div class="col-lg-12 mx-auto pt-2">
+  <div class="form-inline">
+    <span><%== announce_table(announce) %></span>
+  </div>
+</div>
+<div class="row AnnounceBottom pb-2">
+  <div class="col-lg-8 mx-auto text-left pl-4">
+    <span class="AnnounceComment">
+      <%= truncate(TweetComment.find_by(id: announce.tweet_comment_id).try(:body), length: 30) do %>
+        <%= link_to "続きを読む", tweet_path(announce.tweet_id) %>
+      <% end %>
+      <%= truncate(Message.find_by(id: announce.message_id).try(:body), length: 30) do %>
+        <%= link_to "続きを読む", room_path(announce.message.room_id) %>
+      <% end %>
+    </span>
+  </div>
+  <div class="col-lg-4 mx-auto d-flex align-items-end justify-content-end">
+    <span><%= time_ago_in_words(announce.created_at) + "前" %></span>
+  </div>
+</div>

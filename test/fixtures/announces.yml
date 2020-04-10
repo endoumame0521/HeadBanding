@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  visitor_id: 1
+  visited_id: 1
+  article: one
+  tweet: one
+  tweet_comment: one
+  message: one
+
+two:
+  visitor_id: 1
+  visited_id: 1
+  article: two
+  tweet: two
+  tweet_comment: two
+  message: two
