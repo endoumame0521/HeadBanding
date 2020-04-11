@@ -67,7 +67,7 @@ class Admins::MembersController < Admins::ApplicationController
   end
 
   def check_guest #ゲストユーザーの削除を禁止
-    if @member.email = ENV["GUEST_LOGIN_USER_PASSWORD"]
+    if @member.email == ENV["GUEST_LOGIN_USER_PASSWORD"]
       redirect_to request.referer, notice: "ゲストユーザーは削除できません"
     end
   end
