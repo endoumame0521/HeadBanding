@@ -1,5 +1,7 @@
+<%# 管理者ログイン中の場合、管理者側のメンバーパスを代入する %>
+<% member_path = admin_signed_in? ? admins_member_path(tweet.member) : tweet.member %>
 <figure>
-  <%= attachment_image_tag tweet.member, :profile_image, size: 50, format: 'jpeg', fallback: "no_image.jpg", size: 50 %>
+  <%= link_to (attachment_image_tag tweet.member, :profile_image, size: 50, format: 'jpeg', fallback: "no_image.jpg", size: 50), member_path %>
 </figure>
 <div class="twitter__block-text">
   <div class="name"><%= tweet.member.name %><span class="name_reply"></span></div>

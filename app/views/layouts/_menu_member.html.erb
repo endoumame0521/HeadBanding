@@ -2,17 +2,13 @@
     <li class="nav-item"><%= link_to 'バンド記事', articles_path, class: "nav-link member-menu" %></li>
     <li class="nav-item"><%= link_to 'タイムライン', tweets_path, class: "nav-link member-menu" %></li>
     <li class="nav-item"><%= link_to 'メンバ一', members_path, class: "nav-link member-menu" %></li>
-    <li class="nav-item">
-      <%= link_to rooms_path, class: "nav-link member-menu", id: "announce-nav-link" do %>
-        <span>メッセージ</span>
-        <%= render "layouts/message_unread_announce.html.erb" %>
-      <% end %>
+    <li class="nav-item" id="announce-nav-item">
+      <%= link_to "メッセージ" ,rooms_path, class: "nav-link member-menu" %>
+      <%= render "layouts/message_unread_announce.html.erb" %>
     </li>
-    <li class="nav-item">
-      <%= link_to announces_path, class: "nav-link member-menu", id: "announce-nav-link" do %>
-        <span>お知らせ</span>
-        <%= render "layouts/uncheck_announce.html.erb" %>
-      <% end %>
+    <li class="nav-item" id="announce-nav-item">
+      <%= link_to "お知らせ", announces_path, class: "nav-link member-menu" %>
+      <%= render "layouts/uncheck_announce.html.erb" %>
     </li>
     <%= attachment_image_tag current_member, :profile_image, size: 40, format: 'jpeg', fallback: "no_image.jpg", size: 40 %>
     <li class="nav-item dropdown">
