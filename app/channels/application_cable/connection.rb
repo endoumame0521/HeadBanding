@@ -6,8 +6,7 @@ module ApplicationCable
       self.current_member = find_verified_member
       logger.add_tags 'ActionCable',
                       current_member.id,
-                      current_member.name,
-                      I18n.l(current_member.online_at, format: :short)
+                      current_member.name
     end
 
     protected
