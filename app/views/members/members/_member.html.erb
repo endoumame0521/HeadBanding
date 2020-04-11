@@ -1,5 +1,5 @@
-<div class="justify-content-center col-lg-6">
-  <%= link_to member_path do %>
+<div class="justify-content-center col-lg-12 ProfileOuter pr-5">
+  <%= link_to member_path, class: "ProfileCardLink" do %>
   <div class="ProfileCard">
     <div class="ProfileCardInner">
       <div class="ProfileThumb">
@@ -17,13 +17,13 @@
         <span class="ProfilePart">
           <% partString = "" %>
           <% member.part_members.each do |part_member| %>
-            <% partString += part_member.part.name + " " %>
+            <% partString += part_member.part.name + ", " %>
           <% end %>
-          <%= partString.truncate(25) %>
+          <%= partString.chop.chop.truncate(25) %>
         </span>
         <span class="ProfileIntro">
           <!-- 表示文字数を制限して表示 -->
-          <%= member.introduction.truncate(200) %>
+          <%= member.introduction.truncate(180) %>
         </span>
       </div>
     </div>

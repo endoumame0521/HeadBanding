@@ -7,6 +7,9 @@
   <td><%= access.visitor.address_prefecture %></td>
   <td><%= access.visitor.address_city %></td>
   <td><%= access.visitor.age %><span>歳</span></td>
-  <td><%= I18n.l(access.created_at, format: :original) %></td>
+  <td>
+    <%= I18n.l(access.created_at, format: :original) %>
+    (<%= time_ago_in_words(access.created_at) + "前" %>)
+  </td>
   <td><%= link_to "詳細", access.visitor %></td>
 </tr>

@@ -7,10 +7,10 @@
   <div class="col-lg-8 mx-auto text-left pl-4">
     <span class="AnnounceComment">
       <%= truncate(TweetComment.find_by(id: announce.tweet_comment_id).try(:body), length: 30) do %>
-        <%= link_to "続きを読む", tweet_path(announce.tweet_id) %>
+        <%= link_to "続きを読む", tweet_path(announce.tweet_id), class: "ReadMore" %>
       <% end %>
       <%= truncate(Message.find_by(id: announce.message_id).try(:body), length: 30) do %>
-        <%= link_to "続きを読む", room_path(announce.message.room_id) %>
+        <%= link_to "続きを読む", room_path(announce.message.room_id), class: "ReadMore" %>
       <% end %>
     </span>
   </div>

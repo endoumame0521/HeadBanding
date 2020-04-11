@@ -17,30 +17,38 @@
 }
 
 .ArticleProfileImage {
-  height: 100px;
+  z-index: 1;
+  height: 90px;
+  margin-top: 10px;
 
   figure {
-    height: 90px;
+    height: 80px;
     padding: 0;
     margin: 0;
     float: left;
-    width: 90px;
+    width: 80px;
 
     img{
       border-radius: 50%;
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
     }
   }
+}
+
+.ArticleSubjectLink {
+  display: block;
 }
 
 .ArticleSubject {
   height: 100px;
   background: #FFBC61;
-  color: #FFF;
   border-radius: 10px 10px 10px 10px;/*角の丸み*/
   position: relative;
   border: solid 3px #FFBC61;
+  .ArticleSubjectText {
+    color: #FFF;
+  }
 }
 
 .ArticleSubject:after {
@@ -95,5 +103,23 @@
 
 .ArticleShow h4 {
   padding: 0.2em;
-  background: linear-gradient(transparent 5%, #FFBC61 90%);
+  background: linear-gradient(rgba(255,255,255,5), #FFBC61 90%);
+}
+
+.ArticleUpdatedAt {
+  font-size: 15px;
+}
+
+.ArticleCategory {
+  text-align: center;
+  width: 90px;
+  z-index: 2;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  font-size: 12px;
+  color: #FFF;
+  background-color: #FB7D79;
 }
