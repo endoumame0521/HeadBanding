@@ -179,7 +179,11 @@
         <% @member.artists.each do |artist| %>
           <% artist_name = artist_name + artist.name + ", " %>
         <% end %>
-        <%= artist_name.chop.chop %>
+        <% if artist_name == ", , , , , " %>
+          <span>指定はありません</span>
+        <% else %>
+          <%= artist_name.chop.chop %>
+        <% end %>
       </div>
     </div>
     <h3 class="mt-3">
