@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-6">
+  <div class="col-7 mb-5">
     <h2>バンド記事の詳細</h2>
   </div>
-  <div class="col-6 form-inline d-flex justify-content-end">
+  <div class="col-5 form-inline d-flex justify-content-end">
     <!-- 自分の記事の場合、編集ボタンと削除ボタンを表示 -->
     <% unless admin_signed_in? %>
       <% if member_signed_in? && @article.member == current_member %>
@@ -13,11 +13,37 @@
   </div>
 </div>
 
-<div class="row pr-3 mb-4">
+<div class="row mb-4">
   <div class="ArticleShow col-lg-12">
     <!-- 記事の表題 -->
     <h4><%= Article.human_attribute_name(:subject) %></h4>
-    <p><%= @article.subject %></p>
+    <div class="ArticleHeader row mb-4 pr-3">
+      <div class="col-3">
+        <div class="ArticleProfileImage row mx-auto">
+          <div class="col-12">
+            <span class="ArticleCategory">
+              <% if @article.recruit? %>
+                ﾒﾝﾊﾞｰ募集！
+              <% elsif @article.entry? %>
+                加入希望！
+              <% end %>
+            </span>
+            <%# 管理者ログイン中の場合、管理者側のメンバーパスを代入する %>
+            <% member_path = admin_signed_in? ? admins_member_path(@article.member.id) : @article.member %>
+            <figure class="ml-3">
+              <%= link_to (attachment_image_tag @article.member, :profile_image, size: 80, format: 'jpeg', fallback: "no_image.jpg", size: 80), member_path %>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="ArticleSubject row mx-auto">
+          <div class="col-12 d-flex align-items-center">
+            <h5 class="ArticleSubjectText"><%= @article.subject %></h5>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 記事の内容 -->
     <h4><%= Article.human_attribute_name(:body) %></h4>

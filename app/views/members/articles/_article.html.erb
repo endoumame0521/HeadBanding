@@ -2,30 +2,41 @@
   <div class="Article">
     <div class="ArticleHeader row">
       <div class="col-3">
-        <div class="ArticleProfileImage row">
+        <div class="ArticleProfileImage row mt-3">
           <div class="col-12">
+            <span class="ArticleCategory">
+              <% if article.recruit? %>
+                ﾒﾝﾊﾞｰ募集！
+              <% elsif article.entry? %>
+                加入希望！
+              <% end %>
+            </span>
+            <%# 管理者ログイン中の場合、管理者側のメンバーパスを代入する %>
+            <% member_path = admin_signed_in? ? admins_member_path(article.member.id) : article.member %>
             <figure>
-              <%= link_to (attachment_image_tag article.member, :profile_image, size: 80, format: 'jpeg', fallback: "no_image.jpg", size: 80), article_path %>
+              <%= link_to (attachment_image_tag article.member, :profile_image, size: 80, format: 'jpeg', fallback: "no_image.jpg", size: 80), member_path %>
             </figure>
           </div>
         </div>
       </div>
       <div class="col-9">
+        <%= link_to article_path, class: "ArticleSubjectLink" do %>
         <div class="ArticleSubject row">
           <div class="col-12 d-flex align-items-center">
-            <h4><%= article.subject %></h4>
+            <h5 class="ArticleSubjectText"><%= article.subject.truncate(35) %></h5>
           </div>
         </div>
+        <% end %>
       </div>
     </div>
     <div class="ArticleInfo row">
       <div class="col-4">
         <div class="ArticleMemberName row d-flex align-items-end">
-          <div class="col-12"><p><%= article.member.name %></p></div>
+          <div class="col-12"><p><%= article.member.name.truncate(10) %></p></div>
         </div>
         <div class="ArticleMemberInfo row d-flex align-items-end">
           <div class="col-12">
-            <p>
+            <p class="mb-0">
               <%= article.member.age %><span>歳 </span>
               <%= Article.human_attribute_name("gender.#{article.member.gender}") %>
             </p>
@@ -41,14 +52,23 @@
         <div class="ArticlePart row d-flex align-items-end">
           <div class="col-12">
             <p>
-              <% article.part_articles.each { |part_article| %><%= part_article.part.name %>、<% } %>
+              <% part_article_name = "" %>
+              <% article.part_articles.each do |part_article| %>
+                <% part_article_name = part_article_name + part_article.part.name + ", " %>
+              <% end %>
+              <%= part_article_name.chop.chop.truncate(35) %>
             </p>
           </div>
         </div>
         <div class="ArticleGenre row d-flex align-items-end">
           <div class="col-12">
             <p>
-              <% article.genre_articles.each { |genre_article| %><%= genre_article.genre.name %>、<% } %>
+              <% genre_article_name = "" %>
+              <% article.genre_articles.each do |genre_article| %>
+                <% genre_article_name = genre_article_name + genre_article.genre.name + ", " %>
+              <% end %>
+              <%# binding.pry %>
+              <%= genre_article_name.chop.chop.truncate(35) %>
             </p>
           </div>
         </div>
@@ -59,15 +79,15 @@
         <span>
           <!-- 表示文字数を制限し、続きを読むリンクを表示 -->
           <%= truncate(article.body, length: 200) do %>
-            <%= link_to "続きを読む", article_path %>
+            <%= link_to "続きを読む", article_path, class: "ReadMore" %>
           <% end %>
         </span>
       </div>
     </div>
     <div class="ArticleFooter row mt-3">
       <div class="col-12">
-        <p class="text-right">
-          最終更新日
+        <p class="text-right ArticleUpdatedAt">
+          更新日
           <!-- 日付表示変更(ja.ymlファイルにて定義) -->
           <%= I18n.l(article.updated_at, format: :original) %>
           (<%= time_ago_in_words(article.updated_at) + "前" %>)
