@@ -177,9 +177,12 @@
       <div class="col-lg-12 mx-auto mb-2 pl-5">
         <% artist_name = "" %>
         <% @member.artists.each do |artist| %>
-          <% artist_name = artist_name + artist.name + ", " %>
+          <% unless artist.name.empty? %>
+            <% artist_name = artist_name + artist.name + ", " %>
+          <% end %>
         <% end %>
-        <% if artist_name == ", , , , , " %>
+
+        <% if artist_name.empty? %>
           <span>指定はありません</span>
         <% else %>
           <%= artist_name.chop.chop %>
