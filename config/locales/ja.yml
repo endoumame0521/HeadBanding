@@ -55,6 +55,7 @@ ja:
       member: 会員
       article: 記事
       artist: アーティスト
+      artists: アーティスト
       city: 市区町村
       genre: ジャンル
       message: メッセージ
@@ -152,6 +153,9 @@ ja:
         disable: 無効
 
       artist:
+        name: アーティスト名
+
+      artists:
         name: アーティスト名
 
       city:

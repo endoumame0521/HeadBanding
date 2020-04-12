@@ -52,7 +52,6 @@ class Member < ApplicationRecord
   validates :part_member_ids, presence: true
   validates :genre_member_ids, presence: true
   validates :sound, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
-  #validates :name, presence: true, allow_nil: true
 
   # バリデーションEND--------------------------------------------------------------------------------------------
 
