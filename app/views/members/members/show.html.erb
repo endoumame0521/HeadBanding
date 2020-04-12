@@ -69,21 +69,21 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-5">
       <% if admin_signed_in? %>
         <%= link_to "ブロックリスト", admins_member_blocking_path(@member) %>
         <%= link_to "ブロッカーリスト", admins_member_blockers_path(@member) %>
       <% else %>
         <!-- ログイン中メンバー自分自身の場合 -->
         <% if @member == current_member %>
-          <%= link_to "メッセージ一覧", rooms_path %>
-          <%= link_to "ブロックリスト", member_blocking_path(@member) %>
-          <%= link_to "足跡", member_accesses_path(@member) %>
-          <%= link_to "編集", edit_member_path %>
-          <%= link_to "退会", member_cancel_path(@member) %>
+          <%= link_to "", member_accesses_path(@member), class: "fas fa-shoe-prints fa-2x" %>
+          <%= link_to "", member_article_favorites_path(current_member.id), class: "fa fa-star fa-2x faa-wrench animated-hover-item" %>
+          <%= link_to "", edit_member_path, class: "fas fa-user-edit fa-2x" %>
+          <%= link_to "", member_blocking_path(@member), class: "fas fa-user-slash fa-2x" %>
+          <%= link_to "", member_cancel_path(@member), class: "fas fa-user-times fa-2x" %>
         <% else %>
           <% if @is_room %>
-            <%= link_to "メッセージルームへ", room_path(@room_id), class: "btn-gradient-radius mb-5" %>
+            <%= link_to "メッセージルームへ", room_path(@room_id), class: "btn-gradient-radius" %>
           <% else %>
             <%= form_with model: @room do |f| %>
               <%= fields_for @entry do |e| %>
