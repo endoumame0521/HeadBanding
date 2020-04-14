@@ -1,11 +1,9 @@
 <h2>フォロー</h2>
 
-<% if @members.count > 0 %>
-  <div class="row">
+<% if @members.exists? %>
+  <div class="row" id="follower_lists">
     <!-- フォロー一覧 -->
-    <% @members.each do |member| %>
-      <%= render partial: "members/members/member", locals: { member: member, member_path: admins_member_path(member.id) } %>
-    <% end %>
+    <%= render "admins/members/member_lists", { members: @members }  %>
   </div>
 <% else %>
   <p class="NoCount">フォローしている人はいません</p>

@@ -98,7 +98,7 @@ Admin.create!(
     'https://www.youtube.com/watch?v=lDK9QqIzhwk',
     './app/assets/images/no_image.jpg', DateTime.now],
 
-  ['a@a', 'aaaaaa', '森本里美', 'female', Date.new(1992, 1, 21),
+  ['a@a', 'aaaaaa', '森本ちあき', 'female', Date.new(1992, 1, 21),
     "ワンオクロックのコピーバンドを組みたいです！\r\n担当パートはギターを予定しています！\r\n普段は会社員として働いています！\r\n
     宜しくお願いいたします！",
     'https://www.youtube.com/watch?v=z2ed0Tazw0E',
@@ -235,7 +235,7 @@ end
 
 
 # memberに紐づく初期データを投入---------------------------------------------------------------------------
-1.upto(15) do |n|
+Member.ids.each do |n|
   Genre.all.sample(rand(3..6)).each do |genre|
     genre_member = GenreMember.new(
       member_id: n,
@@ -291,12 +291,14 @@ end
       "すごく素敵です！", "私も好き！", "わかる！", "同意します！", "わあ！",
       "そんなことが！？", "いいね！", "センスいい！", "素敵です！", "何という事でしょう！"
     ].sample(rand(0..5)).each do |tweet_comment_body|
+      member_id = rand(1..(Member.all.size))
       tweet_comment = TweetComment.new(
-        member_id: rand(1..(Member.all.size)),
+        member_id: member_id,
         tweet_id: tweet.id,
         body: tweet_comment_body
       )
       tweet_comment.save!(validate: false)
+      tweet.create_announce_tweet_comment!(Member.find(member_id), tweet_comment.id)
     end
   end
 
@@ -604,21 +606,69 @@ end
       prefecture_id: Prefecture.all.sample(1)[0].id
     )
     article.save!(validate: false)
+
+    Genre.all.sample(rand(1..5)).each do |genre|
+      genre_article = GenreArticle.new(
+        article_id: article.id,
+        genre_id: genre.id
+      )
+      genre_article.save!(validate: false)
+    end
+
+    Part.all.sample(rand(1..5)).each do |part|
+      part_article = PartArticle.new(
+        article_id: article.id,
+        part_id: part.id
+      )
+      part_article.save!(validate: false)
+    end
+  end
+end
+
+
+# メンバーに紐づく初期データを投入２
+Member.ids.each do |n|
+  current_member = Member.find(n)
+
+  Article.all.sample(rand(3..6)).each do |article|
+    article_favorite = ArticleFavorite.new(
+      article_id: article.id,
+      member_id: n
+    )
+    article_favorite.save!(validate: false)
+    article.create_announce_article_favorite!(current_member)
   end
 
-  Genre.all.sample(rand(1..5)).each do |genre|
-    genre_article = GenreArticle.new(
-      article_id: n,
-      genre_id: genre.id
+  Tweet.all.sample(rand(25..50)).each do |tweet|
+    tweet_favorite = TweetFavorite.new(
+      tweet_id: tweet.id,
+      member_id: n
     )
-    genre_article.save!(validate: false)
+    tweet_favorite.save!(validate: false)
+    tweet.create_announce_tweet_favorite!(current_member)
   end
 
-  Part.all.sample(rand(1..5)).each do |part|
-    part_article = PartArticle.new(
-      article_id: n,
-      part_id: part.id
+  TweetComment.all.sample(rand(15..30)).each do |tweet_comment|
+    tweet_comment_favorite = TweetCommentFavorite.new(
+      tweet_comment_id: tweet_comment.id,
+      member_id: n
     )
-    part_article.save!(validate: false)
+    tweet_comment_favorite.save!(validate: false)
+    tweet_comment.create_announce_tweet_comment_favorite!(current_member)
+  end
+
+  Member.where.not(id: n).sample(rand(0..3)).each do |member|
+    current_member.block(member.id)
+  end
+
+  Member.where.not(id: n).sample(rand(3..10)).each do |member|
+    unless member.blocking?(current_member)
+      current_member.follow(member.id)
+      member.create_announce_follow!(current_member)
+    end
+  end
+
+  Member.where.not(id: n).sample((Member.all.size)-5).each do |member|
+    current_member.visitor.create!(visited_id: member.id)
   end
 end
