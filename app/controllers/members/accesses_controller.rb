@@ -3,6 +3,7 @@ class Members::AccessesController < Members::ApplicationController
     if params[:member_id].to_i == current_member.id
       @accesses = current_member.visited.includes(:visitor)
       @accesses = @accesses.page(params[:page])
+      @accesses = @accesses.where.not(visitor_id: current_member.blocker_member)
     else
       redirect_to top_path, alert: "アクセスが拒否されました"
     end
