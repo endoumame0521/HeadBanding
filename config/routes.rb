@@ -60,16 +60,17 @@ Rails.application.routes.draw do
     get "all_message_read" => "rooms#all_message_read", as: "all_message_read"
 
     get "top" => "articles#top", as: "top"
-    get "about" => "articles#about", as: "about"
 
-    root 'articles#top'
+    constraints ->  request { request.session.try(:[], 'warden.user.member.key').try(:[], 0).try(:[], 0).present? } do
+      # ログイン中のルートパス
+      root to: "articles#index"
+    end
+    # 未ログイン時のルートパス
+    root to: 'articles#top'
   end
 
   #市区町村のソートの為
   get "cities_select" => "searches#cities_select"
   get "cities_select_regist" => "searches#cities_select_regist"
-
-
-  mount ActionCable.server => '/cable'
 
 end

@@ -1,0 +1,153 @@
+// body { cursor: ns-resize }
+.intro-section {
+  text-align: center;
+  min-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    margin-right: 100px;
+    margin-bottom: 10px;
+    font-size: 80px;
+    font-weight: 800;
+    font-family: 'Plantagenet Cherokee',serif;
+    color: #696969;
+  }
+  img {
+    margin-left: 60px;
+  }
+}
+
+.content-section {
+  --scroll-length: 1.5;
+  height: calc( var(--scroll-length) * 100vh );
+  width: 100%;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  .content .subheading,
+  .content .paragraph {
+    opacity: 1;
+    opacity: calc( 1 + var(--viewport-y) );
+  }
+
+}
+
+.figure {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 50em;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  color: white;
+  padding: 2em;
+  font-size: 2.5vmin;
+
+  * {
+    text-shadow: 0 0 4vmin rgba(black, 0.25);
+  }
+
+  > .header {
+    grid-row: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: none !important;
+  }
+
+  > .paragraph {
+    grid-row: 2 / 3;
+    line-height: 1.5;
+  }
+}
+
+.HeadLine {
+  font-size: 2.75em;
+  margin: 0;
+  background-color: none !important;
+}
+
+.subheading {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-bottom: .5em;
+}
+
+/* ---------------------------------- */
+
+.figure {
+  --scale: calc(.8 +
+    (.2 * var(--scroll-length) * var(--visible-y))
+  );
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  will-change: transform;
+  transform: scale(var(--scale));
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(black, 1);
+    opacity: calc( var(--visible-y) );
+  }
+
+  > img {
+    display: block;
+    will-change: transform;
+    transform: scale(calc(1 / var(--scale)));
+  }
+}
+
+/* ---------------------------------- */
+
+.char {
+  display: inline-block;
+  opacity: calc(
+    1 + (
+      ( var(--viewport-y) * 1.5 )
+      - var(--char-percent)
+    )
+  );
+}
+
+
+*,
+*:before,
+*:after {
+  position: relative;
+}
+
+.HeadLine,
+.intro-heading {
+  font-weight: 700;
+}

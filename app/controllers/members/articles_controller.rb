@@ -3,9 +3,7 @@ class Members::ArticlesController < Members::ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_member?, only: [:edit, :update, :destroy]
   before_action :blocked_member?, only: [:show]
-
-  def about
-  end
+  before_action :already_member_signed_in?, only: [:top]
 
   def top
     @search_params = article_search_params
@@ -16,7 +14,11 @@ class Members::ArticlesController < Members::ApplicationController
   end
 
   def index
-    top
+    @search_params = article_search_params
+    @articles = Article.search(@search_params).enable.opening
+    @articles = @articles.where(member_id: Member.enable)
+    @articles = @articles.page(params[:page])
+    @articles = @articles.includes([:member, :prefecture, part_articles: :part, genre_articles: :genre])
     @articles = @articles.where.not(member_id: current_member.blocker_member)
   end
 
@@ -92,6 +94,12 @@ class Members::ArticlesController < Members::ApplicationController
   def blocked_member? # 会員が退会済、またはブロックされていればアクセスできない
     if @article.member.blocking?(current_member) || @article.member.disable?
       redirect_to top_path, alert: "アクセスできません"
+    end
+  end
+
+  def already_member_signed_in? #ログインメンバーのアクセスを禁止
+    if member_signed_in?
+      redirect_to root_path
     end
   end
 end

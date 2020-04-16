@@ -85,3 +85,49 @@ $(document).on('turbolinks:load', function() {
         $(form).find(":radio").filter("[data-default]").prop("checked", true);
     }
 });
+
+$(document).on('turbolinks:load', function() {
+  setTimeout(function(){
+    scrollTo(0, 0);
+    $('.start p').fadeIn(1600);
+  },500); //0.5秒後にロゴをフェードイン!
+
+  setTimeout(function(){
+    $('.start').fadeOut(500);
+  },2500); //2.5秒後にロゴ含め真っ白背景をフェードアウト！
+
+  $('.intro-HeadLine').hide();
+  setTimeout(function(){
+    $('.intro-HeadLine').addClass('fadeInLeft');
+    $('.intro-HeadLine').show();
+  },3100);
+
+  $('.intro-HeadLine-logo').hide();
+  setTimeout(function(){
+    $('.intro-HeadLine-logo').addClass('fadeInRight');
+    $('.intro-HeadLine-logo').show();
+  },3100);
+});
+
+// ログイン前のページについてのスクリプト
+$(document).on('turbolinks:load', function() {
+  memberSignedIn = $('.TopHeader').data('member_signed_in')
+  adminSignedIn = $('.TopHeader').data('admin_signed_in')
+
+  // ログインしていなければ、ヘッダー最上位部を隠す
+  if (memberSignedIn == false && adminSignedIn == false) {
+    $('.TopHeader').hide();
+  }
+
+  console.clear();
+
+  ScrollOut({
+    cssProps: {
+      visibleY: true,
+      viewportY: true
+    }
+  });
+
+  Splitting({ target: '.HeadLine' });
+});
+
