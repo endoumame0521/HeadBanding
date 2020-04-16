@@ -1,4 +1,7 @@
-<h2>バンド記事一覧（トップ）</h2>
+<!-- サイトのアバウト画面 -->
+<%= render file: "members/articles/about" %>
+
+<h2>バンド記事一覧（トップページ）</h2>
 
 <div class="row">
   <!-- 記事一覧 -->
@@ -10,7 +13,3 @@
 
 <!-- もっと見るボタン -->
 <%= render "layouts/and_more_button", { model: @articles } %>
-
-<div class="start">
-  <p><%= image_tag 'start.png' %></p>
-</div>
