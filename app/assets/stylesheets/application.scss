@@ -59,8 +59,23 @@ nav {
 
 // ナビゲーションバーより上のヘッダー
 header {
-  padding-top: 1.5rem;
-  background-color: white !important;
+  .TopHeader {
+    padding-top: 1.5rem;
+    background-color: white !important;
+    background-image: image-url("about2.jpg");
+    background-position:center center;
+    background-size:cover;
+    width:100%;
+    margin: 0px;
+    height: 190px;
+    position: relative;
+    img {
+      position: absolute;
+      left: 10px;
+      top: 0px;
+      display: block;
+    }
+  }
 }
 
 // ナビゲーションバーの下のメイン部分
@@ -81,24 +96,28 @@ body {
 }
 
 // 全ページの見出し
-h2 {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  position: relative;
-  padding: 0.5em;
-  background: #AE9890;
-  color: white;
+.container {
+  h2 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    position: relative;
+    padding: 0.5em;
+    background: #AE9890;
+    color: white;
+  }
 }
 
 // 全ページの見出しのラベルデザイン
-h2::before {
-  position: absolute;
-  content: '';
-  top: 100%;
-  left: 0;
-  border: none;
-  border-bottom: solid 15px transparent;
-  border-right: solid 20px rgb(149, 158, 155);
+.container {
+  h2::before {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    border: none;
+    border-bottom: solid 15px transparent;
+    border-right: solid 20px rgb(149, 158, 155);
+  }
 }
 
 // 全てのbootstrapのフォームに影をつける

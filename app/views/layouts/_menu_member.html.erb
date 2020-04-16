@@ -1,5 +1,4 @@
 <% if member_signed_in? %>
-    <li class="nav-item"><%= link_to 'TOP', top_path, class: "nav-link member-menu fas fa-home" %></li>
     <li class="nav-item"><%= link_to 'バンド記事', articles_path, class: "nav-link member-menu fas fa-newspaper" %></li>
     <li class="nav-item"><%= link_to 'タイムライン', tweets_path, class: "nav-link member-menu fas fa-stream" %></li>
     <li class="nav-item"><%= link_to 'メンバ一', members_path, class: "nav-link member-menu fas fa-user" %></li>
@@ -28,6 +27,7 @@
     </div>
   </li>
 <% else %>
+  <li class="nav-item"><%= link_to 'TOP', top_path, class: "nav-link member-menu fas fa-home" %></li>
   <li class="nav-item"><%= link_to 'メンバー登録', new_member_registration_path, class: "nav-link member-menu fas fa-user-plus" %></li>
   <li class="nav-item"><%= link_to 'ログイン', new_member_session_path, class: "nav-link member-menu fas fa-sign-in-alt" %></li>
   <!-- ゲストログイン -->

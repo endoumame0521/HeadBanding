@@ -7,6 +7,13 @@
 
     <%= favicon_link_tag('favicon.ico') %>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+    <script src="https://unpkg.com/scroll-out/dist/scroll-out.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css" />
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6bb1565f31.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.css" type="text/css" media="all" />
@@ -16,9 +23,11 @@
 
   <body>
     <header>
-      <div class="row">
+      <div class="row TopHeader" data-member_signed_in="<%= member_signed_in? %>" data-admin_signed_in="<%= admin_signed_in? %>">
         <div class="col-6">
-          <%= image_tag 'logo.jpg', height: "150px"%>
+          <%= link_to root_path do %>
+            <%= image_tag 'logo.jpg', height: "150px" %>
+          <% end %>
         </div>
         <div class="col-6 text-right">
           <% if member_signed_in? %>
