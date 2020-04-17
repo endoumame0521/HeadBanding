@@ -86,6 +86,7 @@ $(document).on('turbolinks:load', function() {
     }
 });
 
+// TOPページのファーストアニメーション
 $(document).on('turbolinks:load', function() {
   setTimeout(function(){
     scrollTo(0, 0);
@@ -109,16 +110,21 @@ $(document).on('turbolinks:load', function() {
   },3100);
 });
 
-// ログイン前のページについてのスクリプト
+// ログイン前のページについてのスクリプト（ヘッダーの表示内容を切り替える）
 $(document).on('turbolinks:load', function() {
   memberSignedIn = $('.TopHeader').data('member_signed_in')
   adminSignedIn = $('.TopHeader').data('admin_signed_in')
-
   // ログインしていなければ、ヘッダー最上位部を隠す
   if (memberSignedIn == false && adminSignedIn == false) {
     $('.TopHeader').hide();
+    $('#MainContainer').attr('id','NotSignedInContainer');
+  } else if (memberSignedIn == true || adminSignedIn == true) {
+    $('#MainContainer').attr('id','SignedInContainer');
   }
+});
 
+// TOPページのスクロールアニメーション
+$(document).on('turbolinks:load', function() {
   console.clear();
 
   ScrollOut({
