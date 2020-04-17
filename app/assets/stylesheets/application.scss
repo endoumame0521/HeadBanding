@@ -80,9 +80,16 @@ header {
 
 // ナビゲーションバーの下のメイン部分
 main {
-  color: #757575;
-  background-color: #FFF4E0;
-  min-height: calc(100vh - 174px - 56px - 140px);
+  .container {
+    color: #757575;
+    background-color: #FFF4E0;
+  }
+  #NotSignedInContainer {
+    min-height: calc(100vh - 56px - 56px - 50px);
+  }
+  #SignedInContainer {
+    min-height: calc(100vh - 190px - 56px - 140px);
+  }
 }
 
 body {
