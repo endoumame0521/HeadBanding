@@ -1,91 +1,100 @@
-![ロゴ](https://github.com/endoumame0521/HeadBanding/blob/images/logo.jpg)
+![logo](https://github.com/endoumame0521/HeadBanding/blob/images/logo.png)
+# :newspaper:バンドメンバー募集SNS：Head x Banding(ヘッドバンディング)
 
-# Head x Banding
+実際のサイトはこちらです→ [Click me!!](http://headbanding.org/)
 
-You can check out the app on [Heroku](https://coffeee-time.herokuapp.com/)!
+![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/introduction1.png)
 
-![image](https://github.com/nouvelle/coffee-time/blob/master/images/desktop.png?raw=true)
-![image](https://github.com/nouvelle/coffee-time/blob/master/images/smartphone.png?raw=true)
+![image](https://github.com/endoumame0521/HeadBanding/blob/images/introduction2.png)
 
-1. [About](#About)
-1. [Development](#Development)
-1. [Other command](#Other%20command)
-1. [Technology used](#Technology%20used)
-1. [Future features](#Future%20features)
-1. [Contributing](#Contributing)
-1. [License](#License)
+1. [Overview](#overview)
+1. [Development](#development)
+1. [Description](#description)
+1. [Technology used](#technology%20used)
+1. [Future features](#future%20features)
+1. [Contributing](#contributing)
+1. [License](#license)
 
-# About
+# Overview
 
-If you use this app, you can save the URLs you want to read later and read them together later.  
-You can save what you have read, so you can read it immediately if you want to read it again.
+本サイトはバンドメンバー募集SNSです。
+
+バンド活動をするにあたってメンバーを見つける事は大変な労力となります。
+
+音楽の方向性、活動の方向性、メンバーの年齢、活動拠点など自分にマッチしたメンバーは
+そうそう居ないからです。
+
+バンド活動では最も大事な事は、作曲スキルでもなければ楽器の腕前でもありません。
+
+いかに多く息の合うメンバーを揃える事ができるか。これが最も重要だと考えています。
+
+私が過去に趣味で組んでいたバンドはメンバーのバンドに対する考え方の相違が原因で解散しました。
+
+そんな私の様になってほしくないという考えの下、これからバンド活動を始めようとしている方々に少しでも良いバンドライフを送って頂ける様に考えてこのサイトを制作しました。
 
 # Development
 
-Follow this guide to set up your environment etc.
+下記に従ってアプリの開発環境設定をしてください。
 
 ## Database
 
-This project assumes a Postgres database, naturally, this is not included in the package.json file, so must be installed separately.
+※このアプリはMySQLを使用して開発しています。
 
-If you are on Windows using WSL, [this blogpost](https://medium.com/@harshityadav95/postgresql-in-windows-subsystem-for-linux-wsl-6dc751ac1ff3) is very helpful.
+必ず`database.yml`内の下記記述のusernameとpasswordをご自身のMySQL環境に設定してください。
 
-Create a database called `coffeetime`.
-
-Create a `.config.js` file in the project root with this format:
+`/HeadBanding/config/database.yml`
 
 ```
-module.exports = {
-  db: {
-    client: "postgresql",
-    connection: process.env.DATABASE_URL || {
-      host: process.env.DB_HOST || "127.0.0.1",
-      port: process.env.DB_PORT || 5432,
-      database: process.env.DB_NAME || "coffeetime",
-      user: "exampleUsername", // <= Your command line username
-      password: "examplePassword", // <= Your command line
-    }
-  },
-};
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: ご自身のMySQLユーザー名
+  password: ご自身のMySQLパスワード
+  host: localhost
+  socket: /tmp/mysql.sock
 
 ```
 
-To clone and run this application, you'll need Git and Node.js (which comes with yarn) installed on your computer.  
-From your command line:
+## Install
 
-**Downloading and installing steps**
-
-1. Clone this repository
+1. リポジトリをクローンする
 
 ```bash
-$ git clone https://github.com/nouvelle/coffee-time.git
+$ git clone https://github.com/endoumame0521/HeadBanding.git
 ```
 
-2. Go into the repository
+2. クローンしたリポジトリの中に移動
 
 ```bash
-$ cd coffee-time
+$ cd HeadBanding
 ```
 
-3. Install dependencies
+3. Gemをインストール
 
 ```bash
-$ yarn
+$ bundle install
 ```
 
-4. Create database, Run migrations and set up the database
+4. MySQLサーバーを起動
 
 ```bash
-$ yarn migrate
+$ mysql.server start
 ```
 
-5. Run the app
+5. データベースに初期データを投入(※最大で10分ほど掛かる場合があります)
 
 ```bash
-$ yarn start
+$ rails db:reset
 ```
 
-# Other command
+6. アプリケーションサーバーを起動し、ブラウザで[http://localhost:3000/](http://headbanding.org/)にアクセス
+
+```bash
+$ rails s -b 0.0.0.0
+```
+
+# Description
 
 - To roll back migrations
 
@@ -101,23 +110,33 @@ $ yarn seed
 
 # Technology used
 
-This software uses the following open source packages:
-![image](https://github.com/nouvelle/coffee-time/blob/master/images/technology.png?raw=true)
+## Language
+HTML<br>
+CSS<br>
+JavaScript<br>
+Ruby 2.5.7
 
-# Future features
+## Framework
+Ruby on Rails
 
-For now, you can see the site clip data.  
-I will be adding more function.
+## Gems
+devise<br>
+kaminari<br>
+refile<br>
+pry-byebug<br>
+better_errors<br>
+binding_of_caller<br>
+bullet<br>
+hirb<br>
+capistrano<br>
+jquery-rails<br>
+bootstrap<br>
+dotenv-rails<br>
+rails-i18n<br>
 
-- [x] Save added data and read information into database.
-- [ ] Show the history of your reading.
-- [ ] Login function.
-- [ ] Interactive animations.
+## JS Library
+jQuery
 
-# Contributing
 
-Pull requests are welcome!! 😊
-
-# License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+# Auther
+DMM WEBCAMP 難波校　2020年1月生　垣内 繁直
