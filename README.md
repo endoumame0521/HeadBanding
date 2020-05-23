@@ -1,12 +1,13 @@
 ![logo](https://github.com/endoumame0521/HeadBanding/blob/images/logo.png)
-# Head x Banding(ヘッドバンディング)
+# :newspaper:バンドメンバー募集SNS：Head x Banding(ヘッドバンディング)
 
-You can check out the app on [Heroku](https://coffeee-time.herokuapp.com/)!
+実際のサイトはこちらです→ [Click me!!](http://headbanding.org/)
 
 ![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/introduction1.png)
-![image](https://github.com/nouvelle/coffee-time/blob/master/images/smartphone.png?raw=true)
 
-1. [About](#About)
+![image](https://github.com/endoumame0521/HeadBanding/blob/images/introduction2.png)
+
+1. [Overview](#overview)
 1. [Development](#Development)
 1. [Other command](#Other%20command)
 1. [Technology used](#Technology%20used)
@@ -14,10 +15,22 @@ You can check out the app on [Heroku](https://coffeee-time.herokuapp.com/)!
 1. [Contributing](#Contributing)
 1. [License](#License)
 
-# About
+# Overview
 
-If you use this app, you can save the URLs you want to read later and read them together later.  
-You can save what you have read, so you can read it immediately if you want to read it again.
+本サイトはバンドメンバー募集SNSです。
+
+バンド活動をするにあたってメンバーを見つける事は大変な労力となります。
+
+音楽の方向性、活動の方向性、メンバーの年齢、活動拠点など自分にマッチしたメンバーは
+そうそう居ないからです。
+
+バンド活動では最も大事な事は、作曲スキルでもなければ楽器の腕前でもありません。
+
+いかに多く息の合うメンバーを揃える事ができるか。これが最も重要だと考えています。
+
+私が過去に趣味で組んでいたバンドはメンバーのバンドに対する考え方の相違が原因で解散しました。
+
+そんな私の様になってほしくないという考えの下、これからバンド活動を始めようとしている方々に少しでも良いバンドライフを送って頂ける様に考えてこのサイトを制作しました。
 
 # Development
 
