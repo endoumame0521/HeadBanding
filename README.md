@@ -1,9 +1,9 @@
-![ロゴ](https://github.com/endoumame0521/HeadBanding/blob/images/logo.png)
+![logo](https://github.com/endoumame0521/HeadBanding/blob/images/logo.png)
 # Head x Banding(ヘッドバンディング)
 
 You can check out the app on [Heroku](https://coffeee-time.herokuapp.com/)!
 
-![image](https://github.com/nouvelle/coffee-time/blob/master/images/desktop.png?raw=true)
+![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/introduction1.png)
 ![image](https://github.com/nouvelle/coffee-time/blob/master/images/smartphone.png?raw=true)
 
 1. [About](#About)
