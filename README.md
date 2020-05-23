@@ -2,6 +2,11 @@
 # バンドメンバー募集SNS：Head x Banding(ヘッドバンディング)
 
 実際のサイトはこちらです→ [Click me!!](http://headbanding.org/)
+<br>
+
+- テストユーザー<br>
+Eメール：a@a<br>
+パスワード：aaaaaa<br>
 
 ![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/introduction1.png)
 
@@ -147,6 +152,7 @@ $ rails s -b 0.0.0.0
 
 
 - ログイン状態リアルタイム更新<br>
+- ゲストログイン機能<br>
 ![description8](https://github.com/endoumame0521/HeadBanding/blob/images/anime8.gif)
 <br>
 
