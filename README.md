@@ -1,5 +1,5 @@
 ![logo](https://github.com/endoumame0521/HeadBanding/blob/images/logo.png)
-# :newspaper:バンドメンバー募集SNS：Head x Banding(ヘッドバンディング)
+# バンドメンバー募集SNS：Head x Banding(ヘッドバンディング)
 
 実際のサイトはこちらです→ [Click me!!](http://headbanding.org/)
 
@@ -11,9 +11,7 @@
 1. [Development](#development)
 1. [Description](#description)
 1. [Technology used](#technology%20used)
-1. [Future features](#future%20features)
-1. [Contributing](#contributing)
-1. [License](#license)
+1. [Auther](#auther)
 
 # Overview
 
@@ -98,7 +96,7 @@ $ rails s -b 0.0.0.0
 
 - TOPページ<br>
 - メンバー登録<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime1.gif)
+![description1](https://github.com/endoumame0521/HeadBanding/blob/images/anime1.gif)
 <br>
 
 - 記事お気に入り<br>
@@ -106,7 +104,7 @@ $ rails s -b 0.0.0.0
 - 検索フォームクリア<br>
 - 記事通報機能<br>
 - ページネーション<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime2.gif)
+![description2](https://github.com/endoumame0521/HeadBanding/blob/images/anime2.gif)
 <br>
 
 - ツイートいいね<br>
@@ -115,7 +113,7 @@ $ rails s -b 0.0.0.0
 - ツイートコメントいいね<br>
 - ツイートコメントCRUD<br>
 - ページネーション<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime3.gif)
+![description3](https://github.com/endoumame0521/HeadBanding/blob/images/anime3.gif)
 <br>
 
 
@@ -123,18 +121,18 @@ $ rails s -b 0.0.0.0
 - メンバーフォロー機能<br>
 - メンバーブロック機能<br>
 - メンバープロフィールページ<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime4.gif)
+![description4](https://github.com/endoumame0521/HeadBanding/blob/images/anime4.gif)
 <br>
 
 
 - リアルタイムチャット<br>
 - メッセージ既読機能<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime5.gif)
+![description5](https://github.com/endoumame0521/HeadBanding/blob/images/anime5.gif)
 <br>
 
 
 - お知らせ機能<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime6.gif)
+![description6](https://github.com/endoumame0521/HeadBanding/blob/images/anime6.gif)
 <br>
 
 
@@ -144,21 +142,23 @@ $ rails s -b 0.0.0.0
 - 会員情報編集<br>
 - ブロックリスト<br>
 - 退会機能<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime7.gif)
+![description7](https://github.com/endoumame0521/HeadBanding/blob/images/anime7.gif)
 <br>
 
 
 - ログイン状態リアルタイム更新<br>
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime8.gif)
+![description8](https://github.com/endoumame0521/HeadBanding/blob/images/anime8.gif)
 <br>
 
-- 管理者機能
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime9.gif)
+
+- 管理者機能<br>
+![description9](https://github.com/endoumame0521/HeadBanding/blob/images/anime9.gif)
 <br>
 
-- 記事投稿機能
-![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime10.gif)
 
+- 記事投稿機能<br>
+![description10](https://github.com/endoumame0521/HeadBanding/blob/images/anime10.gif)
+<br>
 
 # Technology used
 
