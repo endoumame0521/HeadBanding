@@ -96,7 +96,68 @@ $ rails s -b 0.0.0.0
 
 # Description
 
-![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/gifanime.gif)
+- TOPページ<br>
+- メンバー登録<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime1.gif)
+<br>
+
+- 記事お気に入り<br>
+- 記事検索<br>
+- 検索フォームクリア<br>
+- 記事通報機能<br>
+- ページネーション<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime2.gif)
+<br>
+
+- ツイートいいね<br>
+- ツイートCRUD<br>
+- ツイート検索<br>
+- ツイートコメントいいね<br>
+- ツイートコメントCRUD<br>
+- ページネーション<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime3.gif)
+<br>
+
+
+- メンバー検索<br>
+- メンバーフォロー機能<br>
+- メンバーブロック機能<br>
+- メンバープロフィールページ<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime4.gif)
+<br>
+
+
+- リアルタイムチャット<br>
+- メッセージ既読機能<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime5.gif)
+<br>
+
+
+- お知らせ機能<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime6.gif)
+<br>
+
+
+- マイページ<br>
+- 足跡機能<br>
+- お気に入り記事一覧<br>
+- 会員情報編集<br>
+- ブロックリスト<br>
+- 退会機能<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime7.gif)
+<br>
+
+
+- ログイン状態リアルタイム更新<br>
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime8.gif)
+<br>
+
+- 管理者機能
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime9.gif)
+<br>
+
+- 記事投稿機能
+![ログイン](https://github.com/endoumame0521/HeadBanding/blob/images/anime10.gif)
 
 
 # Technology used
@@ -108,7 +169,7 @@ JavaScript<br>
 Ruby 2.5.7
 
 ## Framework
-Ruby on Rails
+Ruby on Rails 5.2.4
 
 ## Gems
 devise<br>
