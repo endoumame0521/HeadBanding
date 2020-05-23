@@ -96,17 +96,8 @@ $ rails s -b 0.0.0.0
 
 # Description
 
-- To roll back migrations
+![intro1](https://github.com/endoumame0521/HeadBanding/blob/images/gifanime.gif)
 
-```bash
-$ yarn rollback
-```
-
-- To insert test data
-
-```bash
-$ yarn seed
-```
 
 # Technology used
 
